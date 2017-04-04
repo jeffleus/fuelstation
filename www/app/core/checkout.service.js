@@ -33,6 +33,17 @@
             //         method: 'PUT'
             //     }
             // });
+            return {
+                save: function(checkout) {
+                    return $http.post('https://f5ekrwo1b6.execute-api.us-west-2.amazonaws.com/dev/checkouts',checkout);
+                },
+                get: function(id) {
+                    return $http.get('https://f5ekrwo1b6.execute-api.us-west-2.amazonaws.com/dev/checkouts/',id);
+                },
+                query: function() {
+                    return $http.get('https://f5ekrwo1b6.execute-api.us-west-2.amazonaws.com/dev/checkouts');
+                }
+            };
             return $http.post('https://f5ekrwo1b6.execute-api.us-west-2.amazonaws.com/dev/checkouts',checkout)
         }
 
@@ -116,7 +127,12 @@
         }
         
         function _unarchived() {
-            return $resource(ApiEndpoint.url + 'Checkouts/Unarchived');
+            //return $resource(ApiEndpoint.url + 'Checkouts/Unarchived');
+            return {
+                query: function() {
+                    return $http.get('https://f5ekrwo1b6.execute-api.us-west-2.amazonaws.com/dev/checkouts/Unarchived'); 
+                }
+            };            
         }
     });
 })();
