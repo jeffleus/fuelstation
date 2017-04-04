@@ -9,6 +9,7 @@
 
         vm.password = {};
   		vm.loginData = { username:"jeffleus-cs1", password:"GoBruins2017" };
+        vm.authSvc = AuthSvc;
 
         vm.closeModal = _closeModal;
         vm.closeFSModal = _closeFSModal;
@@ -82,7 +83,11 @@
         }
 		
 		function _openFSLogin() {
-            $scope.fsModal.show();
+            if (AuthSvc.isAuthenticated()) {
+                AuthSvc.logout();
+            } else {
+                $scope.fsModal.show();
+            }
 		};
 
         function loadFSModal() {
