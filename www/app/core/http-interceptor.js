@@ -5,10 +5,11 @@
 
     app.factory('authInterceptor', function (AuthSvc) {
         return {
-            request: function(config){
+            request: function(config) {
+                return AuthSvc.getToken().then(function(token) {
                     config.headers['Authorization'] = AuthSvc.token;
-
-                return config;
+                    return config;                    
+                });
             }
         }
     });
