@@ -67,15 +67,16 @@
 
 		function _getToken() {
 			return $q(function(resolve, reject) {
-				if (self.token) resolve(self.token);
-				else {
-					return _getUser().then(function(token) {
-						self.token = token;
-						resolve(token)
-					}).catch(function(err) {
-						reject(err);
-					});
-				}
+                return _getUser().then(function(token) {
+                    if (!token) {
+                        reject('You are not logged into the FuelStation.  Please login to use the services.');
+                    } else {
+                        self.token = token;
+                        resolve(token);
+                    }
+                }).catch(function(err) {
+                    reject(err);
+                });
 			});
 		}
 
@@ -90,9 +91,9 @@
 							console.error('Error encountered during getSession.', err);
 							reject(err);
 						}
-						console.log('session validity: ' + session.isValid());
-						var remainSec = Math.abs(new Date() - new Date(session.getIdToken().getExpiration()*1000));
-						console.log('session expiration: ' + (remainSec / 1000 / 60));
+//						console.log('session validity: ' + session.isValid());
+//						var remainSec = Math.abs(new Date() - new Date(session.getIdToken().getExpiration()*1000));
+//						console.log('session expiration: ' + (remainSec / 1000 / 60));
 						resolve(session.getIdToken().jwtToken);
 	//                    // NOTE: getSession must be called to authenticate user before calling getUserAttributes
 	//                    cognitoUser.getUserAttributes(function(err, attributes) {
