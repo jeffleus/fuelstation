@@ -8,7 +8,7 @@
         var apiUrl = 'https://mna6x5va5e.execute-api.us-west-2.amazonaws.com/dev/choices';
 
         self.alphabetize = _alphabetize;
-        //self.choice = _choice;
+        self.choice = _choice;
         self.getAllChoices = _getAllChoices;
         self.getType = _getType;
         self.hydrationFilter = _hydrationFilter;
@@ -29,15 +29,19 @@
                 return 0;
         }
 
-        // function _choice() {
-        //     return $resource(ApiEndpoint.url + 'FuelChoices/:id', {
-        //         id: '@choiceID'
-        //     }, {
-        //         'update': {
-        //             method: 'PUT'
-        //         }
-        //     });
-        // }
+         function _choice() {
+            return {
+                get: function(args) {
+                    return $http.get(apiUrl + '/' + args.id)
+                    .then(function(result){
+                        return result.data.choices;
+                    });
+                },
+                delete: function(args) {
+                    return $http.delete(apiUrl + '/' + args.id);
+                }
+            };
+         }
 
         function _getAllChoices() {
             //return $resource(ApiEndpoint.url + 'Choices', {});
