@@ -1,0 +1,39 @@
+<ion-view view-title="Today's Archive">
+    <ion-nav-buttons side="right">
+        <button class="button button-large ng-click-active ion-refresh" ng-click="vm.init()"> Refresh
+        </button>
+    </ion-nav-buttons>
+    <ion-content>
+        <div class="container">
+            <ul class="list m-b-0">
+                <li class="item item-icon-right">
+                    <i ng-if="vm.name.value" ng-click="vm.clearFilter()" class="icon ion-close-circled assertive"></i>
+                    <input type="text" ng-model="vm.name.value" placeholder="Filter by name" class="col">
+                </li>
+            </ul>
+            <div class="row  unlimited-items">
+                <div class="col-33 animate-leave" ng-repeat="checkout in vm.todaysCheckouts  | filter: vm.nameFilter track by $index">
+                    <div class="list card card-checkout">
+                        <div class="item item-card-divider item-button-right positive-bg text-white">
+                            <button class="button button-clear" ng-click="vm.setUnarchive(checkout, $index)"><i class="icon ion-reply light"></i></button>
+                            <strong>{{checkout.studentSport.fullName}}</strong>
+                            <br>
+                            <small>{{checkout.createDate | date: 'shortTime'}}</small>
+                        </div>
+                        <div class="card-order-body" ng-click="editCheckout(checkout)">
+                            <ion-scroll>
+                                <ion-list>
+                                    <ion-item class="padding" ng-repeat="choice in checkout.checkoutChoices">
+                                        {{choice.choice.name}}
+                                    </ion-item>
+                                    <ion-item></ion-item>
+                                </ion-list>
+                            </ion-scroll>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </ion-content>
+</ion-view>

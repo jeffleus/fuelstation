@@ -1,0 +1,76 @@
+<ion-view view-title="Fuel Station">
+    <ion-content class="padding text-center has-header" has-bouncing="false">
+        <div>
+            <h1 class="light-weight">Fuel Station</h1>
+            <h3 class="light-weight">
+                    Please enter your student ID:
+                </h3>
+            <h2 class="light-weight">{{vm.accountSvc.studentId}} &nbsp;</h2>
+        </div>
+
+        <div class="numpad-container">
+
+            <div class="row">
+                <div class="col key-padding">
+                    <button type="button" class="button button-stable round-ios-button" ng-click="vm.numButton('1')">
+                        <h1>1</h1></button>
+                </div>
+                <div class="col key-padding">
+                    <button type="button" class="button button-stable round-ios-button" ng-click="vm.numButton('2')">
+                        <h1>2</h1></button>
+                </div>
+                <div class="col key-padding">
+                    <button type="button" class="button button-stable round-ios-button" ng-click="vm.numButton('3')">
+                        <h1>3</h1></button>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col key-padding">
+                    <button type="button" class="button button-stable round-ios-button" ng-click="vm.numButton('4')">
+                        <h1>4</h1></button>
+                </div>
+                <div class="col key-padding">
+                    <button type="button" class="button button-stable round-ios-button" ng-click="vm.numButton('5')">
+                        <h1>5</h1></button>
+                </div>
+                <div class="col key-padding">
+                    <button type="button" class="button button-stable round-ios-button" ng-click="vm.numButton('6')">
+                        <h1>6</h1></button>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col key-padding">
+                    <button type="button" class="button button-stable round-ios-button" ng-click="vm.numButton('7')">
+                        <h1>7</h1></button>
+                </div>
+                <div class="col key-padding">
+                    <button type="button" class="button button-stable round-ios-button" ng-click="vm.numButton('8')">
+                        <h1>8</h1></button>
+                </div>
+                <div class="col key-padding">
+                    <button type="button" class="button button-stable round-ios-button" ng-click="vm.numButton('9')">
+                        <h1>9</h1></button>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col key-padding">
+                    <button type="button" class="button button-stable round-ios-button" ng-click="vm.deleteButton()">
+                        <h1><i class="icon ion-arrow-left-b line-height-0 larger-icon"></i></h1></button>
+                </div>
+                <div class="col key-padding">
+                    <button type="button" class="button button-stable round-ios-button" ng-click="vm.numButton('0')">
+                        <h1>0</h1></button>
+                </div>
+                <div class="col key-padding">
+                    <button type="button" class="button button-stable round-ios-button" ng-click="vm.accountSvc.clearStudentId()">
+                        <h1>CLR</h1></button>
+                </div>
+            </div>
+
+        </div>
+
+    </ion-content>
+</ion-view>

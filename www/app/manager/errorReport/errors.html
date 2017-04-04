@@ -1,0 +1,35 @@
+<ion-view view-title="Errors">
+    <ion-nav-buttons side="right">
+        <button class="button button-large ng-click-active ion-refresh" ng-click="vm.refresh()"> Refresh
+        </button>
+    </ion-nav-buttons>
+    <ion-content class="has-header">
+        <button class="button button-assertive" ng-click="vm.deleteLog()">Delete Log</button>
+        <div class="container padding">
+            <!--<div class="row stable-bg">
+                <div class="col-10"><strong>Date</strong></div>
+                <div class="col-20"><strong>Cause</strong></div>
+                <div class="col-33"><strong>Stack</strong></div>
+                <div class="col-33"><strong>Other</strong></div>
+            </div>
+
+            <div class="row m-t-20 m-b-10" ng-repeat="error in vm.errors" style="border-bottom: 1px #ccc solid">
+                <div class="col-10" ng-bind="vm.parseDate(error.date)"></div>
+                <div class="col-20">{{error.cause}}</div>
+                <div class="col-33">{{error.stack}}</div>
+                <div class="col-33">{{error.other}}</div>
+            </div>-->
+
+            <div class="row padding" ng-class="{'stable-bg': $index % 2 === 1}" ng-repeat="error in vm.errors">
+                <div class="col">
+                    <strong><p ng-bind="vm.parseDate(error.date)"></p></strong>
+                    <p><strong>Cause:</strong> {{error.cause}}</p>
+                    <p><strong>Stack:</strong> {{error.stack}}</p>
+                    <p><strong>Other:</strong> {{error.other}}</p>
+                    
+                </div>
+            </div>
+
+        </div>
+    </ion-content>
+</ion-view>

@@ -1,0 +1,47 @@
+<ion-view view-title="Snack Limits">
+    <ion-content class="">
+
+        <div class="two-columns padding">
+            <form name="vm.limitForm{{$index}}" ng-submit="vm.onSubmitSnackLimits(sport)" ng-repeat="sport in vm.sportsLimits" class="m-b-10">
+                <div class="list">
+
+                    <div>
+
+                        <label class="item item-input item-stacked-label">
+                            <span class="input-label bold">{{sport.sport.sportDescription}}</span>
+                        </label>
+
+                        <label class="item item-input item-stacked-label energized-bg" ng-show="!vm.limitForm{{$index}}.$valid">
+                            Please enter a whole number greater than 0.
+                        </label>
+
+                        <label for="daySnackLimit" class="item item-input">
+                            <span class="input-label">
+                                Daily Snack Limit
+                            </span>
+                            <input ng-model="sport.daySnackLimit" name="daySnackLimit"
+                                   type="number" min="1" inputmode="tel" pattern="[0-9]*" required />
+                        </label>
+
+                        <label for="monthSnackLimit" class="item item-input">
+                            <span class="input-label">
+                                Monthly Snack Limit
+                            </span>
+                            <input ng-model="sport.monthSnackLimit" name="monthSnackLimit"
+                                   type="number" min="1" inputmode="tel" pattern="[0-9]*" required />
+                        </label>
+
+                        <span class="item item-input item-stacked-label">
+                            <button type="submit" class="button button-balanced unset-position"
+                                    style="position:unset; float: right; margin-right: 10px !important" ng-disabled="!vm.limitForm{{$index}}.$valid">Save</button>
+                        </span>
+                    </div>
+
+                </div>
+
+
+            </form>
+        </div>
+
+    </ion-content>
+</ion-view>

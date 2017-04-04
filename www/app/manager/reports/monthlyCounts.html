@@ -1,0 +1,59 @@
+<ion-view view-title="Monthly Counts">
+
+    <ion-content class="has-header">
+        <div class="container padding">
+            <div class="list">
+                <div class="row">
+                    <div class="col-25">
+                        <label class="item item-input item-select">
+                            <div class="input-label">
+                                Month
+                            </div>
+                            <select ng-model="vm.dateSelection.month" ng-init="vm.dateSelection.month = vm.currentMonth" 
+                                    ng-options="num as month for (month, num) in vm.months"></select>
+                        </label>
+
+                    </div>
+                    <div class="col-25">
+                        <label class="item item-input item-select">
+                            <div class="input-label">
+                                Year
+                            </div>
+                            <select ng-model="vm.dateSelection.year" ng-init="vm.dateSelection.year = vm.currentYear" 
+                                    ng-options="y for y in vm.years() track by y"></select>
+                        </label>
+                    </div>
+
+                    <div class="col-10 text-center">
+                        <button type="button" class="button button-positive" ng-click="vm.getMonthCounts()" style="min-height: 35px; line-height: 20px;">Go</button>
+
+                    </div>
+
+                    <div class="col-20">
+                        <button type="button" class="button button-balanced" ng-click="vm.download()" style="min-height: 35px; line-height: 20px;" ng-disabled="vm.counts.length === 0">Download CSV</button>
+                    </div>
+                </div>
+
+
+
+            </div>
+            <div ng-if="vm.counts.length > 0" class="category-fade">
+                <div class="row stable-bg m-b-10">
+                    <div class="col-25"><strong>Choice</strong></div>
+                    <div class="col-20"><strong>Count</strong></div>
+                </div>
+
+                <div class="row m-b-10" ng-repeat="item in vm.counts">
+                    <div class="col-25">{{item.choice}}</div>
+                    <div class="col-20">{{item.count}}</div>
+                </div>
+            </div>
+            <div ng-if="vm.counts.length === 0" class="padding">
+                <h4 ng-show="vm.noRecords">There are no records for the selected time period.</h4>
+                <h4>Please select a month and year, then press Go.</h4>
+            </div>
+        </div>
+        
+        
+    </ion-content>
+</ion-view>

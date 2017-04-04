@@ -1,0 +1,99 @@
+<ion-view view-title="Fuel Station">
+    <ion-side-menus>
+
+        <ion-side-menu-content>
+            <ion-header-bar class="bar-positive">
+                <button class="button button-icon ion-navicon" ng-click="vm.toggleLeft()" ng-hide="$exposeAside.active"></button>
+                <h1 class="title">Fuel Station Choices</h1>
+            </ion-header-bar>
+            <ion-content class="padding">
+
+                <div ng-if="!vm.accountSvc.shouldHidePre" class="category-fade">
+                    <h4>Pre-Workout Options:</h4>
+                    <hr />
+                    <p>
+                        <button class="button button-balanced" ng-repeat="c in vm.choiceSvc.pre" ng-click="vm.orderItem(c)" ng-show="c.isActive">{{c.name}}</button>
+                    </p>
+                </div>
+                <div ng-if="!vm.accountSvc.shouldHidePost" class="category-fade">
+                    <h4>Post-Workout Options:</h4>
+                    <hr />
+                    <p>
+                        <button class="button button-royal" ng-repeat="c in vm.choiceSvc.post" ng-click="vm.orderItem(c)" ng-show="c.isActive">{{c.name}}</button>
+                    </p>
+                </div>
+                <div ng-if="!vm.accountSvc.shouldHideHydration" class="category-fade">
+                    <h4>Hydration Options:</h4>
+                    <hr />
+                    <p>
+                        <button class="button button-energized" ng-repeat="c in vm.choiceSvc.hydration" ng-click="vm.orderItem(c)" ng-show="c.isActive">{{c.name}}</button>
+                    </p>
+                </div>
+                <div ng-if="!vm.accountSvc.shouldHideSnacks" class="category-fade">
+                    <h4>Snack Options:</h4>
+                    <hr />
+                    <p>
+                        <button class="button button-calm" ng-repeat="c in vm.choiceSvc.snacks" ng-click="vm.orderItem(c, true)" ng-show="c.isActive">
+                            {{c.name}}
+                        </button>
+                        <button class="button button-balanced" ng-repeat="c in vm.choiceSvc.pre" ng-if="vm.accountSvc.shouldHidePre && c.isActive" ng-click="vm.orderItem(c, true)">
+                            {{c.name}}
+                        </button>
+                        <button class="button button-royal" ng-repeat="c in vm.choiceSvc.post" ng-if="vm.accountSvc.shouldHidePost && c.isActive" ng-click="vm.orderItem(c, true)">
+                            {{c.name}}
+                        </button>
+                        <button class="button button-energized" ng-repeat="c in vm.choiceSvc.hydration" ng-if="vm.accountSvc.shouldHideHydration && c.isActive" ng-click="vm.orderItem(c, true)">
+                            {{c.name}}
+                        </button>
+                    </p>
+                </div>
+                <div class="category-fade" ng-if="(vm.accountSvc.shouldHideSnacks &&
+                     vm.accountSvc.shouldHideHydration &&
+                     vm.accountSvc.shouldHidePre &&
+                     vm.accountSvc.shouldHidePost)">
+
+                    <div class="energized-bg padding">
+                        <h4 class="text-white">
+                            You have reached your limit. To change your selection, remove items from your order list.
+                        </h4>
+                    </div>
+                </div>
+            </ion-content>
+        </ion-side-menu-content>
+
+        <ion-side-menu expose-aside-when="large">
+            <ion-header-bar class="bar-positive">
+                <h1 class="title">Current Order:</h1>
+            </ion-header-bar>
+
+            <ion-content>
+                <div ng-show="vm.timeRemaining < 60" class="padding text-center">
+                    <h4 class="text-center assertive"><strong>0:{{vm.seconds}} remaining. <br />Please make a selection.</strong></h4>
+                </div>
+                <ion-item class="bar-stable">
+                    <p class="text-center">
+                        Welcome, {{vm.accountSvc.athleteData[0].firstname}}
+                        <br /><br />
+                    </p>
+                    <p>
+                        <strong>
+                            Monthly snacks remaining: {{vm.accountSvc.monthSnacksRemaining}}<br />
+                            Snacks remaining today: {{vm.accountSvc.daySnacksRemaining}}<br />
+                        </strong>
+                    </p>
+                </ion-item>
+                <ion-item>
+                    <button class="button button-stable stable-border" ng-click="vm.cancel()">Cancel</button>
+
+                    <button class="button button-positive" ng-click="vm.onOrderClick()" ng-disabled="vm.orderItems.length === 0">Order</button>
+                </ion-item>
+                <ion-item class="item-button-right" ng-repeat="oi in vm.orderItems track by $index">
+                    {{oi.name}}
+                    <a class="button button-icon icon ion-close-circled assertive" ng-click="vm.removeItem($index)"></a>
+                </ion-item>
+
+            </ion-content>
+        </ion-side-menu>
+
+    </ion-side-menus>
+</ion-view>

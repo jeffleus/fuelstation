@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <title></title>
+    <link href="lib/ionic/css/ionic.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above
+    <link href="css/ionic.app.css" rel="stylesheet">
+    -->
+    <!-- ionic/angularjs js -->
+    <script src="lib/ionic/js/ionic.bundle.js"></script>
+    <script src="lib/underscore-min.js"></script>
+
+    <!-- cordova script (this will be a 404 during development) -->
+    <script src="cordova.js"></script>
+
+    <!-- your app's js -->
+    <script src="lib/ionic/js/angular/angular-resource.min.js"></script>
+    <script src="lib/moment.js"></script>
+
+    <script src="js/app.js"></script>
+    
+    <script src="app/core/http-interceptor.js"></script>
+    <script src="app/core/exception-handler.provider.js"></script>
+    <script src="app/core/localstorage.service.js"></script>
+    <script src="app/core/errorlog.service.js"></script>
+
+    <script src="app/cart/choices.controller.js"></script>
+    <script src="app/athleteLogin/login.controller.js"></script>
+    <script src="app/athleteLogin/menu.controller.js"></script>
+    
+    <!-- Manager controllers -->
+    <script src="app/manager/manager.controller.js"></script>
+    <script src="app/manager/orderList/orderList.controller.js"></script>
+    <script src="app/manager/orderList/editOrder.contoller.js"></script>
+    <script src="app/manager/archiveList/archiveList.controller.js"></script>
+    <script src="app/manager/snackChoices/snackChoices.controller.js"></script>
+    <script src="app/manager/snackLimits/snackLimit.controller.js"></script>
+    <script src="app/manager/reports/todaysCheckouts.controller.js"></script>
+    <script src="app/manager/errorReport/errors.controller.js"></script>
+    <script src="app/manager/reports/monthlyCounts.controller.js"></script>
+    
+    <!-- Services -->
+    <script src="app/core/core.module.js"></script>
+    <script src="app/core/constants.js"></script>
+    <script src="app/core/snackLimits.service.js"></script>
+    <script src="app/core/choice.service.js"></script>
+    <script src="app/core/account.service.js"></script>
+    <script src="app/core/order.service.js"></script>
+    <script src="app/core/athlete.service.js"></script>
+    <script src="app/core/checkout.service.js"></script>
+    <script src="app/core/ionicAlert.service.js"></script>
+    <script src="app/core/loadingSpinner.service.js"></script>
+    <script src="app/core/csv.service.js"></script>
+
+</head>
+<body ng-app="app">
+    <ion-nav-view></ion-nav-view>
+</body>
+</html>
