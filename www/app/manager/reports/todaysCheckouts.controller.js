@@ -14,11 +14,11 @@
         init();
 
         function init() {
-            CheckoutSvc.getDailyCheckouts().query().$promise.then(onGetTodaysCheckouts, IonicAlertSvc.error);
+            CheckoutSvc.getDailyCheckouts().query().then(onGetTodaysCheckouts, IonicAlertSvc.error);
         }
 
         function onGetTodaysCheckouts(response) {
-            vm.checkouts = response;
+            vm.checkouts = response.data;
         }
 
         function _download() {

@@ -10,11 +10,18 @@
 		self.logout = _logout;
 		self.getUser = _getUser;
 		self.getToken = _getToken;
+		self.refreshTokens = _refreshTokens;
+		self.changePassword = _changePassword;
 		self.token = null;
 
+//		self.poolData = { 
+//			UserPoolId : "us-west-2_HqCU8elu4",
+//			ClientId : "bq4vqit9hrh97vrkurd2ns45p"
+//		};
+		//FuelStation User Pool
 		self.poolData = { 
-			UserPoolId : "us-west-2_HqCU8elu4",
-			ClientId : "bq4vqit9hrh97vrkurd2ns45p"
+			UserPoolId : "us-west-2_KMI3gTfQw",
+			ClientId : "49f7iepq786236nea8t33m1kje"
 		};
 		AWSCognito.config.update({region:'us-west-2'});
 
@@ -50,6 +57,27 @@
 				});            
 			});
 		}
+		
+		function _changePassword(oldPassword, newPassword) {
+			var userPool = new AWSCognito.CognitoIdentityServiceProvider.CognitoUserPool(self.poolData);
+			var cognitoUser = userPool.getCurrentUser();
+			return $q(function(resolve, reject){
+				cognitoUser.getSession(function(err, session) {
+					if (err) {
+						console.error('Error encountered during getSession.', err);
+						reject(err);
+					}
+					cognitoUser.changePassword(oldPassword, newPassword, function(err, result) {
+						if (err) {
+							reject(err);
+							return;
+						}
+						console.log('call result: ' + result);
+						resolve(result);
+					});
+				});
+			});
+		}
 
 		function _isAuthenticated() {
 			var userPool = new AWSCognito.CognitoIdentityServiceProvider.CognitoUserPool(self.poolData);
@@ -67,16 +95,36 @@
 
 		function _getToken() {
 			return $q(function(resolve, reject) {
-                return _getUser().then(function(token) {
-                    if (!token) {
-                        reject('You are not logged into the FuelStation.  Please login to use the services.');
+				if (self.token) {
+                    if (self.tokenExpiration > new Date()) {
+						//console.log(self.token);
+                        resolve(self.token);
                     } else {
-                        self.token = token;
-                        resolve(token);
+                        console.info('EXPIRED - refresh tokens w/ AWS and the refreshToken...');
+						_refreshTokens();
+                        resolve(null);
                     }
-                }).catch(function(err) {
-                    reject(err);
-                });
+                }
+				else {
+					return _getUser().then(function(token) {
+						self.token = token;
+						resolve(token)
+					}).catch(function(err) {
+						reject(err);
+					});
+				}
+			});
+		}
+		
+		function _refreshTokens() {
+			//call refresh method in order to authenticate user and get new temp credentials
+			AWSCognito.config.credentials.refresh((error) => {
+				if (error) {
+					console.error(error);
+				} else {
+					console.log('Successfully logged!');
+					_getUser();
+				}
 			});
 		}
 
@@ -91,36 +139,23 @@
 							console.error('Error encountered during getSession.', err);
 							reject(err);
 						}
-//						console.log('session validity: ' + session.isValid());
-//						var remainSec = Math.abs(new Date() - new Date(session.getIdToken().getExpiration()*1000));
-//						console.log('session expiration: ' + (remainSec / 1000 / 60));
+						self.token = session.getIdToken().jwtToken;
+                        self.tokenExpiration = new Date(session.getIdToken().getExpiration() * 1000);
+						console.info("Token Remain (min): ", (self.tokenExpiration - new Date())/60000);
+
+				// Add the User's Id Token to the Cognito credentials login map.
+                AWSCognito.config.credentials = new AWSCognito.CognitoIdentityCredentials({
+                    IdentityPoolId: 'us-west-2:28695927-b308-4073-acd6-fedc4e1cd40b',
+                    Logins: {
+                        'cognito-idp.us-west-2.amazonaws.com/us-west-2_HqCU8elu4': self.token
+                    }
+                });
+						
 						resolve(session.getIdToken().jwtToken);
-	//                    // NOTE: getSession must be called to authenticate user before calling getUserAttributes
-	//                    cognitoUser.getUserAttributes(function(err, attributes) {
-	//                        if (err) {
-	//                            // Handle error
-	//                            console.error('Error encountered during getUserAttributes', err);
-	//                            reject(err);
-	//                        } else {
-	//                            // Do something with attributes
-	//                            resolve(session.getIdToken().getJwtToken());
-	//                        }
-	//                    });
-
-		//                AWS.config.credentials = new AWS.CognitoIdentityCredentials({
-		//                    IdentityPoolId : '...', // your identity pool id here
-		//                    Logins : {
-		//                        // Change the key below according to the specific region your user pool is in.
-		//                        'cognito-idp.<region>.amazonaws.com/<YOUR_USER_POOL_ID>' : session.getIdToken().getJwtToken()
-		//                    }
-		//                });
-
-						// Instantiate aws sdk service objects now that the credentials have been updated.
-						// example: var s3 = new AWS.S3();
-
 					});
 				} else { return resolve(null); }
 			});
 		}
+
 	});
 })();

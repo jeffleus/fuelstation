@@ -22,7 +22,7 @@
         function init() {
             LoadingSpinner.show();
 
-            CheckoutSvc.unarchived().query().$promise.then(onGetTodaysCheckouts, IonicAlertSvc.error);
+            CheckoutSvc.unarchived().query().then(onGetTodaysCheckouts, IonicAlertSvc.error);
 
             // Fix bug where header is hidden on route change, with delay to make sure this function gets called after the view is finished rendering
             $timeout(function () {
@@ -30,7 +30,7 @@
             }, 800);
 
             polling = $interval(function () {
-                CheckoutSvc.unarchived().query().$promise.then(onGetTodaysCheckouts);
+                CheckoutSvc.unarchived().query().then(onGetTodaysCheckouts);
             }, 20000);
 
             loadModal();
@@ -72,7 +72,7 @@
 
         function onGetTodaysCheckouts(response) {
             LoadingSpinner.hide();
-            vm.todaysCheckouts = response;
+            vm.todaysCheckouts = response.data;
         }
 
 
@@ -117,7 +117,7 @@
             });
             $scope.$on('modal.hidden', function () {
                 //init();
-                CheckoutSvc.checkout().query().$promise.then(onGetTodaysCheckouts, IonicAlertSvc.error);
+                CheckoutSvc.checkout().query().then(onGetTodaysCheckouts, IonicAlertSvc.error);
 
             });
             $scope.$on('modal.removed', function () {

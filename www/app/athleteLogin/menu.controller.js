@@ -8,7 +8,7 @@
         var vm = this;
 
         vm.password = {};
-  		vm.loginData = { username:"jeffleus-cs1", password:"GoBruins2017" };
+  		vm.loginData = { username:"jeffleus-cs1", password:"FuelStation17!" };
         vm.authSvc = AuthSvc;
 
         vm.closeModal = _closeModal;
@@ -17,11 +17,19 @@
         vm.onSubmitFS = _onSubmitFS;
         vm.openModal = _openModal;
 		vm.openFSLogin = _openFSLogin;
+		vm.changePassword = _changePassword;
 
 
         loadModal();
 		loadFSModal();
 
+		function _changePassword() {
+			AuthSvc.changePassword('GoBruins2017', 'FuelStation17!')
+				.then(function(result) {
+				console.log(result);
+			});;
+		}
+		
         function _closeModal() {
             $scope.modal.hide();
         }
@@ -38,7 +46,7 @@
                 cause: "Wrong manager login password"
             };
 
-            if (vm.password.value === "gobruins42!") {
+            if (vm.password.value === "fu3lst4tion!") {
                 $state.go('tab.orderList', null, {
                     reload: true
                 });
