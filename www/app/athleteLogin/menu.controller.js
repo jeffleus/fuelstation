@@ -7,8 +7,8 @@
     .controller('LoginMenuCtrl', function (IonicAlertSvc, $state, LoadingSpinner, $scope, $timeout, $ionicModal, AuthSvc) {
         var vm = this;
 
-        vm.password = {};
-  		vm.loginData = { username:"jeffleus-cs1", password:"FuelStation17!" };
+        vm.password = { value:"fu3lst4tion!" };
+  		vm.loginData = { username:"fsdemo-manager", password:"FuelStation17!" };
         vm.authSvc = AuthSvc;
 
         vm.closeModal = _closeModal;
@@ -19,6 +19,10 @@
 		vm.openFSLogin = _openFSLogin;
 		vm.changePassword = _changePassword;
 
+        vm.newUser = { username:'fsdemo-student', password:'TempPass17!' };
+        vm.authNewUser = function(loginData) {
+            return AuthSvc.authNewUser(loginData);
+        };
 
         loadModal();
 		loadFSModal();

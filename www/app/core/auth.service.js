@@ -12,6 +12,7 @@
 		self.getToken = _getToken;
 		self.refreshTokens = _refreshTokens;
 		self.changePassword = _changePassword;
+        self.authNewUser = _authNewUser;
 		self.token = null;
 
 //		self.poolData = { 
@@ -47,6 +48,15 @@
 						console.log('accessToken + ' + new Date(result.getAccessToken().getExpiration() * 1000));
 						console.log('idToken + ' + new Date(result.getIdToken().getExpiration() * 1000));
 						self.token = result.idToken.jwtToken;
+                        
+				// Add the User's Id Token to the Cognito credentials login map.
+                AWSCognito.config.credentials = new AWSCognito.CognitoIdentityCredentials({
+                    IdentityPoolId: 'us-west-2:28695927-b308-4073-acd6-fedc4e1cd40b',
+                    Logins: {
+                        'cognito-idp.us-west-2.amazonaws.com/us-west-2_KMI3gTfQw': result.getIdToken().getJwtToken()
+                    }
+                });
+                        
 						resolve(result.idToken.jwtToken);
 					},
 
@@ -147,7 +157,7 @@
                 AWSCognito.config.credentials = new AWSCognito.CognitoIdentityCredentials({
                     IdentityPoolId: 'us-west-2:28695927-b308-4073-acd6-fedc4e1cd40b',
                     Logins: {
-                        'cognito-idp.us-west-2.amazonaws.com/us-west-2_HqCU8elu4': self.token
+                        'cognito-idp.us-west-2.amazonaws.com/us-west-2_KMI3gTfQw': session.getIdToken().getJwtToken()
                     }
                 });
 						
@@ -156,6 +166,60 @@
 				} else { return resolve(null); }
 			});
 		}
+        
+        function _authNewUser(loginData) {
+			var authenticationData = {
+				Username : loginData.username,
+				Password : loginData.password
+			};
+			var authenticationDetails = new AWSCognito.CognitoIdentityServiceProvider.AuthenticationDetails(authenticationData);
 
-	});
+			var userPool = new AWSCognito.CognitoIdentityServiceProvider.CognitoUserPool(self.poolData);
+			var userData = {
+				Username : loginData.username,
+				Pool : userPool
+			};
+			var cognitoUser = new AWSCognito.CognitoIdentityServiceProvider.CognitoUser(userData);
+
+            return $q(function(resolve, reject) {
+                if (cognitoUser != null) {
+                    cognitoUser.authenticateUser(authenticationDetails, {
+                        onSuccess: function (result) {
+                            // User authentication was successful
+                            console.log('User Auth for new user was successful!');
+                            resolve(result);
+                        },
+
+                        onFailure: function(err) {
+                            // User authentication was not successful
+                            console.error('User Auth Problem: ', err);
+                            reject(err);
+                        },
+
+                        mfaRequired: function(codeDeliveryDetails) {
+                            // MFA is required to complete user authentication.
+                            // Get the code from user and call
+                            console.log('User Auth requires an MFA code...');
+                            cognitoUser.sendMFACode(mfaCode, this)
+                        },
+
+                        newPasswordRequired: function(userAttributes, requiredAttributes) {
+                            // User was signed up by an admin and must provide new
+                            // password and required attributes, if any, to complete
+                            // authentication.
+
+                            // the api doesn't accept this field back
+                            delete userAttributes.email_verified;
+
+                            // Get these details and call
+                            var newPassword = 'FuelStation17!';
+                            userAttributes.family_name = 'Leininger';
+                            userAttributes.given_name = 'Jeff';
+                            cognitoUser.completeNewPasswordChallenge(newPassword, userAttributes, this);
+                        }
+                    });
+                } else { reject('no user found for authentication...'); }
+			});
+	   }
+    });
 })();

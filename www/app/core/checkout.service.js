@@ -42,6 +42,9 @@
                 save: function(checkout) {
                     return $http.post('https://f5ekrwo1b6.execute-api.us-west-2.amazonaws.com/dev/checkouts',checkout);
                 },
+                update: function(checkout) {
+                    return $http.put('https://f5ekrwo1b6.execute-api.us-west-2.amazonaws.com/dev/checkouts',checkout);
+                },
                 get: function(id) {
                     return $http.get('https://f5ekrwo1b6.execute-api.us-west-2.amazonaws.com/dev/checkouts/',id);
                 },

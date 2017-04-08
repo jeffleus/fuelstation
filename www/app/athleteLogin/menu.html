@@ -10,6 +10,9 @@
         <li>
             <a class="item" menu-close ng-click="vm.openFSLogin()">{{vm.authSvc.isAuthenticated()?'Logout':'Login'}}</a>
         </li>
+        <li>
+            <a class="item" menu-close ng-click="vm.authNewUser(vm.newUser)">Auth New User</a>
+        </li>
 <!--
         <li>
             <a class="item item-calm" menu-close ng-click="vm.changePassword()">Change Pwd</a>

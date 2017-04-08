@@ -8,6 +8,7 @@
 angular.module('app', [
     'ionic',
 
+    'googlechart',
     'app.core',
 
     'app.archiveListCtrl',

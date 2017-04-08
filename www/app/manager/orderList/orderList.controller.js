@@ -89,7 +89,7 @@
         function _setArchive(checkout, index) {
             var currentCheckout = CheckoutSvc.setArchiveProperties(checkout);
 
-            CheckoutSvc.checkout().update(currentCheckout).$promise
+            CheckoutSvc.checkout().update(currentCheckout)
                 .then(removeCheckoutFromList)
                 .then(init)
                 .catch(IonicAlertSvc.error);
