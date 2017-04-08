@@ -3,7 +3,7 @@
 
     angular.module('app.archiveListCtrl', [])
 
-    .controller('ArchiveListCtrl', function (CheckoutSvc, IonicAlertSvc) {
+    .controller('ArchiveListCtrl', function (CheckoutSvc, AuthSvc, IonicAlertSvc) {
         var vm = this;
 
         vm.name = {};
@@ -17,10 +17,11 @@
         init();
 
         function init() {
-            CheckoutSvc.archived().query().$promise.then(onGetTodaysCheckouts, IonicAlertSvc.error);
+			AuthSvc.refreshTokens();
+            CheckoutSvc.archived().query().then(onGetTodaysCheckouts, IonicAlertSvc.error);
 
             function onGetTodaysCheckouts(response) {
-                vm.todaysCheckouts = response;
+                vm.todaysCheckouts = response.data;
             }
         }
 
@@ -42,7 +43,8 @@
         function _setUnarchive(checkout, index) {
             var currentCheckout = CheckoutSvc.setUnarchiveProperties(checkout);
 
-            CheckoutSvc.checkout().update(currentCheckout).$promise
+            CheckoutSvc.checkout()
+				.update(currentCheckout)
                 .then(removeCheckoutFromList, IonicAlertSvc.error);
 
             function removeCheckoutFromList() {

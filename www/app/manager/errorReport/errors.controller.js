@@ -3,7 +3,7 @@
 
     angular.module('app.errors', [])
 
-    .controller('ErrorsCtrl', function ($localstorage, ErrorLogSvc) {
+    .controller('ErrorsCtrl', function ($localstorage, ErrorLogSvc, AuthSvc) {
         var vm = this;
 
         vm.errors = {};
@@ -23,7 +23,7 @@
             ErrorLogSvc.clear();
             init();
         }
-        
+		
         function _parseDate(dateStr){
             return moment(dateStr).format('MM-DD-YY, h:mm a');
         }

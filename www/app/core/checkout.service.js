@@ -22,10 +22,15 @@
 
         
         function _archived() {
-            return $resource(ApiEndpoint.url + 'Checkouts/Archived');
+//            return $resource(ApiEndpoint.url + 'Checkouts/Archived');
+            return {
+                query: function() {
+                    return $http.get('https://f5ekrwo1b6.execute-api.us-west-2.amazonaws.com/dev/checkouts/Archived'); 
+                }
+            };            
         }
         
-        function _checkout(checkout) {
+        function _checkout() {
             // return $resource(ApiEndpoint.url + 'Checkouts/:checkoutID', {
             //     checkoutID: '@checkoutID'
             // }, {
@@ -33,6 +38,20 @@
             //         method: 'PUT'
             //     }
             // });
+            return {
+                save: function(checkout) {
+                    return $http.post('https://f5ekrwo1b6.execute-api.us-west-2.amazonaws.com/dev/checkouts',checkout);
+                },
+                update: function(checkout) {
+                    return $http.put('https://f5ekrwo1b6.execute-api.us-west-2.amazonaws.com/dev/checkouts',checkout);
+                },
+                get: function(id) {
+                    return $http.get('https://f5ekrwo1b6.execute-api.us-west-2.amazonaws.com/dev/checkouts/',id);
+                },
+                query: function() {
+                    return $http.get('https://f5ekrwo1b6.execute-api.us-west-2.amazonaws.com/dev/checkouts?filter=93262,93263,93265,93266');
+                }
+            };
             return $http.post('https://f5ekrwo1b6.execute-api.us-west-2.amazonaws.com/dev/checkouts',checkout)
         }
 
@@ -48,7 +67,12 @@
         }
         
         function _getDailyCheckouts() {
-            return $resource(ApiEndpoint.url + 'Checkouts/GetDailyCheckouts');
+            //return $resource(ApiEndpoint.url + 'Checkouts/GetDailyCheckouts');
+			return {
+				query: function() {
+					return $http.get('https://f5ekrwo1b6.execute-api.us-west-2.amazonaws.com/dev/report/checkouts/daily');
+				}
+			}
         }
         
         /**
@@ -78,7 +102,7 @@
 
             // var saveCheckout = service.checkout().save(checkout);
             // saveCheckout.$promise.then(onOrderSuccess, IonicAlertSvc.error);
-            return service.checkout(checkout)
+            return service.checkout().save(checkout)
                 .then(onOrderSuccess)
                 .catch(IonicAlertSvc.error);
 
@@ -116,7 +140,12 @@
         }
         
         function _unarchived() {
-            return $resource(ApiEndpoint.url + 'Checkouts/Unarchived');
+            //return $resource(ApiEndpoint.url + 'Checkouts/Unarchived');
+            return {
+                query: function() {
+                    return $http.get('https://f5ekrwo1b6.execute-api.us-west-2.amazonaws.com/dev/checkouts/Unarchived'); 
+                }
+            };            
         }
     });
 })();
