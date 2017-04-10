@@ -21,7 +21,8 @@
             CheckoutSvc.archived().query().then(onGetTodaysCheckouts, IonicAlertSvc.error);
 
             function onGetTodaysCheckouts(response) {
-                vm.todaysCheckouts = response.data;
+				console.log('ARCHIVED: (' + response.data.count + ') checkouts found.');
+                vm.todaysCheckouts = response.data.checkouts;
             }
         }
 

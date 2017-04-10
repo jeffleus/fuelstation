@@ -72,15 +72,15 @@
 
         function onGetTodaysCheckouts(response) {
             LoadingSpinner.hide();
-            vm.todaysCheckouts = response.data;
+            vm.todaysCheckouts = response.data.checkouts;
         }
 
 
         function _openModal(checkout) {
             AccountSvc.clear();
             CheckoutSvc.currentCheckout = checkout;
-            OrderSvc.orderItems = OrderSvc.parseChoices(checkout.checkoutChoices);
-            AccountSvc.studentId = checkout.studentSport.schoolsidnumber;
+            OrderSvc.orderItems = OrderSvc.parseChoices(checkout.CheckoutChoices);
+            AccountSvc.studentId = checkout.Athlete.schoolid;
             //loadModal();
             $scope.$broadcast("openModal");
             $scope.modal.show();
