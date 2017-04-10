@@ -27,7 +27,7 @@
         }
 
         function _getMonthCounts() {
-            CheckoutSvc.getMonthCounts(vm.dateSelection).query().$promise.then(onGetMonthCounts, IonicAlertSvc.error);
+            CheckoutSvc.getMonthCounts(vm.dateSelection).query().then(onGetMonthCounts, IonicAlertSvc.error);
         }
 
         // Hidden logic for message that says "No records found for this time period"

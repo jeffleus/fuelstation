@@ -13,7 +13,7 @@
         init();
 
         function init() {
-            SnackLimits.snackLimits().query().$promise
+            SnackLimits.snackLimits().query()
                 .then(onGetSnackLimitsSuccess, IonicAlertSvc.error);
         }
 
