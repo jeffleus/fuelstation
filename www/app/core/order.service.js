@@ -26,7 +26,7 @@
             var choices = [];
             for (var i = 0; i < checkoutChoices.length; i++) {
                 var choice = {};
-                choice = checkoutChoices[i].choice;
+                choice = checkoutChoices[i].Choice;
                 
                 if (checkoutChoices[i].isSnack) {
                     choice.isSnack = true;
