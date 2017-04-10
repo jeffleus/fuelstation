@@ -79,7 +79,15 @@
         * Gets total orders for each snack by month
         */
         function _getMonthCounts(timePeriod){
-            return $resource(ApiEndpoint.url + 'Checkouts/GetMonthCounts/Month/' + timePeriod.month + '/Year/' + timePeriod.year);
+            //return $resource(ApiEndpoint.url + 'Checkouts/GetMonthCounts/Month/' + timePeriod.month + '/Year/' + timePeriod.year);
+            return {
+                query: function(){
+                    return $http.get('https://f5ekrwo1b6.execute-api.us-west-2.amazonaws.com/dev/report/checkouts/monthly')
+                        .then(function(result){
+                            return result.data;
+                        });
+                }
+            }
         }
 
         /**
