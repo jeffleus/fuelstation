@@ -60,9 +60,9 @@
             // return $resource(ApiEndpoint.url + 'Checkouts/History/:studentSportID', {
             //     studentSportID: '@studentSportID'
             // });
-            return $http.get('https://f5ekrwo1b6.execute-api.us-west-2.amazonaws.com/dev/checkouts/' + id)
+            return $http.get('https://f5ekrwo1b6.execute-api.us-west-2.amazonaws.com/dev/report/checkouts/history/' + id)
                 .then(function(result){
-                    return result.data.checkouts;
+                    return result.data;
                 });
         }
         
