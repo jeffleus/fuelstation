@@ -45,8 +45,11 @@
                 update: function(checkout) {
                     return $http.put('https://f5ekrwo1b6.execute-api.us-west-2.amazonaws.com/dev/checkouts',checkout);
                 },
+                delete: function(id) {
+                    return $http.delete('https://f5ekrwo1b6.execute-api.us-west-2.amazonaws.com/dev/checkouts/' + id);
+                },
                 get: function(id) {
-                    return $http.get('https://f5ekrwo1b6.execute-api.us-west-2.amazonaws.com/dev/checkouts/',id);
+                    return $http.get('https://f5ekrwo1b6.execute-api.us-west-2.amazonaws.com/dev/checkouts/' + id);
                 },
                 query: function() {
                     return $http.get('https://f5ekrwo1b6.execute-api.us-west-2.amazonaws.com/dev/checkouts?filter=93262,93263,93265,93266');
@@ -60,9 +63,10 @@
             // return $resource(ApiEndpoint.url + 'Checkouts/History/:studentSportID', {
             //     studentSportID: '@studentSportID'
             // });
-            return $http.get('https://f5ekrwo1b6.execute-api.us-west-2.amazonaws.com/dev/checkouts/' + id)
+			var url = 'https://f5ekrwo1b6.execute-api.us-west-2.amazonaws.com/dev/report/checkouts/history/';
+            return $http.get(url + id)
                 .then(function(result){
-                    return result.data.checkouts;
+                    return result.data;
                 });
         }
         
@@ -88,7 +92,7 @@
         function _fillCheckoutObject(order, studentSportID) {
             var checkout = {};
 
-            checkout.createDate = moment().format();
+            checkout.CreateDate = moment().format();
             checkout.StudentSportID = studentSportID;
             checkout.CheckoutChoices = order;
 

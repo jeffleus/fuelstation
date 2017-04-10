@@ -21,8 +21,9 @@
 
         $scope.$on("openModal", init);
         function init() {
+			ChoiceSvc.ini
             if (AccountSvc.studentId) {
-                AthleteSvc.getAthlete(AccountSvc.studentId).$promise
+                AthleteSvc.getAthlete(AccountSvc.studentId)
                     .then(AccountSvc.saveAthleteData)
                     .then(AccountSvc.getSnackLimits)
                     .then(getCheckoutHistory)
@@ -44,19 +45,21 @@
         }
 
         function getAllChoices() {
-            ChoiceSvc.getAllChoices().query(ChoiceSvc.initializeChoiceCategories, IonicAlertSvc.error);
+            return ChoiceSvc.getAllChoices()
+                .then(ChoiceSvc.initializeChoiceCategories)
+                .catch(IonicAlertSvc.error);
         }
 
         function getCheckoutHistory(id) {
-            return CheckoutSvc.getCheckoutHistory().get(id)
-                .$promise.then(function (response) {
+            return CheckoutSvc.getCheckoutHistory(id)
+                .then(function (response) {
                     return response;
                 }, IonicAlertSvc.error);
         }
 
         function initializeHiddenCategories(result) {
             // Pass true as second parameter so function knows that this is an update of an order, not a new order
-            AccountSvc.initializeHiddenCategories(result, true);
+            return AccountSvc.initializeHiddenCategories(result, true);
         }
 
         // Deletes the checkout then posts a new one
@@ -64,18 +67,16 @@
             if (OrderSvc.orderItems.length >= 1) {
                 LoadingSpinner.show();
 
-                CheckoutSvc.checkout().delete({
-                        checkoutID: CheckoutSvc.currentCheckout.checkoutID
-                    }).$promise
+                CheckoutSvc.checkout().delete(CheckoutSvc.currentCheckout.CheckoutID)
                     .then(processCheckout)
                     .catch(IonicAlertSvc.error);
             }
 
 
             function processCheckout() {
-                var checkout = CheckoutSvc.fillCheckoutObject(OrderSvc.orderItems, AccountSvc.athleteData[0].studentSportID);
+                var checkout = CheckoutSvc.fillCheckoutObject(OrderSvc.orderItems, AccountSvc.athleteData[0].AthleteID);
 
-                CheckoutSvc.checkout().save(checkout).$promise
+                CheckoutSvc.checkout().save(checkout)
                     .then(onOrderSuccess)
                     .then(vm.closeModal)
                     .catch(IonicAlertSvc.error);
