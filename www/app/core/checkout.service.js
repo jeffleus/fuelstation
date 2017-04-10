@@ -96,7 +96,7 @@
         function _fillCheckoutObject(order, studentSportID) {
             var checkout = {};
 
-            checkout.createDate = moment().format();
+            checkout.CreateDate = moment().format();
             checkout.StudentSportID = studentSportID;
             checkout.CheckoutChoices = order;
 
