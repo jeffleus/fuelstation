@@ -31,7 +31,7 @@ angular.module('app', [
     'ionic.utils'
     ])
 
-.run(function ($ionicPlatform) {
+.run(['$ionicPlatform', function ($ionicPlatform) {
     $ionicPlatform.ready(function () {
         // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
         // for form inputs)
@@ -45,9 +45,9 @@ angular.module('app', [
             StatusBar.styleDefault();
         }
     });
-})
+}])
 
-.config(function ($stateProvider, $urlRouterProvider, $ionicConfigProvider, $httpProvider) {
+.config(['$stateProvider', '$urlRouterProvider', '$ionicConfigProvider', '$httpProvider', function ($stateProvider, $urlRouterProvider, $ionicConfigProvider, $httpProvider) {
     $ionicConfigProvider.views.maxCache(0);
 
 
@@ -173,4 +173,4 @@ angular.module('app', [
     // if none of the above states are matched, use this as the fallback
     $urlRouterProvider.otherwise('/tab/studentID');
 
-});
+}]);

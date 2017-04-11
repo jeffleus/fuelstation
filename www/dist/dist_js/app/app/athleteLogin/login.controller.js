@@ -4,7 +4,7 @@
     angular
         .module('app.studentLogin', [])
 
-    .controller('StudentLoginCtrl', function (AccountSvc, OrderSvc, AthleteSvc, IonicAlertSvc, CheckoutSvc, ChoiceSvc, $state, LoadingSpinner, $ionicModal, $scope, $timeout, $localstorage) {
+    .controller('StudentLoginCtrl', ['AccountSvc', 'OrderSvc', 'AthleteSvc', 'IonicAlertSvc', 'CheckoutSvc', 'ChoiceSvc', '$state', 'LoadingSpinner', '$ionicModal', '$scope', '$timeout', '$localstorage', function (AccountSvc, OrderSvc, AthleteSvc, IonicAlertSvc, CheckoutSvc, ChoiceSvc, $state, LoadingSpinner, $ionicModal, $scope, $timeout, $localstorage) {
         var vm = this;
 
         vm.accountSvc = AccountSvc;
@@ -89,5 +89,5 @@
                 reload: true
             });
         }
-    });
+    }]);
 })();

@@ -4,7 +4,7 @@
     angular
         .module('app.loginMenuCtrl', [])
 
-    .controller('LoginMenuCtrl', function (IonicAlertSvc, $state, LoadingSpinner, $scope, $timeout, $ionicModal, AuthSvc) {
+    .controller('LoginMenuCtrl', ['IonicAlertSvc', '$state', 'LoadingSpinner', '$scope', '$timeout', '$ionicModal', 'AuthSvc', function (IonicAlertSvc, $state, LoadingSpinner, $scope, $timeout, $ionicModal, AuthSvc) {
         var vm = this;
 
         vm.password = { value:"fu3lst4tion!" };
@@ -116,5 +116,5 @@
                 $scope.fsModal.remove();
             });
         }
-    });
+    }]);
 })();
