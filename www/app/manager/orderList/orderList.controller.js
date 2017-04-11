@@ -72,7 +72,7 @@
 
         function onGetTodaysCheckouts(response) {
             LoadingSpinner.hide();
-            vm.todaysCheckouts = response.data;
+            vm.todaysCheckouts = response.data.checkouts;
         }
 
 

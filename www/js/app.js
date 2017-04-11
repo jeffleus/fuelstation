@@ -23,6 +23,7 @@ angular.module('app', [
     'app.studentChoices',
     'app.studentLogin',
     'app.todaysCheckouts',
+    'app.unauthenticated',
 
     'blocks.exception',
     'blocks.errorlog',
@@ -166,6 +167,12 @@ angular.module('app', [
             url: '/cart',
             templateUrl: 'app/cart/choices.html',
             controller: 'StudentChoicesCtrl as vm'
+
+        })
+        .state('unauthenticated', {
+            url: '/unauthenticated',
+            templateUrl: 'app/authentication/unauthenticated.html',
+            controller: 'UnauthenticatedCtrl as vm'
 
         });
 
