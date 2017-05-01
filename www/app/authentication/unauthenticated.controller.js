@@ -7,16 +7,15 @@
         .controller('UnauthenticatedCtrl', function (AuthSvc, $ionicModal, $scope, $state) {
             var vm = this;
 
-            vm.closeModal = _closeModal;
+            vm.closeFSModal = _closeModal;
             vm.loginData = { username: "fsdemo-manager", password: "FuelStation17!" };
+            vm.onLogIn = onLogIn;
             vm.onSubmitFS = _onSubmitFS;
 
             init();
 
             function init() {
                 console.log("UNAUTHORIZED");
-                loadFSModal();
-
             }
 
             function _closeModal() {
@@ -36,6 +35,11 @@
                 $scope.$on('$destroy', function () {
                     $scope.fsModal.remove();
                 });
+            }
+
+            function onLogIn(e){
+                e.preventDefault();
+                loadFSModal();
             }
 
             function _onSubmitFS() {
