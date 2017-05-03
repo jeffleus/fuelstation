@@ -1,0 +1,35 @@
+<ion-view view-title="Manage Sports">
+
+
+   <ion-content>
+
+      <ion-list can-swipe="true">
+         <ion-item>
+            <label for="type" class="item item-input item-select">
+               <span class="input-label">
+                  Select a sport
+               </span>
+               <select name="type" ng-model="vm.selectedSport" ng-change="vm.onSelectSport()" ng-options="type.SportCodeID as type.description for type in vm.sports" required>
+               </select>
+            </label>
+         </ion-item>
+         <ion-item ng-show="vm.selectedSport && vm.athletes">
+            <button class="button button-icon icon ion-ios-plus force-balanced align-left" ng-click="vm.onAddAthletes()"></button>
+         </ion-item>
+
+         <ion-item ng-show="vm.selectedSport && vm.athletes" ng-repeat="athlete in vm.athletes | orderBy: 'lastName' ">
+            {{athlete.lastName}}, {{athlete.firstName}}  - {{athlete.schoolid}}
+            <ion-option-button class="button-energized"
+            ng-click="vm.onUpdateAthlete(athlete)">
+            Edit
+         </ion-option-button>
+         <ion-option-button class="button-assertive"
+         ng-click="vm.onDeleteAthlete(athlete)">
+         Delete
+      </ion-option-button>
+   </ion-item>
+</ion-list>
+
+
+</ion-content>
+</ion-view>

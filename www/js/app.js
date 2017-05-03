@@ -18,10 +18,12 @@ angular.module('app', [
     'app.loginMenuCtrl',
     'app.monthlyCounts',
     'app.orderListCtrl',
+    'app.rosterManagerCtrl',
     'app.snackChoicesCtrl',
     'app.snackLimitCtrl',
     'app.studentChoices',
     'app.studentLogin',
+    'app.teamManagerCtrl',
     'app.todaysCheckouts',
     'app.unauthenticated',
 
@@ -163,6 +165,32 @@ angular.module('app', [
             }
 
         })
+        .state('tab.manageRoster', {
+            url: '/manageRoster',
+            views: {
+                'appContent': {
+                    templateUrl: 'app/manager/team/roster-manager.html',
+                    controller: 'RosterManagerCtrl as vm'
+                },
+                'sideMenu': {
+                    templateUrl: 'app/manager/menu.html'
+                }
+            }
+
+        })
+        .state('tab.manageSports', {
+           url: '/manageSports',
+           views: {
+               'appContent': {
+                   templateUrl: 'app/manager/team/team-manager.html',
+                   controller: 'TeamManagerCtrl as vm'
+               },
+               'sideMenu': {
+                   templateUrl: 'app/manager/menu.html'
+               }
+           }
+
+      })
         .state('cart', {
             url: '/cart',
             templateUrl: 'app/cart/choices.html',

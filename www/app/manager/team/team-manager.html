@@ -1,0 +1,26 @@
+<ion-view view-title="Manage Sports">
+    <div class="bar bar-subheader bar-stable text-center vcenter">
+        <button class="button button-icon icon ion-ios-plus force-balanced align-left" ng-click="vm.onAddSport()"></button>
+        <!-- <div class="title">
+            Sort by: <span ng-class="{bold: vm.predicate === 'name'}" ng-click="vm.predicate = 'name'">Name</span> | <span ng-class="{bold: vm.predicate === 'type'}" ng-click="vm.predicate = 'type'">Type</span>
+        </div> -->
+    </div>
+    <ion-content class="has-subheader">
+
+        <ion-list show-delete="vm.data.showDelete" can-swipe="true">
+            <ion-item ng-repeat="sport in vm.sports">
+                {{sport.description}}
+                <ion-option-button class="button-energized"
+                                   ng-click="vm.onUpdateSport(sport)">
+                    Edit
+                </ion-option-button>
+                <ion-option-button class="button-assertive"
+                                   ng-click="vm.onDeleteSport(sport)">
+                    Delete
+                </ion-option-button>
+            </ion-item>
+        </ion-list>
+
+
+    </ion-content>
+</ion-view>
