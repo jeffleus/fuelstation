@@ -12,11 +12,11 @@
     <!-- ionic/angularjs js -->
     <script src="lib/ionic/js/ionic.bundle.js"></script>
     <script src="lib/underscore-min.js"></script>
-	
+
     <script src="lib/aws/aws-cognito-sdk.min.js"></script>
     <script src="lib/aws/amazon-cognito-identity.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-google-chart/0.1.0/ng-google-chart.min.js" type="text/javascript"></script>
-    
+
     <!-- cordova script (this will be a 404 during development) -->
     <script src="cordova.js"></script>
 
@@ -27,16 +27,18 @@
 <!-- build:js dist_js/app.js -->
     <script src="js/templates.js"></script>
     <script src="js/app.js"></script>
-    
+
     <script src="app/core/http-interceptor.js"></script>
     <script src="app/core/exception-handler.provider.js"></script>
     <script src="app/core/localstorage.service.js"></script>
     <script src="app/core/errorlog.service.js"></script>
+    <script src="app/authentication/authentication-check.js"></script>
 
+    <script src="app/authentication/unauthenticated.controller.js"></script>
     <script src="app/cart/choices.controller.js"></script>
     <script src="app/athleteLogin/login.controller.js"></script>
     <script src="app/athleteLogin/menu.controller.js"></script>
-    
+
     <!-- Manager controllers -->
     <script src="app/manager/manager.controller.js"></script>
     <script src="app/manager/orderList/orderList.controller.js"></script>
@@ -47,7 +49,9 @@
     <script src="app/manager/reports/todaysCheckouts.controller.js"></script>
     <script src="app/manager/errorReport/errors.controller.js"></script>
     <script src="app/manager/reports/monthlyCounts.controller.js"></script>
-    
+    <script src="app/manager/team/roster-manager.controller.js"></script>
+    <script src="app/manager/team/team-manager.controller.js"></script>
+
     <!-- Services -->
     <script src="app/core/core.module.js"></script>
     <script src="app/core/constants.js"></script>
@@ -61,6 +65,7 @@
     <script src="app/core/ionicAlert.service.js"></script>
     <script src="app/core/loadingSpinner.service.js"></script>
     <script src="app/core/csv.service.js"></script>
+    <script src="app/core/sport.service.js"></script>
 <!-- endbuild -->
 
 </head>

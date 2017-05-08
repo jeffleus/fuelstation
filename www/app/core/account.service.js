@@ -60,7 +60,7 @@
                         self.daySnacksLimit = data.daySnackLimit;
                         self.monthSnacksLimit = data.monthSnackLimit;
 
-                        return $q.when(athlete[0].schoolid);
+                        return $q.when(athlete[0].AthleteID);
                     });
 
                 // return SnackLimits.athleteSnackLimits().get(athlete[0]).$promise.then(function (data) {
