@@ -18,15 +18,21 @@
         }
 
         function onGetSnackLimitsSuccess(data) {
-            vm.sportsLimits = data;
+            vm.sportsLimits = data.snacklimit;
         }
 
         function _onSubmitSnackLimits(sportLimit) {
             LoadingSpinner.show();
 
-            sport = sportLimit.sport.sportDescription;
+            sport = sportLimit.Sport.description;
+            
+            var updateJson = {
+                  "SnackLimitID": sportLimit.SnackLimitID,
+                  "daySnackLimit": sportLimit.daySnackLimit,
+                  "monthSnackLimit": sportLimit.monthSnackLimit
+            };
 
-            SnackLimits.snackLimits().update(sportLimit).$promise
+            SnackLimits.snackLimits().update(sportLimit)
                         .then(onUpdateSnackLimitSuccess, IonicAlertSvc.error);
         }
 
