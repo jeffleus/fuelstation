@@ -44,6 +44,7 @@
             focusFirstInput: true
          }).then(function (modal) {
             vm.modal = modal;
+             console.log('modal was loaded...');
          });
 
          $scope.$on('$destroy', function () {
@@ -124,6 +125,8 @@
       }
 
       function openModal(){
+          console.log('openModal was clicked...');
+          console.info(vm.modal);
          vm.modal.show();
       }
 
