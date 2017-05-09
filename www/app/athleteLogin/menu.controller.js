@@ -98,6 +98,7 @@
 		function _openFSLogin() {
             if (AuthSvc.isAuthenticated()) {
                 AuthSvc.logout();
+                $state.go('unauthenticated');
             } else {
                 $scope.fsModal.show();
             }
