@@ -1,5 +1,5 @@
 {
-  "name": "fuelStation2",
+  "name": "FuelStationAWS",
   "app_id": "",
   "gulpStartupTasks": [
     "sass",
@@ -7,5 +7,6 @@
     "ng_annotate",
     "useref",
     "watch"
-  ]
+  ],
+  "type": "ionic1"
 }
