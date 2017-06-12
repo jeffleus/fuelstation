@@ -36,7 +36,7 @@
                         <button class="button button-calm" ng-repeat="c in vm.choiceSvc.snacks" ng-click="vm.orderItem(c, true)" ng-show="c.isActive">
                             {{c.name}}
                         </button>
-                        <button class="button button-balanced" ng-repeat="c in vm.choiceSvc.pre" ng-if="vm.accountSvc.shouldHidePre && c.isActive" ng-click="vm.orderItem(c, true)">
+                        <button class="button button-balanced" ng-repeat="c in vm.choiceSvc.pre | filter: {isSnack:true}" ng-if="vm.accountSvc.shouldHidePre && c.isActive" ng-click="vm.orderItem(c, true)">
                             {{c.name}}
                         </button>
                         <button class="button button-royal" ng-repeat="c in vm.choiceSvc.post" ng-if="vm.accountSvc.shouldHidePost && c.isActive" ng-click="vm.orderItem(c, true)">
