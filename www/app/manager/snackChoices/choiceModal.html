@@ -31,7 +31,51 @@
                     <select name="type" ng-model="vm.selectedSnack.isActive" ng-options="type.value as type.label for type in vm.activeOptions" required>
                     </select>
                 </label>
-                <div class="padding">
+                <label for="type" class="item item-input item-toggle">
+                    <span class="input-label">
+                                Pre-Workout?
+                            </span>
+					<label class="toggle">
+					   <input type="checkbox" ng-model="vm.selectedSnack.isPre">
+					   <div class="track">
+						 <div class="handle"></div>
+					   </div>
+					</label>
+                </label>
+                <label for="type" class="item item-input item-toggle">
+                    <span class="input-label">
+                                Post-Workout?
+                            </span>
+					<label class="toggle">
+					   <input type="checkbox" ng-model="vm.selectedSnack.isPost">
+					   <div class="track">
+						 <div class="handle"></div>
+					   </div>
+					</label>
+                </label>
+                <label for="type" class="item item-input item-toggle">
+                    <span class="input-label">
+                                Hydration?
+                            </span>
+					<label class="toggle">
+					   <input type="checkbox" ng-model="vm.selectedSnack.isHydration">
+					   <div class="track">
+						 <div class="handle"></div>
+					   </div>
+					</label>
+                </label>
+                <label for="type" class="item item-input item-toggle">
+                    <span class="input-label">
+                                Snack?
+                            </span>
+					<label class="toggle">
+					   <input type="checkbox" ng-model="vm.selectedSnack.isSnack">
+					   <div class="track">
+						 <div class="handle"></div>
+					   </div>
+					</label>
+                </label>
+				<div class="padding">
                     <button ng-click="vm.closeModal()" class="button button-stable">Cancel</button>
                     <button ng-click="vm.saveChoice()" class="button button-balanced">Save</button>
                 </div>
