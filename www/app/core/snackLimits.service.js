@@ -10,9 +10,9 @@
         };
 
         //mocked service url
-        var url = 'https://n6jjrfl2j7.execute-api.us-west-2.amazonaws.com/dev/snacklimits/';
+        //var url = 'https://n6jjrfl2j7.execute-api.us-west-2.amazonaws.com/dev/snacklimits/';
         //live service url
-        //url = 'https://fliw63osxc.execute-api.us-west-2.amazonaws.com/dev/snacklimits/';
+        var url = 'https://fliw63osxc.execute-api.us-west-2.amazonaws.com/dev/snacklimits/';
         
         return service;
         
@@ -22,7 +22,7 @@
                 get: function(schoolSidNumber){
                     return $http.get(url + schoolSidNumber)
                         .then(function(result){
-                            return result.data;
+                            return result.data.snacklimit[0];
                         });
                 }
             };
