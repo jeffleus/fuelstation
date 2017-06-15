@@ -22,7 +22,7 @@
                         <button class="button button-royal" ng-repeat="c in vm.choiceSvc.post" ng-click="vm.orderItem(c)" ng-show="c.isActive">{{c.name}}</button>
                     </p>
                 </div>
-                <div ng-if="!vm.accountSvc.shouldHideHydration" class="category-fade">
+                <div ng-if="!vm.accountSvc.shouldHideHydration" ng-hide="true" class="category-fade">
                     <h4>Hydration Options:</h4>
                     <hr />
                     <p>
@@ -39,10 +39,10 @@
                         <button class="button button-balanced" ng-repeat="c in vm.choiceSvc.pre | filter: {isSnack:true}" ng-if="vm.accountSvc.shouldHidePre && c.isActive" ng-click="vm.orderItem(c, true)">
                             {{c.name}}
                         </button>
-                        <button class="button button-royal" ng-repeat="c in vm.choiceSvc.post" ng-if="vm.accountSvc.shouldHidePost && c.isActive" ng-click="vm.orderItem(c, true)">
+                        <button class="button button-royal" ng-repeat="c in vm.choiceSvc.post | filter: {isSnack:true}" ng-if="vm.accountSvc.shouldHidePost && c.isActive" ng-click="vm.orderItem(c, true)">
                             {{c.name}}
                         </button>
-                        <button class="button button-energized" ng-repeat="c in vm.choiceSvc.hydration" ng-if="vm.accountSvc.shouldHideHydration && c.isActive" ng-click="vm.orderItem(c, true)">
+                        <button class="button button-energized" ng-repeat="c in vm.choiceSvc.hydration | filter: {isSnack:true}" ng-if="vm.accountSvc.shouldHideHydration && c.isActive" ng-click="vm.orderItem(c, true)">
                             {{c.name}}
                         </button>
                     </p>
