@@ -4,7 +4,7 @@
     angular
         .module('app.editOrderCtrl', [])
 
-    .controller('EditOrderCtrl', function (AccountSvc, OrderSvc, AthleteSvc, IonicAlertSvc, CheckoutSvc, ChoiceSvc, LoadingSpinner, $scope) {
+    .controller('EditOrderCtrl', function (AccountSvc, OrderSvc, AthleteSvc, IonicAlertSvc, CheckoutSvc, ChoiceSvc, LoadingSpinner, $scope, $rootScope) {
         var vm = this;
 
         vm.accountSvc = AccountSvc;
@@ -42,6 +42,7 @@
         function _closeModal() {
             //OrderSvc.clear();
             $scope.modal.hide();
+			$rootScope.$broadcast("closeOrderModal");
         }
 
         function getAllChoices() {
