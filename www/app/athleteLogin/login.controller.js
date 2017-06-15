@@ -32,15 +32,15 @@
 
         function _numButton(num) {
             console.log('yo! a number was pressed...');
-            // Student ID must be 9 characters long. 
-            if (AccountSvc.studentId.length < 9) {
+            // Student ID must be 8 characters long. 
+            if (AccountSvc.studentId.length < 8) {
                 AccountSvc.studentId = AccountSvc.studentId + num;
                 checkStudentId();
             }
         }
 
         function checkStudentId() {
-            if (AccountSvc.studentId.length === 9) {
+            if (AccountSvc.studentId.length === 8) {
                 LoadingSpinner.show();
                 getAthleteData();
             }
