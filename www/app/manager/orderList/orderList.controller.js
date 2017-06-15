@@ -18,7 +18,12 @@
         vm.setArchive = _setArchive;
 
         init();
-
+		$scope.$on('closeOrderModal', function() {
+			console.log('closeOrderModal');
+			LoadingSpinner.show();
+			refresh();
+		});
+		
         function init() {
             LoadingSpinner.show();
 
@@ -30,11 +35,17 @@
             }, 800);
 
             polling = $interval(function () {
-                CheckoutSvc.unarchived().query().then(onGetTodaysCheckouts);
+                refresh();
             }, 20000);
 
             loadModal();
         }
+					   
+		function refresh() {
+			console.log('refreshing the order list...');
+			CheckoutSvc.unarchived().query()
+				.then(onGetTodaysCheckouts);
+		}
 
         // Cancel polling when controller is destroyed (i.e. when route changes)
         $scope.$on('$destroy', function () {
@@ -63,7 +74,8 @@
             if (!item.isArchived) {
                 // Return orders that are not archived and that contain name in filter
                 if (vm.name.value && vm.name.value.length > 0) {
-                    return !item.isArchived && (item.studentSport.fullName.toLowerCase().indexOf(vm.name.value.toLowerCase()) > -1);
+					var fullName = item.Athlete.lastName + ', ' + item.Athlete.firstName
+                    return !item.isArchived && (fullName.toLowerCase().indexOf(vm.name.value.toLowerCase()) > -1);
                 }
                 // Return all orders that have not been archived
                 return !item.isArchived;
@@ -91,11 +103,12 @@
 
             CheckoutSvc.checkout().update(currentCheckout)
                 .then(removeCheckoutFromList)
-                .then(init)
+                //.then(init)
                 .catch(IonicAlertSvc.error);
 
             function removeCheckoutFromList() {
                 vm.todaysCheckouts.splice(index, 1);
+//				$scope.$apply();
             }
         }
 

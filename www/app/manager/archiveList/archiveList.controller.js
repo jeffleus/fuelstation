@@ -34,7 +34,8 @@
             if (item.isArchived) {
                 // Return archived items that contain the name typed in the filter
                 if (vm.name.value && vm.name.value.length > 0) {
-                    return item.isArchived && (item.studentSport.fullName.toLowerCase().indexOf(vm.name.value.toLowerCase()) > -1);
+					var fullName = item.Athlete.lastName + ', ' + item.Athlete.firstName
+                    return item.isArchived && (fullName.toLowerCase().indexOf(vm.name.value.toLowerCase()) > -1);
                 }
                 // Return all archived items
                 return item.isArchived;
@@ -50,6 +51,7 @@
 
             function removeCheckoutFromList() {
                 vm.todaysCheckouts.splice(index, 1);
+//				$scope.$apply();
             }
         }
     });
