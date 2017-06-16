@@ -23,6 +23,9 @@
         vm.authNewUser = function(loginData) {
             return AuthSvc.authNewUser(loginData);
         };
+        vm.updateUser = function(newTeam, newType) {
+            AuthSvc.updateUser(newType, newTeam);
+        }
 
         loadModal();
 		loadFSModal();
@@ -69,7 +72,7 @@
 
 			AuthSvc.login(vm.loginData).then(function(token) {
 				console.info("idToken", token);
-                $state.go('tab.orderList', null, {
+                $state.go('tab.studentID', null, {
                     reload: true
                 });
 			}).catch(function(err) {
@@ -78,7 +81,14 @@
         }
 
         function _openModal() {
-            $scope.modal.show();
+            if (AuthSvc.userType == "MANAGER") {
+                $state.go('tab.orderList', null, {
+                    reload: true
+                });
+            } else {
+                alert('You are not logged in as a MANAGER currently.');
+            }
+            //$scope.modal.show();
         }
 
         function loadModal() {
