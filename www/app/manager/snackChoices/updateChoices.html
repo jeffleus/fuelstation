@@ -8,32 +8,55 @@
     <ion-content class="has-subheader">
 
         <ion-list show-delete="vm.data.showDelete" can-swipe="true">
-  <div class="item item-body table-row" ng-repeat="choice in vm.allChoices | orderBy:vm.predicate">
-    <div class="row">
-      <div class="col col-50">
-        {{choice.name}}
-      </div>
-      <div class="col col-10">
-        {{choice.isActive}}
-      </div>
-      <div class="col col-10">
-	  	<i class="icon ion-close-circled assertive" ng-show="!choice.isPre"></i>
-	  	<i class="icon ion-checkmark-circled balanced" ng-show="choice.isPre"></i>
-      </div>
-      <div class="col col-10">
-	  	<i class="icon ion-close-circled assertive" ng-show="!choice.isPost"></i>
-	  	<i class="icon ion-checkmark-circled balanced" ng-show="choice.isPost"></i>
-      </div>
-      <div class="col col-10">
-	  	<i class="icon ion-close-circled assertive" ng-show="!choice.isHydration"></i>
-	  	<i class="icon ion-checkmark-circled balanced" ng-show="choice.isHydration"></i>
-      </div>
-      <div class="col col-10">
-	  	<i class="icon ion-close-circled assertive" ng-show="!choice.isSnack"></i>
-	  	<i class="icon ion-checkmark-circled balanced" ng-show="choice.isSnack"></i>
-      </div>
-    </div>
-  </div>
+		  <div class="item item-body item-divider table-row positive">
+			<div class="row">
+			  <div class="col col-50">
+				<b>Item Name</b>
+			  </div>
+			  <div class="col col-10 col-center">
+				<b>Active</b>
+			  </div>
+			  <div class="col col-10 col-center">
+				<b>Pre</b>
+			  </div>
+			  <div class="col col-10 col-center">
+				<b>Post</b>
+			  </div>
+			  <div class="col col-10 col-center">
+				<b>Hydration</b>
+			  </div>
+			  <div class="col col-10 col-center">
+				<b>Snack</b>
+			  </div>
+			</div>
+		  </div>
+			
+		  <div class="item item-body table-row" ng-repeat="choice in vm.allChoices | orderBy:vm.predicate">
+			<div class="row">
+			  <div class="col col-50">
+				{{choice.name}}
+			  </div>
+			  <div class="col col-10 col-center">
+				{{choice.isActive}}
+			  </div>
+			  <div class="col col-10 col-center">
+				<i class="icon ion-close-circled assertive" ng-show="!choice.isPre"></i>
+				<i class="icon ion-checkmark-circled balanced" ng-show="choice.isPre"></i>
+			  </div>
+			  <div class="col col-10 col-center">
+				<i class="icon ion-close-circled assertive" ng-show="!choice.isPost"></i>
+				<i class="icon ion-checkmark-circled balanced" ng-show="choice.isPost"></i>
+			  </div>
+			  <div class="col col-10 col-center">
+				<i class="icon ion-close-circled assertive" ng-show="!choice.isHydration"></i>
+				<i class="icon ion-checkmark-circled balanced" ng-show="choice.isHydration"></i>
+			  </div>
+			  <div class="col col-10 col-center">
+				<i class="icon ion-close-circled assertive" ng-show="!choice.isSnack"></i>
+				<i class="icon ion-checkmark-circled balanced" ng-show="choice.isSnack"></i>
+			  </div>
+			</div>
+		  </div>
 <!--
             <ion-item ng-repeat="choice in vm.allChoices | orderBy:vm.predicate">
                 {{choice.name}} <span ng-show="!choice.isActive" class="text-gray"> &ndash; <em><i class="icon ion-close-circled"></i> Not Available</em></span>
@@ -49,44 +72,6 @@
             </ion-item>
 -->
         </ion-list>
-		
-		<ion-list>
-  <div class="item item-body table-row" ng-repeat="order in orders">
-    <div class="row">
-      <div class="col col-20">
-        {{order.OrderDate }}
-      </div>
-      <div class="col col-50">
-        <a ui-sref="order">
-          {{order.Supplier }}
-        </a>
-      </div>
-      <div class="col col-10">
-        ###</div>
-      <div class="col col-20 col-center">
-        $#,###.##</div>
-    </div>
-  </div>
-  <div class="item item-body item-divider table-row positive">
-    <div class="row">
-      <div class="col col-20">
-        <b>Date</b>
-      </div>
-      <div class="col col-50">
-        <b>Vendor</b>
-      </div>
-      <div class="col col-10">
-        <b>Status
-        </b>
-      </div>
-      <div class="col col-20 col-center">
-        <b>Amount
-        </b>
-      </div>
-    </div>
-  </div>
-</ion-list>
-
 
     </ion-content>
 </ion-view>
