@@ -1,3 +1,15 @@
+/***********************/
+/* Choice Grid Classes */
+/***********************/
+.col-center {
+    text-align:center;
+}
+
+.table-row {
+    padding: 2px !important;
+}
+/***********************/
+
 button {
     margin: 2px !important;
 }
