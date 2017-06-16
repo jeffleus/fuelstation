@@ -71,6 +71,8 @@
             LoadingSpinner.show();
 
             // TODO: Delete sport
+			 SportSvc.deleteSport(sport.SportCodeID)
+				 .then(onDeleteSuccess, IonicAlertSvc.error);
 
             function onDeleteSuccess() {
                LoadingSpinner.hide();
@@ -80,8 +82,8 @@
       }
 
       function onSaveSport(){
-         // TODO
-         //LoadingSpinner.show();
+         //TODO
+         LoadingSpinner.show();
 
          // If there is a choiceID, it is an update. Otherwise, save a new choice.
          // if (vm.isUpdate) {
@@ -91,7 +93,9 @@
          //     ChoiceSvc.saveChoice(vm.selectedSnack)
          //         .then(onSuccess, IonicAlertSvc.error);
          // }
-
+		  
+		  SportSvc.saveSport(vm.selectedSport)
+			  .then(onSuccess, IonicAlertSvc.error);
 
          function onSuccess() {
             LoadingSpinner.hide();
