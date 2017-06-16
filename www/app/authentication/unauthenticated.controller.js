@@ -51,7 +51,7 @@
 
                 AuthSvc.login(vm.loginData).then(function (token) {
                     console.info("idToken", token);
-                    $state.go('tab.orderList', null, {
+                    $state.go('tab.studentID', null, {
                         reload: true
                     });
                 }).catch(function (err) {
