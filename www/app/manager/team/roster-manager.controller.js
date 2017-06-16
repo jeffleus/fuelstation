@@ -79,6 +79,8 @@
             LoadingSpinner.show();
 
             // TODO: Delete ath
+			AthleteSvc.deleteAthlete(athlete.schoolid)
+			 	.then(onDeleteSuccess, IonicAlertSvc);
 
             function onDeleteSuccess() {
                LoadingSpinner.hide();
@@ -93,7 +95,7 @@
 
       function onSaveAthlete(){
          // TODO
-         //LoadingSpinner.show();
+         LoadingSpinner.show();
 
          // If there is a choiceID, it is an update. Otherwise, save a new choice.
          // if (vm.isUpdate) {
@@ -103,11 +105,15 @@
          //     ChoiceSvc.saveChoice(vm.selectedSnack)
          //         .then(onSuccess, IonicAlertSvc.error);
          // }
+		  
+		  vm.selectedAthlete.sportCode = vm.selectedSport;
+		  AthleteSvc.saveAthlete(vm.selectedAthlete)
+		  	.then(onSuccess, IonicAlertSvc.error);
 
 
          function onSuccess() {
             LoadingSpinner.hide();
-            getAthletes();
+            getAthletes(vm.selectedSport);
             onCloseModal();
             vm.selectedAthlete = {};
             vm.athleteForm.$setPristine();

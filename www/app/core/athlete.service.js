@@ -8,7 +8,9 @@
         var service = {
             getAthlete: _getAthlete,
             getAthletesBySport: _getAthletesBySport,
-            athleteApi: _athleteApi
+            athleteApi: _athleteApi,
+			saveAthlete: _saveAthlete,
+			deleteAthlete: _deleteAthlete
         };
 
         return service;
@@ -35,5 +37,21 @@
                    return result.data.athletes;
                });
         }
+		
+		function _saveAthlete(athlete) {
+			return $http.post(url, athlete)
+				.then(function(result) {
+					console.log('athlete saved');
+					return result;
+				});
+		}
+		
+		function _deleteAthlete(id) {
+			return $http.delete(url + id)
+				.then(function(result) {
+					console.log('athlete deleted');
+					return result;
+				});
+		}
     });
 })();
