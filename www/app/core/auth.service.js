@@ -13,7 +13,11 @@
 		self.refreshTokens = _refreshTokens;
 		self.changePassword = _changePassword;
         self.authNewUser = _authNewUser;
+        self.updateUser = _updateUser;
 		self.token = null;
+        
+        self.userTeam = 'NONE';
+        self.userType = 'NONE';
 
 //		self.poolData = { 
 //			UserPoolId : "us-west-2_HqCU8elu4",
@@ -49,6 +53,13 @@
 						console.log('idToken + ' + new Date(result.getIdToken().getExpiration() * 1000));
 						self.token = result.idToken.jwtToken;
                         
+                        var base64Url = self.token.split('.')[1];
+                        var base64 = base64Url.replace('-', '+').replace('_', '/');
+                        var props = JSON.parse(window.atob(base64));
+                        self.userTeam = props['custom:team'];
+                        self.userType = props['custom:userType'];
+                        console.log(self.userProps);
+                        
 				// Add the User's Id Token to the Cognito credentials login map.
                 AWSCognito.config.credentials = new AWSCognito.CognitoIdentityCredentials({
                     IdentityPoolId: 'us-west-2:28695927-b308-4073-acd6-fedc4e1cd40b',
@@ -67,7 +78,7 @@
 				});            
 			});
 		}
-		
+        		
 		function _changePassword(oldPassword, newPassword) {
 			var userPool = new AWSCognito.CognitoIdentityServiceProvider.CognitoUserPool(self.poolData);
 			var cognitoUser = userPool.getCurrentUser();
@@ -166,6 +177,45 @@
 				} else { return resolve(null); }
 			});
 		}
+        
+        function _updateUser(newUserType, newUserTeam) {
+			var userPool = new AWSCognito.CognitoIdentityServiceProvider.CognitoUserPool(self.poolData);
+			var cognitoUser = userPool.getCurrentUser();
+            cognitoUser.getSession(function(err, session) {
+                if (err) {
+                    console.error('Error encountered during getSession.', err);
+                    reject(err);
+                } else {
+                    var attributeList = [];
+                    var attributeTeam = new AWSCognito.CognitoIdentityServiceProvider.CognitoUserAttribute({
+                        Name : 'custom:team',
+                        Value : newUserTeam
+                    });
+                    attributeList.push(attributeTeam);
+                    var attributeType = new AWSCognito.CognitoIdentityServiceProvider.CognitoUserAttribute({
+                        Name : 'custom:userType',
+                        Value : newUserType
+                    });
+                    attributeList.push(attributeType);
+                    cognitoUser.updateAttributes(attributeList, function(err, result) {
+                        if (err) {
+                            alert(err);
+                            return;
+                        }
+                        console.log('call result: ' + result);
+                    });            
+//                    cognitoUser.getUserAttributes(function(err, result) {
+//                        if (err) {
+//                            alert(err);
+//                            return;
+//                        }
+//                        for (var i = 0; i < result.length; i++) {
+//                            console.log('attribute ' + result[i].getName() + ' has value ' + result[i].getValue());
+//                        }
+//                    });                    
+                }
+            });
+        }
         
         function _authNewUser(loginData) {
 			var authenticationData = {
