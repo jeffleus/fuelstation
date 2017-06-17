@@ -14,7 +14,7 @@
 				<b>Item Name</b>
 			  </div>
 			  <div class="col col-10 col-center">
-				<b>Active</b>
+				<b>Free</b>
 			  </div>
 			  <div class="col col-10 col-center">
 				<b>Pre</b>
@@ -30,14 +30,15 @@
 			  </div>
 			</div>
 		  </div>
-			
-		  <div class="item item-body table-row" ng-repeat="choice in vm.allChoices | orderBy:vm.predicate">
+          <ion-item class="item item-body table-row" ng-repeat="choice in vm.allChoices | orderBy:vm.predicate">
+<!--		  <div class="item item-body table-row" ng-repeat="choice in vm.allChoices | orderBy:vm.predicate">-->
 			<div class="row">
 			  <div class="col col-50">
-				{{choice.name}}
+				{{choice.name}}<span ng-show="!choice.isActive" class="text-gray"> &ndash; <em><i class="icon ion-close-circled"></i> Not Available</em></span>
 			  </div>
 			  <div class="col col-10 col-center">
-				{{choice.isActive}}
+				<i class="icon ion-close-circled assertive" ng-show="!choice.isFree"></i>
+				<i class="icon ion-checkmark-circled balanced" ng-show="choice.isFree"></i>
 			  </div>
 			  <div class="col col-10 col-center">
 				<i class="icon ion-close-circled assertive" ng-show="!choice.isPre"></i>
@@ -55,8 +56,15 @@
 				<i class="icon ion-close-circled assertive" ng-show="!choice.isSnack"></i>
 				<i class="icon ion-checkmark-circled balanced" ng-show="choice.isSnack"></i>
 			  </div>
+                <ion-option-button class="button-energized"
+                                   ng-click="vm.editChoice(choice)">
+                    Edit</ion-option-button>
+                <ion-option-button class="button-assertive"
+                                   ng-click="vm.deleteChoice(choice)">
+                    Delete</ion-option-button>
 			</div>
-		  </div>
+<!--		  </div>-->
+            </ion-item>
 <!--
             <ion-item ng-repeat="choice in vm.allChoices | orderBy:vm.predicate">
                 {{choice.name}} <span ng-show="!choice.isActive" class="text-gray"> &ndash; <em><i class="icon ion-close-circled"></i> Not Available</em></span>

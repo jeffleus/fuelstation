@@ -50,8 +50,8 @@
                 LoadingSpinner.show();
 
                 ChoiceSvc.choice().delete({
-                    id: choice.choiceID
-                }, onDeleteSuccess, IonicAlertSvc.error);
+                    id: choice.ChoiceID
+                }).then(onDeleteSuccess, IonicAlertSvc.error);
 
                 function onDeleteSuccess() {
                     LoadingSpinner.hide();

@@ -24,12 +24,16 @@
 
                     </select>
                 </label>
-                <label for="type" class="item item-input item-select">
+                <label for="type" class="item item-input item-toggle">
                     <span class="input-label">
                                 Available
                             </span>
-                    <select name="type" ng-model="vm.selectedSnack.isActive" ng-options="type.value as type.label for type in vm.activeOptions" required>
-                    </select>
+					<label class="toggle">
+					   <input type="checkbox" ng-model="vm.selectedSnack.isActive">
+					   <div class="track">
+						 <div class="handle"></div>
+					   </div>
+					</label>
                 </label>
                 <label for="type" class="item item-input item-toggle">
                     <span class="input-label">
@@ -70,6 +74,17 @@
                             </span>
 					<label class="toggle">
 					   <input type="checkbox" ng-model="vm.selectedSnack.isSnack">
+					   <div class="track">
+						 <div class="handle"></div>
+					   </div>
+					</label>
+                </label>
+                <label for="type" class="item item-input item-toggle">
+                    <span class="input-label">
+                                Free?
+                            </span>
+					<label class="toggle">
+					   <input type="checkbox" ng-model="vm.selectedSnack.isFree">
 					   <div class="track">
 						 <div class="handle"></div>
 					   </div>
