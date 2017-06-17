@@ -81,14 +81,16 @@
         }
 
         function _openModal() {
-            if (AuthSvc.userType == "MANAGER") {
-                $state.go('tab.orderList', null, {
-                    reload: true
-                });
-            } else {
-                alert('You are not logged in as a MANAGER currently.');
-            }
-            //$scope.modal.show();
+            AuthSvc.getUserType().then(function(userType) {
+                if (userType == "MANAGER") {
+                    $state.go('tab.orderList', null, {
+                        reload: true
+                    });
+                } else {
+                    alert('You are not logged in as a MANAGER currently.');
+                }
+                //$scope.modal.show();                
+            });            
         }
 
         function loadModal() {

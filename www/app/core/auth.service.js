@@ -9,6 +9,7 @@
 		self.login = _login;
 		self.logout = _logout;
 		self.getUser = _getUser;
+		self.getUserType = _getUserType;
 		self.getToken = _getToken;
 		self.refreshTokens = _refreshTokens;
 		self.changePassword = _changePassword;
@@ -129,7 +130,7 @@
 				else {
 					return _getUser().then(function(token) {
 						self.token = token;
-						resolve(token)
+						resolve(token);
 					}).catch(function(err) {
 						reject(err);
 					});
@@ -143,7 +144,7 @@
 				if (error) {
 					console.error(error);
 				} else {
-					console.log('Successfully logged!');
+					console.log('Successfully refreshed!');
 					_getUser();
 				}
 			});
@@ -177,6 +178,18 @@
 				} else { return resolve(null); }
 			});
 		}
+        
+        function _getUserType() {
+            return _getToken().then(function() {
+                var base64Url = self.token.split('.')[1];
+                var base64 = base64Url.replace('-', '+').replace('_', '/');
+                var props = JSON.parse(window.atob(base64));
+                self.userTeam = props['custom:team'];
+                self.userType = props['custom:userType'];
+                console.log(self.userProps);
+                return self.userType;
+            });
+        }
         
         function _updateUser(newUserType, newUserTeam) {
 			var userPool = new AWSCognito.CognitoIdentityServiceProvider.CognitoUserPool(self.poolData);
