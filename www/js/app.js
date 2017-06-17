@@ -8,6 +8,8 @@
 angular.module('app', [
     'ionic',
 
+    'ion-sticky',
+    
     'googlechart',
     'app.core',
 
