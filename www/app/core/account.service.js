@@ -7,6 +7,10 @@
             var self = this;
             self.daySnacksLimit = 0;
             self.monthSnacksLimit = 0;
+        
+            self.preCount = 0;
+            self.postCount = 0;
+            self.snackCount = 0;
 
             self.studentId = '';
 
@@ -59,6 +63,8 @@
                     .then(function (data) {
                         self.daySnacksLimit = data.daySnackLimit;
                         self.monthSnacksLimit = data.monthSnackLimit;
+                        self.dayPreLimit = data.dayPreLimit;
+                        self.dayPostLimit = data.dayPostLimit;
 
                         return $q.when(athlete[0].AthleteID);
                     });
@@ -127,19 +133,19 @@
                 if (result.length > 0) {
                     self.athleteData = result;
 
-                    // Check if sport is eligible to receive snacks (ie in season)
-                    if (result[0].sportCode.toUpperCase() === 'MFB') {
-                        var err = {
-                            title: "Sorry, you are currently not eligible to check out items.",
-                            shouldClearID: true,
-                            stack: new Error().stack,
-                            cause: "Sport not eligible to receive snacks"
-                        }
-                        return $q.reject(err);
-                    }
-                    else {
+//                    // Check if sport is eligible to receive snacks (ie in season)
+//                    if (result[0].sportCode.toUpperCase() === 'MFB') {
+//                        var err = {
+//                            title: "Sorry, you are currently not eligible to check out items.",
+//                            shouldClearID: true,
+//                            stack: new Error().stack,
+//                            cause: "Sport not eligible to receive snacks"
+//                        }
+//                        return $q.reject(err);
+//                    }
+//                    else {
                         return $q.when(result);
-                    }
+//                    }
                 } else if (result.length === 0) {
                     var err = {
                         title: "The student ID you entered was not found. Please try again.",
@@ -160,20 +166,22 @@
                 var hydrationCounter = 0;
                 var snackCounter = 0;
 
-                for (var i = 0; i < orders.length; i++) {
-                    if (orders[i].type === 1) {
-                        preCounter++;
-                        self.shouldHidePre = true;
-                    } else if (orders[i].type === 2) {
-                        postCounter++;
-                        self.shouldHidePost = true;
-                    } else if (orders[i].type === 3) {
-                        hydrationCounter++;
-                        self.shouldHideHydration = true;
-                    } else if (orders[i].isSnack == true) {
-                        snackCounter++;
-                    }
-                }
+//                for (var i = 0; i < orders.length; i++) {
+//                    if (orders[i].type === 1) {
+//                        preCounter++;
+//                        self.shouldHidePre = true;
+//                    } else if (orders[i].type === 2) {
+//                        postCounter++;
+//                        self.shouldHidePost = true;
+//                    } else if (orders[i].type === 3) {
+//                        hydrationCounter++;
+//                        self.shouldHideHydration = true;
+//                    } else if (orders[i].isSnack == true) {
+//                        snackCounter++;
+//                    }
+//                }
+                self.shouldHidePre = (self.preCount >= self.dayPreLimit);
+                self.shouldHidePost = (self.postCount >= self.dayPostLimit);
 
 
                 if (self.monthSnacksRemaining <= 0 || self.daySnacksRemaining <= 0) {
@@ -183,12 +191,12 @@
                 }
 
                 // The second condition in the following if statements ensures that Pre, Post, and Hyd options display if a manager removes these choices from an already-placed order
-                if ((preCounter === 0 && !self.gotPreToday) || (cancelledItem && cancelledItem.type === 1 && !cancelledItem.isSnack)) {
-                    self.shouldHidePre = false;
-                }
-                if ((postCounter === 0 && !self.gotPostToday) || (cancelledItem && cancelledItem.type === 2 && !cancelledItem.isSnack)) {
-                    self.shouldHidePost = false;
-                }
+//                if ((preCounter === 0 && !self.gotPreToday) || (cancelledItem && cancelledItem.type === 1 && !cancelledItem.isSnack)) {
+//                    self.shouldHidePre = false;
+//                }
+//                if ((postCounter === 0 && !self.gotPostToday) || (cancelledItem && cancelledItem.type === 2 && !cancelledItem.isSnack)) {
+//                    self.shouldHidePost = false;
+//                }
                 if ((hydrationCounter === 0 && !self.gotHydrationToday) || (cancelledItem && cancelledItem.type === 3 && !cancelledItem.isSnack)) {
                     self.shouldHideHydration = false;
                 }

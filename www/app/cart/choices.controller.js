@@ -81,16 +81,22 @@
             }
         }
 
-        function _orderItem(item, isSnack) {
+        function _orderItem(item, isSnack, debit) {
             resetTimer();
 
             // Clone the item that was added to cart to keep track of whether it is a snack or not. If choice is not cloned first, the snack attribute will remain even if the athlete selects it as pre/post
             var itemClone = _.clone(item);
+            itemClone.orderType = debit;
 
             if (isSnack) {
                 AccountSvc.monthSnacksRemaining--;
                 AccountSvc.daySnacksRemaining--;
                 itemClone.isSnack = true;
+                    AccountSvc.snackCount++;
+            } else {
+                if (debit === 'pre') AccountSvc.preCount++;
+                if (debit === 'post') AccountSvc.postCount++;
+                if (debit === 'snack') AccountSvc.snackCount++;
             }
 
             OrderSvc.addItem(itemClone);
@@ -108,8 +114,20 @@
                     AccountSvc.daySnacksRemaining++;
                 }
             }
-            OrderSvc.removeItem(index);
+            
+            switch(OrderSvc.orderItems[index].orderType) {
+                case 'pre':
+                    AccountSvc.preCount--;
+                    break;
+                case 'post':
+                    AccountSvc.postCount--;
+                    break;
+                case 'snack':
+                    AccountSvc.snackCount--;
+                    break;
+           }
 
+            OrderSvc.removeItem(index);
             AccountSvc.updateHiddenCategories(OrderSvc.orderItems);
         }
 
