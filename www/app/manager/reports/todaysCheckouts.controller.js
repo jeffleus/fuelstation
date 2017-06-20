@@ -3,7 +3,7 @@
 
     angular.module('app.todaysCheckouts', [])
 
-    .controller('TodaysCheckoutsCtrl', function (CheckoutSvc, IonicAlertSvc, CsvSvc) {
+    .controller('TodaysCheckoutsCtrl', function (CheckoutSvc, IonicAlertSvc, CsvSvc, LoadingSpinner) {
         var vm = this;
 
         vm.checkouts = [];
@@ -14,11 +14,13 @@
         init();
 
         function init() {
+            LoadingSpinner.show();
             CheckoutSvc.getDailyCheckouts().query().then(onGetTodaysCheckouts, IonicAlertSvc.error);
         }
 
         function onGetTodaysCheckouts(response) {
             vm.checkouts = response.data;
+            LoadingSpinner.hide();
         }
 
         function _download() {
