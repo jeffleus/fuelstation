@@ -113,6 +113,9 @@
                             }
                         }
                     }
+                self.shouldHidePre = (self.preCount >= self.dayPreLimit);
+                self.shouldHidePost = (self.postCount >= self.dayPostLimit);
+                self.shouldHideSnack = (self.snackCount >= self.snackCount);
 
                     // Manually setting defaults (|| self...) because history currently not implemented
                     self.monthSnacksRemaining = Math.max(self.monthSnacksLimit - history.monthSnacksCount, 0) || self.monthSnacksLimit;
