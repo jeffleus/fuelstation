@@ -82,6 +82,10 @@
 
             function _initializeHiddenCategories(history, isUpdate) {
                 if (history) {
+					self.preCount = history.dayPreCount;
+					self.postCount = history.dayPostCount;
+					self.snackCount = history.daySnacksCount;
+					
                     if (history.dayPreCount > 0) {
                         self.shouldHidePre = true;
                         self.gotPreToday = true;
