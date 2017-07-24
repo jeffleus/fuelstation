@@ -12,6 +12,7 @@
         self.getAllChoices = _getAllChoices;
         self.getType = _getType;
         self.hydrationFilter = _hydrationFilter;
+        self.staffFilter = _staffFilter;
         self.initializeChoiceCategories = _initializeChoiceCategories;
         self.postWorkout = _postWorkout;
         self.preWorkout = _preWorkout;
@@ -70,12 +71,20 @@
             return hydrations;
         }
 
+        function _staffFilter(data) {
+            var staffItems = _.where(data, {
+                isStaff: true
+            });
+            return staffItems;
+        }
+
         function _initializeChoiceCategories(choices) {
             var allChoices = choices.sort(self.alphabetize);
             self.snacks = self.snackOnly(allChoices);
             self.pre = self.preWorkout(allChoices);
             self.post = self.postWorkout(allChoices);
             self.hydration = self.hydrationFilter(allChoices);
+			self.staff = self.staffFilter(allChoices);
         }
 
         function _postWorkout(data) {
