@@ -41,6 +41,14 @@
 
                         <label for="daySnackLimit" class="item item-input">
                             <span class="input-label">
+                                Daily Staff Limit
+                            </span>
+                            <input ng-model="sport.dayStaffLimit" name="dayStaffLimit"
+                                   type="number" min="0" inputmode="tel" pattern="[0-9]*" required />
+                        </label>
+
+                        <label for="daySnackLimit" class="item item-input">
+                            <span class="input-label">
                                 Daily Snack Limit
                             </span>
                             <input ng-model="sport.daySnackLimit" name="daySnackLimit"
