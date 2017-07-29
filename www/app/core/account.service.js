@@ -65,6 +65,7 @@
                         self.monthSnacksLimit = data.monthSnackLimit;
                         self.dayPreLimit = data.dayPreLimit;
                         self.dayPostLimit = data.dayPostLimit;
+						self.dayStaffLimit = data.dayStaffLimit;
 
                         return $q.when(athlete[0].AthleteID);
                     });
@@ -85,6 +86,7 @@
 					self.preCount = history.dayPreCount;
 					self.postCount = history.dayPostCount;
 					self.snackCount = history.daySnacksCount;
+					self.staffCount = history.dayStaffCount;
 					
                     if (history.dayPreCount > 0) {
                         self.shouldHidePre = true;
@@ -97,6 +99,10 @@
                     if (history.dayHydrationCount > 0) {
                         self.shouldHideHydration = true;
                         self.gotHydrationToday = true;
+                    }
+                    if (history.dayStaffCount > 0) {
+                        self.shouldHideStaff = true;
+                        self.gotStaffToday = true;
                     }
                     if (history.daySnacksCount >= self.daySnacksLimit || history.monthSnacksCount >= self.monthSnacksLimit) {
                         self.shouldHideSnacks = true;
@@ -120,7 +126,7 @@
                 self.shouldHidePre = (self.preCount >= self.dayPreLimit);
                 self.shouldHidePost = (self.postCount >= self.dayPostLimit);
                 self.shouldHideSnack = (self.snackCount >= self.snackCount);
-                self.shouldHideStaff = false;//(self.staffCount >= self.dayStaffLimit);
+                self.shouldHideStaff = (self.staffCount >= self.dayStaffLimit);
 
                     // Manually setting defaults (|| self...) because history currently not implemented
                     self.monthSnacksRemaining = Math.max(self.monthSnacksLimit - history.monthSnacksCount, 0) || self.monthSnacksLimit;
@@ -190,7 +196,7 @@
 //                }
                 self.shouldHidePre = (self.preCount >= self.dayPreLimit);
                 self.shouldHidePost = (self.postCount >= self.dayPostLimit);
-                self.shouldHideStaff = false;//(self.staffCount >= self.dayStaffLimit);
+                self.shouldHideStaff = (self.staffCount >= self.dayStaffLimit);
 
 
                 if (self.monthSnacksRemaining <= 0 || self.daySnacksRemaining <= 0) {
