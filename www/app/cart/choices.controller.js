@@ -94,9 +94,11 @@
                 itemClone.isSnack = true;
                     AccountSvc.snackCount++;
             } else {
+                itemClone.isSnack = false;
                 if (debit === 'pre') AccountSvc.preCount++;
                 if (debit === 'post') AccountSvc.postCount++;
                 if (debit === 'snack') AccountSvc.snackCount++;
+				if (debit === 'staff') AccountSvc.staffCount++;
             }
 
             OrderSvc.addItem(itemClone);
@@ -121,6 +123,9 @@
                     break;
                 case 'post':
                     AccountSvc.postCount--;
+                    break;
+                case 'staff':
+                    AccountSvc.staffCount--;
                     break;
                 case 'snack':
                     AccountSvc.snackCount--;
