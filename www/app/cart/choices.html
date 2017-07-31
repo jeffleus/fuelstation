@@ -49,6 +49,9 @@
                         <button class="button button-royal" ng-repeat="c in vm.choiceSvc.post | filter: {isSnack:true}" ng-if="vm.accountSvc.shouldHidePost && c.isActive" ng-click="vm.orderItem(c, true,'snack')">
                             {{c.name}}
                         </button>
+                        <button class="button button-positive" ng-repeat="c in vm.choiceSvc.staff | filter: {isSnack:true}" ng-if="vm.accountSvc.shouldHideStaff && c.isActive" ng-click="vm.orderItem(c, true,'snack')">
+                            {{c.name}}
+                        </button>
                         <button class="button button-energized" ng-repeat="c in vm.choiceSvc.hydration | filter: {isSnack:true}" ng-if="vm.accountSvc.shouldHideHydration && c.isActive" ng-click="vm.orderItem(c, true,'snack')">
                             {{c.name}}
                         </button>
