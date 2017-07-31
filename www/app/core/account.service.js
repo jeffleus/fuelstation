@@ -11,6 +11,7 @@
             self.preCount = 0;
             self.postCount = 0;
             self.snackCount = 0;
+            self.staffCount = 0;
 
             self.studentId = '';
 
