@@ -108,10 +108,11 @@
 		  
 		  vm.selectedAthlete.sportCode = vm.selectedSport;
 		  AthleteSvc.saveAthlete(vm.selectedAthlete)
-		  	.then(onSuccess, IonicAlertSvc.error);
+		  	.then(onSuccess)
+		  	.catch(IonicAlertSvc.error);
 
 
-         function onSuccess() {
+         function onSuccess(result) {
             LoadingSpinner.hide();
             getAthletes(vm.selectedSport);
             onCloseModal();
