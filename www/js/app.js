@@ -10,7 +10,8 @@ angular.module('app', [
 
     'ion-sticky',
     
-    'googlechart',
+//    'googlechart',
+	'chart.js',
     'app.core',
 
     'app.archiveListCtrl',
@@ -28,7 +29,8 @@ angular.module('app', [
     'app.teamManagerCtrl',
     'app.todaysCheckouts',
     'app.unauthenticated',
-
+	'app.dashboard',
+	
     'blocks.exception',
     'blocks.errorlog',
 
@@ -135,6 +137,20 @@ angular.module('app', [
                 'appContent': {
                     templateUrl: 'app/manager/reports/todaysCheckouts.html',
                     controller: 'TodaysCheckoutsCtrl as vm'
+                },
+                'sideMenu': {
+                    templateUrl: 'app/manager/menu.html'
+                }
+            }
+
+        })
+        .state('tab.dashboard', {
+            cache: false,
+            url: '/dashboard',
+            views: {
+                'appContent': {
+                    templateUrl: 'app/manager/reports/dashboard.html',
+					controller: 'DashboardCtrl'
                 },
                 'sideMenu': {
                     templateUrl: 'app/manager/menu.html'
