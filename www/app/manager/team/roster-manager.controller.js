@@ -111,7 +111,6 @@
 		  	.then(onSuccess)
 		  	.catch(IonicAlertSvc.error);
 
-
          function onSuccess(result) {
             LoadingSpinner.hide();
             getAthletes(vm.selectedSport);
