@@ -4,8 +4,12 @@
 <div class="row">
   <div class="col">
 	  <div class="card">
-		  <div class="item item-divider">
-			Checkout Count by Hour
+		  <div class="item item-divider item-positive">
+			  <div class="row">
+				  <div class="col col-20"></div>
+				  <div class="col col-60" style="text-align:center;">Checkout Count by Hour</div>
+				  <div class="col col-20" style="text-align:right;"><i class="ion-funnel"></i></div>
+			  </div>
 		  </div>
 		  <div class="item item-text-wrap">
 				<canvas id="line" class="chart chart-line"
@@ -15,14 +19,20 @@
 			  
 		  </div>
 		  <div class="item item-divider" style="text-align:center;">
+			<button class="button button-small button-positive">MFB&nbsp;<i class="ion-close-circled"></i></button>
 			<button class="button button-small button-assertive">Change Day</button>
+			<button class="button button-small button-positive">Set Category</button>
 		  </div>
 	  </div>
   </div>
   <div class="col">
 	<div class="card">
-	  <div class="item item-divider">
-		Checkout Count by Day
+	  <div class="item item-divider item-positive" style="text-align:center;">
+			  <div class="row">
+				  <div class="col col-20"></div>
+				  <div class="col col-60" style="text-align:center;">Checkout Count by Day</div>
+				  <div class="col col-20" style="text-align:right;"><i class="ion-funnel"></i></div>
+			  </div>
 	  </div>
 	  <div class="item item-text-wrap">
 			<canvas id="line" class="chart chart-line"
@@ -35,6 +45,8 @@
 	  </div>
 	</div>	  
   </div>
+  <div class="col"></div>
+  <div class="col"></div>
 </div>				
 <div class="row">
   <div class="col">
