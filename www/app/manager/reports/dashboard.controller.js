@@ -13,7 +13,16 @@
 		$scope.onClick = function (points, evt) {
 			console.log(points, evt);
 		};
-		$scope.datasetOverride = [{ yAxisID: 'y-axis-1' }];
+		$scope.datasetOverride = [{ 
+			yAxisID: 'y-axis-1',
+		    borderColor: '#001d52',
+			borderWidth: 4,
+			backgroundColor: '#527bbd',
+			pointBackgroundColor: '#f77a05',
+			pointBorderColor: '#001d52',
+			pointBorderWidth: 1,
+			pointRadius: 4
+		}];
 		$scope.options = {
 		scales: {
 		  yAxes: [
@@ -36,7 +45,16 @@
 		$scope.onClick_week = function (points, evt) {
 			console.log(points, evt);
 		};
-		$scope.datasetOverride_week = [{ yAxisID: 'y-axis-1' }];
+		$scope.datasetOverride_week = [{ 
+			yAxisID: 'y-axis-1',
+		    borderColor: '#001d52',
+			borderWidth: 4,
+			backgroundColor: '#527bbd',
+			pointBackgroundColor: '#f77a05',
+			pointBorderColor: '#001d52',
+			pointBorderWidth: 1,
+			pointRadius: 4
+		}];
 		$scope.options_week = {
 		scales: {
 		  yAxes: [
