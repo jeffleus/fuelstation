@@ -30,7 +30,7 @@
 			   return result;
 		   });
 	   }
-	   
+	   //update function for saving changes to existing SportCode records
 	   function _updateSport(s) {
 		   return $http.put(url,s)
 		   .then(function(result) {
