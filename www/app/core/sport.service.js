@@ -22,7 +22,7 @@
             return result.data.sports;
          });
       }
-	   
+	   //save function for persisting a new Sport into the database service
 	   function _saveSport(s) {
 		   return $http.post(url,s)
 		   .then(function(result) {
