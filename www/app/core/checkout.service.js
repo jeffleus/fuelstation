@@ -25,7 +25,7 @@
 //            return $resource(ApiEndpoint.url + 'Checkouts/Archived');
             return {
                 query: function() {
-                    return $http.get('https://6tvxksy2ta.execute-api.us-west-2.amazonaws.com/ademo/checkouts/Archived'); 
+                    return $http.get('https://gni7zabnl2.execute-api.us-west-2.amazonaws.com/dummy/checkouts/Archived'); 
                 }
             };            
         }
@@ -40,22 +40,22 @@
             // });
             return {
                 save: function(checkout) {
-                    return $http.post('https://6tvxksy2ta.execute-api.us-west-2.amazonaws.com/ademo/checkouts',checkout);
+                    return $http.post('https://gni7zabnl2.execute-api.us-west-2.amazonaws.com/dummy/checkouts',checkout);
                 },
                 update: function(checkout) {
-                    return $http.put('https://6tvxksy2ta.execute-api.us-west-2.amazonaws.com/ademo/checkouts',checkout);
+                    return $http.put('https://gni7zabnl2.execute-api.us-west-2.amazonaws.com/dummy/checkouts',checkout);
                 },
                 delete: function(id) {
-                    return $http.delete('https://6tvxksy2ta.execute-api.us-west-2.amazonaws.com/ademo/checkouts/' + id);
+                    return $http.delete('https://gni7zabnl2.execute-api.us-west-2.amazonaws.com/dummy/checkouts/' + id);
                 },
                 get: function(id) {
-                    return $http.get('https://6tvxksy2ta.execute-api.us-west-2.amazonaws.com/ademo/checkouts/' + id);
+                    return $http.get('https://gni7zabnl2.execute-api.us-west-2.amazonaws.com/dummy/checkouts/' + id);
                 },
                 query: function() {
-                    return $http.get('https://6tvxksy2ta.execute-api.us-west-2.amazonaws.com/ademo/checkouts?filter=93262,93263,93265,93266');
+                    return $http.get('https://gni7zabnl2.execute-api.us-west-2.amazonaws.com/dummy/checkouts?filter=93262,93263,93265,93266');
                 }
             };
-            return $http.post('https://6tvxksy2ta.execute-api.us-west-2.amazonaws.com/ademo/checkouts',checkout)
+            return $http.post('https://gni7zabnl2.execute-api.us-west-2.amazonaws.com/dummy/checkouts',checkout)
         }
 
         // This currently returns a specific checkout by checkout ID, not the checkout history of athlete
@@ -63,7 +63,7 @@
             // return $resource(ApiEndpoint.url + 'Checkouts/History/:studentSportID', {
             //     studentSportID: '@studentSportID'
             // });
-            return $http.get('https://6tvxksy2ta.execute-api.us-west-2.amazonaws.com/ademo/report/checkouts/history/' + id)
+            return $http.get('https://gni7zabnl2.execute-api.us-west-2.amazonaws.com/dummy/report/checkouts/history/' + id)
                 .then(function(result){
                     return result.data;
                 });
@@ -73,7 +73,7 @@
             //return $resource(ApiEndpoint.url + 'Checkouts/GetDailyCheckouts');
 			return {
 				query: function() {
-					return $http.get('https://6tvxksy2ta.execute-api.us-west-2.amazonaws.com/ademo/report/checkouts/daily');
+					return $http.get('https://gni7zabnl2.execute-api.us-west-2.amazonaws.com/dummy/report/checkouts/daily');
 				}
 			}
         }
@@ -85,7 +85,7 @@
             //return $resource(ApiEndpoint.url + 'Checkouts/GetMonthCounts/Month/' + timePeriod.month + '/Year/' + timePeriod.year);
             return {
                 query: function(){
-                    return $http.get('https://6tvxksy2ta.execute-api.us-west-2.amazonaws.com/ademo/report/checkouts/monthly')
+                    return $http.get('https://gni7zabnl2.execute-api.us-west-2.amazonaws.com/dummy/report/checkouts/monthly')
                         .then(function(result){
                             return result.data;
                         });
@@ -154,7 +154,7 @@
             //return $resource(ApiEndpoint.url + 'Checkouts/Unarchived');
             return {
                 query: function() {
-                    return $http.get('https://6tvxksy2ta.execute-api.us-west-2.amazonaws.com/ademo/checkouts/Unarchived'); 
+                    return $http.get('https://gni7zabnl2.execute-api.us-west-2.amazonaws.com/dummy/checkouts/Unarchived'); 
                 }
             };            
         }
