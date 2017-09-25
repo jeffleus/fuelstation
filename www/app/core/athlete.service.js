@@ -4,7 +4,7 @@
     angular.module('app.core')
 
     .factory('AthleteSvc', function ($http, $resource, $cacheFactory, ApiEndpoint) {
-      var url = 'https://dbc18a3k05.execute-api.us-west-2.amazonaws.com/ademo/athletes/';
+      var url = 'https://ug1z5nn0lk.execute-api.us-west-2.amazonaws.com/dummy/athletes/';
         var service = {
             getAthlete: _getAthlete,
             getAthletesBySport: _getAthletesBySport,
