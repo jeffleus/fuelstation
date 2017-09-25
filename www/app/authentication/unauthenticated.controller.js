@@ -8,7 +8,7 @@
             var vm = this;
 
             vm.closeFSModal = _closeModal;
-            vm.loginData = { username: "fsdemo-manager", password: "FuelStation17!" };
+            vm.loginData = { username: "lsu-manager", password: "GeauxTigers17" };
             vm.onLogIn = onLogIn;
             vm.onSubmitFS = _onSubmitFS;
 
