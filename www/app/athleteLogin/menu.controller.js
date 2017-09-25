@@ -82,7 +82,7 @@
 
         function _openModal() {
             AuthSvc.getUserType().then(function(userType) {
-                if (userType == "MANAGER") {
+                if (userType == "MANAGER" || userType == "manager") {
                     $state.go('tab.orderList', null, {
                         reload: true
                     });
