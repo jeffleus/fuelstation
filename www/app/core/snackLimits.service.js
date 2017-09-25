@@ -12,7 +12,8 @@
         //mocked service url
         //var url = 'https://n6jjrfl2j7.execute-api.us-west-2.amazonaws.com/dev/snacklimits/';
         //live service url
-        var url = 'https://vme194jfwa.execute-api.us-west-2.amazonaws.com/ademo/snacklimits/';
+        //var url = 'https://vme194jfwa.execute-api.us-west-2.amazonaws.com/ademo/snacklimits/';
+        var url = 'https://h9cms40bi2.execute-api.us-west-2.amazonaws.com/dummy/snacklimits/';
         
         return service;
         
