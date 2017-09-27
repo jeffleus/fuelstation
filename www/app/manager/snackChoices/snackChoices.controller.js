@@ -6,7 +6,6 @@
     .controller('SnackChoicesCtrl', function ($ionicSideMenuDelegate, $ionicPopup, $ionicModal, $scope, ChoiceSvc, IonicAlertSvc, LoadingSpinner) {
         var vm = this;
 
-        vm.getType = ChoiceSvc.getType;
         vm.predicate = 'name';
         vm.selectedSnack = {};
         vm.typeOptions = ChoiceSvc.typeOptions();
