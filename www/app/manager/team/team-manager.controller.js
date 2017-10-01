@@ -3,7 +3,8 @@
 
    angular.module('app.teamManagerCtrl', [])
 
-   .controller('TeamManagerCtrl', function (IonicAlertSvc, $ionicModal, LoadingSpinner, $scope, SportSvc) {
+   .controller('TeamManagerCtrl', function (IonicAlertSvc, $ionicModal, LoadingSpinner, $scope
+											 , SportSvc, AthleteSvc) {
       var vm = this;
 
       vm.isUpdate;
@@ -58,28 +59,52 @@
          vm.sportForm.$setPristine();
       }
 
-      function onDeleteSport(sport){
-         var msg = {
-            template: "Are you sure you want to delete " + sport.description + "?"
-         };
+	   function onDeleteSport(sport){
+			//start with a message template for the confirmation dialog
+			var msg = {
+				template: "Are you sure you want to delete " + sport.description + "?"
+			};
 
-         var currentChoiceIndex = vm.sports.indexOf(sport);
+			//show the spinner while useing AthleteSvc to get the sport roster
+			LoadingSpinner.show();
+			AthleteSvc.getAthletesBySport(sport.SportCodeID)
+			.then(function(athletes) {
+				//hide the spinner when the roster is returned
+				LoadingSpinner.hide();
+				//process a roster count message and prepend to the confirmation msg template
+				var countMsg = "This will delete (" + (!athletes?0:athletes.length) + ") athlete records.";
+				msg.template = countMsg + "  " + msg.template;
+				//use the IonicAlertSvc to get a confirmation from the user
+				IonicAlertSvc.confirm(msg, onConfirmDelete);
+			}).catch(function(err) {
+				//hide the spinner when the roster is returned
+				LoadingSpinner.hide();
+				//process a roster count message and prepend to the confirmation msg template
+				var countMsg = "This will delete (0) athlete records.";
+				msg.template = countMsg + "  " + msg.template;
+				//use the IonicAlertSvc to get a confirmation from the user
+				IonicAlertSvc.confirm(msg, onConfirmDelete);
+			});
 
-         IonicAlertSvc.confirm(msg, onConfirmDelete);
+		  
+			 function onConfirmDelete() {
+				LoadingSpinner.show();
+				var currentChoiceIndex = vm.sports.indexOf(sport);
 
-         function onConfirmDelete() {
-            LoadingSpinner.show();
+				// TODO: Delete sport
+				 SportSvc.deleteSport(sport.SportCodeID)
+					 .then(onDeleteSuccess, IonicAlertSvc.error);
 
-            // TODO: Delete sport
-			 SportSvc.deleteSport(sport.SportCodeID)
-				 .then(onDeleteSuccess, IonicAlertSvc.error);
-
-            function onDeleteSuccess() {
-               LoadingSpinner.hide();
-               vm.sports.splice(currentChoiceIndex, 1);
-            }
-         }
+				function onDeleteSuccess() {
+				   LoadingSpinner.hide();
+				   vm.sports.splice(currentChoiceIndex, 1);
+				}
+			 }
       }
+	   
+	   function getRoster(sport) {
+		   return AthleteSvc.getAthletesBySport(sportcode);
+	   }
 
       function onSaveSport(){
          //TODO
