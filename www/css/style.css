@@ -43,7 +43,7 @@ button {
 
 button.button.round-ios-button {
     border: 1px solid #457;
-    background-color: #fff;
+    background-color: #f5f5eb;
     border-radius: 50%;
     width: 100%;
     /* height: 120px; */
@@ -54,6 +54,7 @@ button.button.round-ios-button {
 button.button.round-ios-button h1 {
     font-weight: 100;
     line-height: 0;
+	color: #600;
 }
 .button.button.round-ios-button.active,
 .button.round-ios-button.activated {
@@ -147,6 +148,9 @@ button.button.round-ios-button.activated h1 {
 .text-white {
     color: #fff;
 }
+.text-positive {
+    color: #600;
+}
 .align-left {
     float: left;
 }
@@ -215,4 +219,8 @@ button.button.round-ios-button.activated h1 {
   background-size:cover;
   background-image:url('https://upload.wikimedia.org/wikipedia/commons/thumb/6/60/Virginia_Tech_Hokies_logo.svg/2000px-Virginia_Tech_Hokies_logo.svg.png');
 /*    background-image: url('http://www.fbschedules.com/images/logos/fbs/lsu-tigers.png');*/
+}
+
+.card-item {
+	background-color: #f5f5eb;
 }

@@ -38,17 +38,17 @@
 
             </div>
             <div ng-if="vm.counts.length > 0" class="category-fade">
-                <div class="row stable-bg m-b-10">
+                <div class="row balanced-bg text-white m-b-10">
                     <div class="col-25"><strong>Choice</strong></div>
                     <div class="col-20"><strong>Count</strong></div>
                 </div>
 
-                <div class="row m-b-10" ng-repeat="item in vm.counts">
+                <div class="row m-b-10" ng-repeat="item in vm.counts" style="color:#600;">
                     <div class="col-25">{{item.choice}}</div>
                     <div class="col-20">{{item.count}}</div>
                 </div>
             </div>
-            <div ng-if="vm.counts.length === 0" class="padding">
+            <div ng-if="vm.counts.length === 0" class="padding" style="color:#600;">
                 <h4 ng-show="vm.noRecords">There are no records for the selected time period.</h4>
                 <h4>Please select a month and year, then press Go.</h4>
             </div>

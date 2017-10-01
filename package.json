@@ -32,15 +32,13 @@
     "cordova-plugin-splashscreen@~4.0.3",
     "cordova-plugin-statusbar@~2.2.3",
     "ionic-plugin-keyboard@~2.2.1",
-    "cordova-plugin-wkwebview",
     "cordova-plugin-console",
     "cordova-plugin-device",
     "cordova-plugin-splashscreen",
     "cordova-plugin-statusbar",
     "cordova-plugin-webserver",
     "cordova-plugin-whitelist",
-    "ionic-plugin-keyboard",
-    "cordova-plugin-wkwebview-engine"
+    "ionic-plugin-keyboard"
   ],
   "cordovaPlatforms": [
     "ios"
