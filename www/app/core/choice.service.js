@@ -14,6 +14,7 @@
         self.staffFilter = _staffFilter;
         self.initializeChoiceCategories = _initializeChoiceCategories;
         self.typeOptions = _typeOptions;
+        self.saveChoice = _saveChoice;
         self.updateChoice = _updateChoice;
 
         function _alphabetize(a, b) {
