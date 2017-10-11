@@ -13,7 +13,7 @@
             </ul>
             <div class="row unlimited-items">
                 
-                <div class="col-33 animate-leave" ng-repeat="checkout in vm.todaysCheckouts | filter: vm.nameFilter track by $index">
+                <div class="col-33 animate-leave" ng-repeat="checkout in vm.todaysCheckouts | filter: vm.nameFilter | orderBy: '-CreateDate' track by $index">
                     <div class="list card card-checkout">
                         <div class="item item-card-divider positive-bg text-white p-r-120 p-l-50">
                             <button class="button button-clear first-left-btn" ng-click="vm.setArchive(checkout, $index)"><i class="icon ion-checkmark-circled light"></i></button>
