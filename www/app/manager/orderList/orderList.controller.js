@@ -62,7 +62,7 @@
             };
 
             var onConfirmFn = function () {
-                CheckoutSvc.checkout().delete({ checkoutID: checkout.checkoutID }).$promise
+                CheckoutSvc.checkout().delete( checkout.CheckoutID )//.$promise
                     .then(init)
                     .catch(IonicAlertSvc.error);
             };
