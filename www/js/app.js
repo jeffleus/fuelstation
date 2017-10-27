@@ -16,6 +16,7 @@ angular.module('app', [
     'app.archiveListCtrl',
     'app.editOrderCtrl',
     'app.errors',
+    'app.settings',
     'app.managerCtrl',
     'app.loginMenuCtrl',
     'app.monthlyCounts',
@@ -161,6 +162,19 @@ angular.module('app', [
                 'appContent': {
                     templateUrl: 'app/manager/errorReport/errors.html',
                     controller: 'ErrorsCtrl as vm'
+                },
+                'sideMenu': {
+                    templateUrl: 'app/manager/menu.html'
+                }
+            }
+
+        })
+        .state('tab.settings', {
+            url: '/settings',
+            views: {
+                'appContent': {
+                    templateUrl: 'app/manager/settings/settings.html',
+                    controller: 'SettingsCtrl as vm'
                 },
                 'sideMenu': {
                     templateUrl: 'app/manager/menu.html'
