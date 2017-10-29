@@ -17,6 +17,7 @@ angular.module('app', [
     'app.editOrderCtrl',
     'app.errors',
     'app.settings',
+	'app.locations', 
     'app.managerCtrl',
     'app.loginMenuCtrl',
     'app.monthlyCounts',
@@ -175,6 +176,19 @@ angular.module('app', [
                 'appContent': {
                     templateUrl: 'app/manager/settings/settings.html',
                     controller: 'SettingsCtrl as vm'
+                },
+                'sideMenu': {
+                    templateUrl: 'app/manager/menu.html'
+                }
+            }
+
+        })
+        .state('tab.locations', {
+            url: '/locations',
+            views: {
+                'appContent': {
+                    templateUrl: 'app/manager/locations/locations.html',
+                    controller: 'LocationsCtrl as vm'
                 },
                 'sideMenu': {
                     templateUrl: 'app/manager/menu.html'

@@ -1,17 +1,23 @@
 (function () {
     'use strict';
 
-    angular.module('app.settings', [])
+    angular.module('app.locations', [])
 
-    .controller('LocationsCtrl', function ($localstorage, AuthSvc) {
+    .controller('LocationsCtrl', function (LocationSvc, AuthSvc) {
         var vm = this;
 
-        vm.settingSvc = SettingSvc;
-        vm.saveSettings = _saveSettings;
-        
-        function _saveSettings() {
-            SettingSvc.save();
-        }
+        vm.locationSvc = LocationSvc;
+		
+		vm.editLocation = _editLocation;
+		vm.deleteLocation = _deleteLocation;
+		
+		function _editLocation(loc) {
+			console.log('editLocation', loc);
+		}
+		
+		function _deleteLocation(loc) {
+			console.log('deleteLocation', loc);
+		}
         
     });
 })();
