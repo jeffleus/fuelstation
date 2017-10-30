@@ -24,6 +24,7 @@
             } else {
                 self.terminalID = $window.localStorage.getItem('terminalID') || -1;
                 self.locationID = $window.localStorage.getItem('locationID') || -1;
+				self.locationID = parseInt(self.locationID);
             }
         }
         
