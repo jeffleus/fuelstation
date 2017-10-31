@@ -15,16 +15,16 @@
                 <div class="col-33 animate-leave" ng-repeat="checkout in vm.todaysCheckouts  | filter: vm.nameFilter track by $index">
                     <div class="list card card-checkout">
                         <div class="item item-card-divider item-button-right positive-bg text-white">
-                            <button class="button button-clear" ng-click="vm.setUnarchive(checkout, $index)"><i class="icon ion-reply light"></i></button>
-                            <strong>{{checkout.Athlete.firstName + ' ' + checkout.Athlete.lastName}}</strong>
+                            <button class="button button-clear" ng-click="::vm.setUnarchive(checkout, $index)"><i class="icon ion-reply light"></i></button>
+                            <strong>{{::(checkout.Athlete.firstName + ' ' + checkout.Athlete.lastName)}}</strong>
                             <br>
-                            <small>{{checkout.createDate | date: 'shortTime'}}</small>
+                            <small>{{::checkout.createDate | date: 'shortTime'}}</small>
                         </div>
                         <div class="card-order-body" ng-click="editCheckout(checkout)">
                             <ion-scroll>
                                 <ion-list>
-                                    <ion-item class="padding" ng-repeat="choice in checkout.CheckoutChoices">
-                                        {{choice.Choice.name}}
+                                    <ion-item class="padding" ng-repeat="choice in ::checkout.CheckoutChoices">
+                                        {{::choice.Choice.name}}
                                     </ion-item>
                                     <ion-item></ion-item>
                                 </ion-list>
