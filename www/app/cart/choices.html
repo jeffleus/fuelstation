@@ -12,7 +12,7 @@
                     <h4>Pre-Workout Options:</h4>
                     <hr />
                     <p>
-                        <button class="button button-balanced" ng-repeat="c in vm.choiceSvc.pre" ng-click="vm.orderItem(c, false,'pre')" ng-show="c.isActive">{{c.name}}</button>
+                        <button class="button button-positive" ng-repeat="c in vm.choiceSvc.pre" ng-click="vm.orderItem(c, false,'pre')" ng-show="c.isActive">{{c.name}}</button>
                     </p>
                 </div>
                 <div ng-if="!vm.accountSvc.shouldHidePost" class="category-fade">
@@ -33,7 +33,7 @@
                     <h4>Staff Options:</h4>
                     <hr />
                     <p>
-                        <button class="button button-positive" ng-repeat="c in vm.choiceSvc.staff" ng-click="vm.orderItem(c, false,'staff')" ng-show="c.isActive">{{c.name}}</button>
+                        <button class="button button-balanced" ng-repeat="c in vm.choiceSvc.staff" ng-click="vm.orderItem(c, false,'staff')" ng-show="c.isActive">{{c.name}}</button>
                     </p>
                 </div>
                 <div ng-if="!vm.accountSvc.shouldHideSnacks" class="category-fade">

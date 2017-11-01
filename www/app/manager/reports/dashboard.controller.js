@@ -15,11 +15,11 @@
 		};
 		$scope.datasetOverride = [{ 
 			yAxisID: 'y-axis-1',
-		    borderColor: '#600',
+		    borderColor: '#003366',
 			borderWidth: 4,
-			backgroundColor: '#ffb380',
-			pointBackgroundColor: '#ff6600',
-			pointBorderColor: '#600',
+			backgroundColor: '#0680CD',
+			pointBackgroundColor: '#339999',
+			pointBorderColor: '#003366',
 			pointBorderWidth: 1,
 			pointRadius: 4
 		}];
@@ -47,11 +47,11 @@
 		};
 		$scope.datasetOverride_week = [{ 
 			yAxisID: 'y-axis-1',
-		    borderColor: '#600',
+		    borderColor: '#13294B',
 			borderWidth: 4,
-			backgroundColor: '#f60',
-			pointBackgroundColor: '#f60',
-			pointBorderColor: '#600',
+			backgroundColor: '#b5b5b5',
+			pointBackgroundColor: '#0680CD',
+			pointBorderColor: '#13294B',
 			pointBorderWidth: 1,
 			pointRadius: 4
 		}];
@@ -74,9 +74,9 @@
 			[64,35,21,14,13,9,7,5,5,4,3,3,2,2]
 		];
 		$scope.datasetOverride_top = [{ 
-		    borderColor: '#600',
+		    borderColor: '#003366',
 			//borderWidth: 4,
-			backgroundColor: '#f60',
+			backgroundColor: '#b5b5b5',
 //			pointBackgroundColor: '#f60',
 //			pointBorderColor: '#600',
 //			pointBorderWidth: 1,
@@ -91,9 +91,9 @@
 		];
 		$scope.datasetOverride_items = [{ 
 //			yAxisID: 'y-axis-1',
-		    borderColor: '#600',
+		    borderColor: '#003366',
 //			borderWidth: 4,
-			backgroundColor: '#ffb380',
+			backgroundColor: '#0680CD',
 //			pointBackgroundColor: '#ff6600',
 //			pointBorderColor: '#600',
 //			pointBorderWidth: 1,
