@@ -2,7 +2,7 @@
     <div class="bar bar-subheader bar-stable text-center vcenter">
         <button class="button button-icon icon ion-ios-plus force-balanced align-left" ng-click="vm.openModal()"></button>
         <div class="title">
-            Sort by: <span ng-class="{bold: vm.predicate === 'name'}" ng-click="vm.predicate = 'name'">Name</span> | <span ng-class="{bold: vm.predicate === 'type'}" ng-click="vm.predicate = 'type'">Type</span>
+            Sort by: <span ng-class="{bold: vm.predicate === 'name'}" ng-click="vm.predicate = 'name'">Name</span> | <span ng-class="{bold: vm.predicate === 'CategoryID'}" ng-click="vm.predicate = 'CategoryID'">CategoryID</span>
         </div>
     </div>
     <ion-content class="has-subheader">
@@ -13,48 +13,24 @@
 			  <div class="col col-50">
 				<b>Item Name</b>
 			  </div>
-			  <div class="col col-10 col-center">
-				<b>Free</b>
+			  <div class="col col-40 col-center">
+				<b>Category</b>
 			  </div>
 			  <div class="col col-10 col-center">
-				<b>Pre</b>
-			  </div>
-			  <div class="col col-10 col-center">
-				<b>Post</b>
-			  </div>
-			  <div class="col col-10 col-center">
-				<b>Hydration</b>
-			  </div>
-			  <div class="col col-10 col-center">
-				<b>Snack</b>
+				<b>Value</b>
 			  </div>
 			</div>
 		  </div>
           <ion-item class="item item-body table-row" ng-repeat="choice in vm.allChoices | orderBy:vm.predicate">
-<!--		  <div class="item item-body table-row" ng-repeat="choice in vm.allChoices | orderBy:vm.predicate">-->
 			<div class="row">
 			  <div class="col col-50">
 				{{choice.name}}<span ng-show="!choice.isActive" class="text-gray"> &ndash; <em><i class="icon ion-close-circled"></i> Not Available</em></span>
 			  </div>
-			  <div class="col col-10 col-center">
-				<i class="icon ion-close-circled assertive" ng-show="!choice.isFree"></i>
-				<i class="icon ion-checkmark-circled balanced" ng-show="choice.isFree"></i>
+			  <div class="col col-40 col-center">
+				  {{vm.categories[choice.CategoryID-9].label}}
 			  </div>
 			  <div class="col col-10 col-center">
-				<i class="icon ion-close-circled assertive" ng-show="!choice.isPre"></i>
-				<i class="icon ion-checkmark-circled balanced" ng-show="choice.isPre"></i>
-			  </div>
-			  <div class="col col-10 col-center">
-				<i class="icon ion-close-circled assertive" ng-show="!choice.isPost"></i>
-				<i class="icon ion-checkmark-circled balanced" ng-show="choice.isPost"></i>
-			  </div>
-			  <div class="col col-10 col-center">
-				<i class="icon ion-close-circled assertive" ng-show="!choice.isHydration"></i>
-				<i class="icon ion-checkmark-circled balanced" ng-show="choice.isHydration"></i>
-			  </div>
-			  <div class="col col-10 col-center">
-				<i class="icon ion-close-circled assertive" ng-show="!choice.isSnack"></i>
-				<i class="icon ion-checkmark-circled balanced" ng-show="choice.isSnack"></i>
+			  	{{choice.choiceValue}}
 			  </div>
                 <ion-option-button class="button-energized"
                                    ng-click="vm.editChoice(choice)">
@@ -63,22 +39,7 @@
                                    ng-click="vm.deleteChoice(choice)">
                     Delete</ion-option-button>
 			</div>
-<!--		  </div>-->
             </ion-item>
-<!--
-            <ion-item ng-repeat="choice in vm.allChoices | orderBy:vm.predicate">
-                {{choice.name}} <span ng-show="!choice.isActive" class="text-gray"> &ndash; <em><i class="icon ion-close-circled"></i> Not Available</em></span>
-                <span class="align-right">{{vm.getType(choice.type)}}</span>
-                <ion-option-button class="button-energized"
-                                   ng-click="vm.editChoice(choice)">
-                    Edit
-                </ion-option-button>
-                <ion-option-button class="button-assertive"
-                                   ng-click="vm.deleteChoice(choice)">
-                    Delete
-                </ion-option-button>
-            </ion-item>
--->
         </ion-list>
 
     </ion-content>
