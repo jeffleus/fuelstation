@@ -10,6 +10,7 @@
         vm.predicate = 'name';
         vm.selectedSnack = {};
         vm.typeOptions = ChoiceSvc.typeOptions();
+		vm.categories = ChoiceSvc.categories();
         vm.activeOptions = [
             { label: "Yes", value: true },
             { label: "No", value: false }
