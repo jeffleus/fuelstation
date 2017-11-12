@@ -7,6 +7,7 @@
       var service = {
 		  getSports: _getSports,
 		  saveSport: _saveSport,
+		  updateSport: _updateSport,
 		  deleteSport: _deleteSport
       };
 
@@ -24,6 +25,14 @@
 	   
 	   function _saveSport(s) {
 		   return $http.post(url,s)
+		   .then(function(result) {
+			   console.log(result);
+			   return result;
+		   });
+	   }
+	   
+	   function _updateSport(s) {
+		   return $http.put(url,s)
 		   .then(function(result) {
 			   console.log(result);
 			   return result;
