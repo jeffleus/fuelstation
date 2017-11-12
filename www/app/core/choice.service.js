@@ -5,7 +5,7 @@
 
     .service('ChoiceSvc', function ($http, $resource, ApiEndpoint) {
         var self = this;
-        var apiUrl = 'https://mna6x5va5e.execute-api.us-west-2.amazonaws.com/dev/choices';
+        var apiUrl = 'https://wxje26sx3l.execute-api.us-west-2.amazonaws.com/dev/choices';
 
         self.alphabetize = _alphabetize;
         self.choice = _choice;
@@ -19,6 +19,7 @@
         self.saveChoice = _saveChoice;
         self.snackOnly = _snackOnly;
         self.typeOptions = _typeOptions;
+		self.categories = _categories;
         self.updateChoice = _updateChoice;
 
         function _alphabetize(a, b) {
@@ -103,6 +104,10 @@
             return $http.post(apiUrl, choice);
         }
 
+        function _updateChoice(choice){
+            return $http.put(apiUrl, choice)
+        }
+
         function _snackOnly(data) {
             return _.where(data, {
                 type: 0
@@ -127,9 +132,57 @@
             ];
             return opts;
         }
-
-        function _updateChoice(choice){
-            return $http.put(apiUrl, choice)
+		
+        function _categories() {
+            var cats = [
+                {
+                    label: "Quick Carb",
+                    value: 9
+            }, {
+                    label: "Bars",
+                    value: 10
+            }, {
+                    label: "Protein",
+                    value: 11
+            }, {
+                    label: "Nuts",
+                    value: 12
+            }, {
+                    label: "Fruit",
+                    value: 13
+            }, {
+                    label: "Breads",
+                    value: 14
+            }, {
+                    label: "Drinks",
+                    value: 15
+            }, {
+                    label: "Salty Snacks",
+                    value: 16
+            }, {
+                    label: "Yogurt",
+                    value: 17
+            }, {
+                    label: "Cereal",
+                    value: 18
+            }, {
+                    label: "TT",
+                    value: 19
+            }, {
+                    label: "Smoothie",
+                    value: 20
+            }, {
+                    label: "Special",
+                    value: 21
+            }, {
+                    label: "Bread",
+                    value: 22
+            }, {
+                    label: "Bar",
+                    value: 23
+            }
+            ];
+            return cats;
         }
     });
 })();
