@@ -106,9 +106,14 @@
          //         .then(onSuccess, IonicAlertSvc.error);
          // }
 		  
-		  vm.selectedAthlete.sportCode = vm.selectedSport;
-		  AthleteSvc.saveAthlete(vm.selectedAthlete)
-		  	.then(onSuccess, IonicAlertSvc.error);
+		if (vm.selectedAthlete.createdAt) {
+			AthleteSvc.updateAthlete(vm.selectedAthlete)
+				.then(onSuccess, IonicAlertSvc.error);
+		} else {
+			vm.selectedAthlete.sportCode = vm.selectedSport;
+			AthleteSvc.saveAthlete(vm.selectedAthlete)
+		  		.then(onSuccess, IonicAlertSvc.error);
+		}
 
 
          function onSuccess() {
