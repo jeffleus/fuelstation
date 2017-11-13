@@ -7,61 +7,17 @@
                 <h1 class="title">Fuel Station Choices</h1>
             </ion-header-bar>
             <ion-content class="padding">
-
-                <div ng-if="!vm.accountSvc.shouldHidePre" class="category-fade">
-                    <h4>Pre-Workout Supplements:</h4>
+                <div ng-if="!vm.accountSvc.shouldHideItems" ng-repeat="cat in vm.categories" class="category-fade">
+                    <h4>{{cat.label}}:</h4>
                     <hr />
                     <p>
-                        <button class="button button-balanced" ng-repeat="c in vm.choiceSvc.pre" ng-click="vm.orderItem(c, false,'pre')" ng-show="c.isActive">{{c.name}}</button>
+                        <button class="button button-balanced" 
+								ng-repeat="choice in vm.choiceSvc.categoricalChoices[cat.value]" 
+								ng-show="choice.isActive" ng-click="vm.orderItem(choice, false,'pre')">{{choice.name}}</button>
                     </p>
                 </div>
-                <div ng-if="!vm.accountSvc.shouldHidePost" class="category-fade">
-                    <h4>Post-Workout Supplements:</h4>
-                    <hr />
-                    <p>
-                        <button class="button button-royal" ng-repeat="c in vm.choiceSvc.post" ng-click="vm.orderItem(c, false,'post')" ng-show="c.isActive">{{c.name}}</button>
-                    </p>
-                </div>
-                <div ng-if="!vm.accountSvc.shouldHideHydration" ng-hide="true" class="category-fade">
-                    <h4>Hydration Supplements:</h4>
-                    <hr />
-                    <p>
-                        <button class="button button-energized" ng-repeat="c in vm.choiceSvc.hydration" ng-click="vm.orderItem(c, false,'hyd')" ng-show="c.isActive">{{c.name}}</button>
-                    </p>
-                </div>
-                <div ng-if="!vm.accountSvc.shouldHideStaff" class="category-fade">
-                    <h4>Staff Options:</h4>
-                    <hr />
-                    <p>
-                        <button class="button button-positive" ng-repeat="c in vm.choiceSvc.staff" ng-click="vm.orderItem(c, false,'staff')" ng-show="c.isActive">{{c.name}}</button>
-                    </p>
-                </div>
-                <div ng-if="!vm.accountSvc.shouldHideSnacks" class="category-fade">
-                    <h4>Snack Options:</h4>
-                    <hr />
-                    <p>
-                        <button class="button button-calm" ng-repeat="c in vm.choiceSvc.snacks" ng-click="vm.orderItem(c, true,'snack')" ng-show="c.isActive">
-                            {{c.name}}
-                        </button>
-                        <button class="button button-balanced" ng-repeat="c in vm.choiceSvc.pre | filter: {isSnack:true}" ng-if="vm.accountSvc.shouldHidePre && c.isActive" ng-click="vm.orderItem(c, true,'snack')">
-                            {{c.name}}
-                        </button>
-                        <button class="button button-royal" ng-repeat="c in vm.choiceSvc.post | filter: {isSnack:true}" ng-if="vm.accountSvc.shouldHidePost && c.isActive" ng-click="vm.orderItem(c, true,'snack')">
-                            {{c.name}}
-                        </button>
-                        <button class="button button-positive" ng-repeat="c in vm.choiceSvc.staff | filter: {isSnack:true}" ng-if="vm.accountSvc.shouldHideStaff && (vm.accountSvc.dayStaffLimit > 0) && c.isActive" ng-click="vm.orderItem(c, true,'snack')">
-                            {{c.name}}
-                        </button>
-                        <button class="button button-energized" ng-repeat="c in vm.choiceSvc.hydration | filter: {isSnack:true}" ng-if="vm.accountSvc.shouldHideHydration && c.isActive" ng-click="vm.orderItem(c, true,'snack')">
-                            {{c.name}}
-                        </button>
-                    </p>
-                </div>
-                <div class="category-fade" ng-if="(vm.accountSvc.shouldHideSnacks &&
-                     vm.accountSvc.shouldHideHydration &&
-                     vm.accountSvc.shouldHidePre &&
-                     vm.accountSvc.shouldHidePost)">
-
+			<!-- Warning Msg for Hiding Items after Total Limit Reached -->
+                <div class="category-fade" ng-if="vm.accountSvc.shouldHideItems">
                     <div class="energized-bg padding">
                         <h4 class="text-white">
                             You have reached your limit. To change your selection, remove items from your order list.
@@ -99,6 +55,7 @@
                             postCount: {{vm.accountSvc.postCount}}<br/>
                             snackCount: {{vm.accountSvc.snackCount}}<br/>
                             staffCount: {{vm.accountSvc.staffCount}}<br/>
+                            totalCount: {{vm.accountSvc.totalCount}}<br/>
                         </strong>
                     </p>
                 </ion-item>
