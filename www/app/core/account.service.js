@@ -12,6 +12,8 @@
             self.postCount = 0;
             self.snackCount = 0;
             self.staffCount = 0;
+		
+			self.totalCount = 0;
 
             self.studentId = '';
 
@@ -19,6 +21,7 @@
             self.gotPostToday = false;
             self.gotHydrationToday = false;
 
+			self.shouldHideItems = false;
             self.shouldHidePre = false;
             self.shouldHidePost = false;
             self.shouldHideHydration = false;
@@ -39,6 +42,7 @@
             * Clears saved athlete data and visisbility logic for choices and gets updated snack limits
             */
             function _clear() {
+				self.shouldHideItems = false;
                 self.shouldHidePre = false;
                 self.shouldHidePost = false;
                 self.shouldHideHydration = false;
@@ -51,6 +55,7 @@
                 self.daySnacksRemaining = '';
                 self.monthSnacksRemaining = '';
                 //self.getSnackLimits();
+				self.totalCount = 0;
             }
 
             function _clearStudentId() {
@@ -199,6 +204,8 @@
                 self.shouldHidePost = (self.postCount >= self.dayPostLimit);
                 self.shouldHideStaff = (self.staffCount >= self.dayStaffLimit);
 
+				self.shouldHideItems = (self.totalCount >= 5);
+				console.log('shouldHideItems: ' + self.shouldHideItems + ', totalCount: ' + self.totalCount);
 
                 if (self.monthSnacksRemaining <= 0 || self.daySnacksRemaining <= 0) {
                     self.shouldHideSnacks = true;
