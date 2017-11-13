@@ -3,7 +3,7 @@
 
     angular.module('app.core')
 
-    .service('ChoiceSvc', function ($http, $resource, ApiEndpoint) {
+    .service('ChoiceSvc', function ($rootScope, $http, $resource, ApiEndpoint) {
         var self = this;
         var apiUrl = 'https://wxje26sx3l.execute-api.us-west-2.amazonaws.com/dev/choices';
 
@@ -81,6 +81,11 @@
 
         function _initializeChoiceCategories(choices) {
             var allChoices = choices.sort(self.alphabetize);
+		//use groupBy to build a grouped list of menu choices
+			var categoricalChoices = _.groupBy(choices, 'CategoryID');
+			self.categoricalChoices = categoricalChoices;
+			$rootScope.$broadcast('ChoiceSvc.Categorized', {});
+			
             self.snacks = self.snackOnly(allChoices);
             self.pre = self.preWorkout(allChoices);
             self.post = self.postWorkout(allChoices);
