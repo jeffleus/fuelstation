@@ -12,6 +12,7 @@
         vm.choiceSvc = ChoiceSvc;
         vm.orderItems = OrderSvc.orderItems;
         vm.timeRemaining = 120;
+		vm.categories = vm.choiceSvc.categories();
 
         vm.cancel = _cancel;
         vm.onOrderClick = _onOrderClick;
@@ -22,6 +23,7 @@
         init();
 
         function init() {
+			console.log('Categorical Choices', vm.categoricalChoices);
             // Start counting down timer, which was initialized to 120 above
             timer = $interval(function () {
                 vm.timeRemaining--;
@@ -44,7 +46,6 @@
         $scope.$on('$destroy', function () {
             $interval.cancel(timer);
         });
-
 
         function _cancel() {
             var msg = {
@@ -94,6 +95,7 @@
 					AccountSvc.daySnacksRemaining--;
 					itemClone.isSnack = true;
 					AccountSvc.snackCount++;
+					AccountSvc.totalCount += item.choiceValue;
 				}
             } else {
                 itemClone.isSnack = false;
@@ -102,6 +104,7 @@
 					if (debit === 'post') AccountSvc.postCount++;
 					if (debit === 'snack') AccountSvc.snackCount++;
 					if (debit === 'staff') AccountSvc.staffCount++;
+					AccountSvc.totalCount += item.choiceValue;
 				}
             }
 
@@ -122,6 +125,8 @@
 						AccountSvc.daySnacksRemaining++;
 					}
 				}
+				
+				AccountSvc.totalCount -= OrderSvc.orderItems[index].choiceValue;
 
 				switch(OrderSvc.orderItems[index].orderType) {
 					case 'pre':
