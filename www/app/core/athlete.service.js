@@ -4,9 +4,10 @@
     angular.module('app.core')
 
     .factory('AthleteSvc', function ($http, $resource, $cacheFactory, ApiEndpoint) {
-      var url = 'https://9cyvf89py9.execute-api.us-west-2.amazonaws.com/dev/athletes/';
+      var url = 'https://hixp8ta4fk.execute-api.us-west-2.amazonaws.com/dev/athletes/';
         var service = {
             getAthlete: _getAthlete,
+            getAllAthlete: _getAllAthlete,
             getAthletesBySport: _getAthletesBySport,
             athleteApi: _athleteApi,
 			saveAthlete: _saveAthlete,
@@ -27,6 +28,16 @@
             //     schoolsidnumber: id
             // });
             return $http.get(url + id)
+                .then(function(result){
+                    return result.data.athletes; // API returns data in 'athletes' property
+                });
+        }
+
+        function _getAllAthlete() {
+            // return service.athleteApi().query({
+            //     schoolsidnumber: id
+            // });
+            return $http.get(url)
                 .then(function(result){
                     return result.data.athletes; // API returns data in 'athletes' property
                 });
