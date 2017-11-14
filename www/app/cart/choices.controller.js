@@ -53,7 +53,7 @@
             };
 
             var onConfirmFn = function () {
-                $state.go('tab.studentID', null, {
+                $state.go('tab.orderList', null, {
                     reload: true
                 });
             }
