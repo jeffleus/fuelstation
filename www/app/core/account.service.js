@@ -93,6 +93,7 @@
 					self.postCount = history.dayPostCount;
 					self.snackCount = history.daySnacksCount;
 					self.staffCount = history.dayStaffCount;
+					self.totalCount = history.dayTotalCount;
 					
                     if (history.dayPreCount > 0) {
                         self.shouldHidePre = true;
@@ -133,6 +134,8 @@
                 self.shouldHidePost = (self.postCount >= self.dayPostLimit);
                 self.shouldHideSnack = (self.snackCount >= self.snackCount);
                 self.shouldHideStaff = (self.staffCount >= self.dayStaffLimit);
+				self.shouldHideItems = (self.totalCount >= 5);
+
 
                     // Manually setting defaults (|| self...) because history currently not implemented
                     self.monthSnacksRemaining = Math.max(self.monthSnacksLimit - history.monthSnacksCount, 0) || self.monthSnacksLimit;
