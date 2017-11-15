@@ -1,0 +1,24 @@
+<ion-modal-view>
+<ion-header-bar class="bar bar-assertive">
+  <h1 class="title">New Order - Select Athlete</h1>
+</ion-header-bar>
+<ion-content>
+  <ion-list>
+	<div ng-repeat="sport in vm.sports">
+	  <ion-item class="item-stable"
+				ng-click="toggleSport(sport)"
+				ng-class="{active: isSportShown(sport)}">
+		  <i class="icon" ng-class="isSportShown(sport) ? 'ion-chevron-down' : 'ion-chevron-up'"></i>
+		&nbsp;
+		{{sport[0].sportCode}}
+	  </ion-item>
+	  <ion-item class="item-accordion"
+				ng-repeat="ath in sport | orderBy: 'lastName'"
+				ng-click="vm.gotoOrder(ath)"
+				ng-show="isSportShown(sport)">
+		{{::ath.lastName}}, {{::ath.firstName}}
+	  </ion-item>
+	</div>
+  </ion-list>
+</ion-content>
+</ion-modal-view>
