@@ -8,7 +8,7 @@
             var vm = this;
 
             vm.closeFSModal = _closeModal;
-            vm.loginData = { username: "fsdemo-manager", password: "FuelStation17!" };
+            vm.loginData = { username: "vatech-m", password: "Hokies17" };
             vm.onLogIn = onLogIn;
             vm.onSubmitFS = _onSubmitFS;
 
@@ -51,7 +51,7 @@
 
                 AuthSvc.login(vm.loginData).then(function (token) {
                     console.info("idToken", token);
-                    $state.go('tab.studentID', null, {
+                    $state.go('tab.orderList', null, {
                         reload: true
                     });
                 }).catch(function (err) {
