@@ -3,7 +3,9 @@
 
     angular.module('app.orderListCtrl', [])
 
-    .controller('OrderListCtrl', function (AccountSvc, CheckoutSvc, IonicAlertSvc, OrderSvc, $ionicModal, $scope, LoadingSpinner, $timeout, $interval) {
+    .controller('OrderListCtrl', function ($scope, $state, $timeout, $interval, $ionicModal, 
+											LoadingSpinner, IonicAlertSvc, 
+											AccountSvc, AthleteSvc, ChoiceSvc, CheckoutSvc, OrderSvc) {
         var vm = this;
         var polling;
 
@@ -15,7 +17,11 @@
         vm.deleteCheckout = _deleteCheckout;
         vm.nameFilter = _nameFilter;
         vm.openModal = _openModal;
+        vm.newOrder = _newOrder;
+		vm.gotoOrder = _gotoOrder;
         vm.setArchive = _setArchive;
+		vm.athletes = [];
+		vm.sports = {};
 
         init();
 		$scope.$on('closeOrderModal', function() {
@@ -23,9 +29,25 @@
 			LoadingSpinner.show();
 			refresh();
 		});
+		$scope.toggleSport = function(sport) {
+			if ($scope.isSportShown(sport)) {
+			  $scope.shownSport = null;
+			} else {
+			  $scope.shownSport = sport;
+			}
+		  };
+		  $scope.isSportShown = function(sport) {
+			return $scope.shownSport === sport;
+		  };
 		
         function init() {
             LoadingSpinner.show();
+			
+			AthleteSvc.getAllAthlete().then(function(result) {
+				console.log('OrderListCtrl', 'athletes found: ' + result.length);
+				vm.athletes = result;
+				vm.sports = _.groupBy(_.sortBy(result, 'sportCode'), 'sportCode');
+			});
 
             CheckoutSvc.unarchived().query().then(onGetTodaysCheckouts, IonicAlertSvc.error);
 
@@ -87,7 +109,6 @@
             vm.todaysCheckouts = response.data.checkouts;
         }
 
-
         function _openModal(checkout) {
             AccountSvc.clear();
             CheckoutSvc.currentCheckout = checkout;
@@ -115,7 +136,62 @@
         function showHeader() {
             angular.element(document.querySelector("ion-nav-bar")).removeClass("hide");
         }
+		
+		function _newOrder() {
+            // On page load, remove all previous athlete and order data
+            AccountSvc.clear();
+            OrderSvc.clear();
+			$scope.newModal.show();
+		}
+		
+		function _gotoOrder(athlete) {
+			AccountSvc.studentId = athlete.schoolid;
+            //
+            AthleteSvc.getAthlete(AccountSvc.studentId)
+                .then(AccountSvc.saveAthleteData)
+                .then(AccountSvc.getSnackLimits)
+                .then(getCheckoutHistory)
+                .then(AccountSvc.initializeHiddenCategories)
+                .then(getAllChoices)
+                .then(redirectToCart)
+                .catch(IonicAlertSvc.error);			
+		}
 
+        /** 
+         * Gets athlete checkout history
+         * @returns {object} Counts of: Today's snack checkouts, current month snack checkouts, and whether athlete has checked out pre, post, or hydration today
+         */
+        function getCheckoutHistory(id) {
+            AccountSvc.preCount = 0;AccountSvc.postCount = 0;AccountSvc.snackCount = 0;
+            return CheckoutSvc.getCheckoutHistory(id)
+                .then(function (response) {
+                    return response;
+                }, IonicAlertSvc.error);
+        }
+
+        /**
+         * Get all snack choices, then initialize hidden categories
+         */
+        function getAllChoices(success) {
+            if (success) {
+                ChoiceSvc.getAllChoices()
+                    .then(ChoiceSvc.initializeChoiceCategories)
+                    .catch(IonicAlertSvc.error);
+            }
+        }
+
+        /**
+         * Use the stateProvider to route to the cart once set
+         */
+        function redirectToCart() {
+            LoadingSpinner.hide();
+			return $scope.newModal.hide().then(function() {
+				return $state.go('cart', null, {
+					reload: true
+				});
+			});
+        }
+		
         function loadModal() {
             $ionicModal.fromTemplateUrl('app/manager/orderList/editOrderModal.html', {
                 scope: $scope,
@@ -123,6 +199,12 @@
             }).then(function (modal) {
                 $scope.modal = modal;
                 //$scope.modal.show();
+            });
+            $ionicModal.fromTemplateUrl('app/manager/orderList/newOrderModal.html', {
+                scope: $scope,
+                animation: 'slide-in-up'
+            }).then(function (modal) {
+                $scope.newModal = modal;
             });
 
             $scope.$on('$destroy', function () {
