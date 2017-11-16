@@ -30,6 +30,8 @@ angular.module('app', [
     'app.teamManagerCtrl',
     'app.todaysCheckouts',
     'app.unauthenticated',
+	
+	'app.summary', 
 
     'blocks.exception',
     'blocks.errorlog',
@@ -176,6 +178,19 @@ angular.module('app', [
                 'appContent': {
                     templateUrl: 'app/manager/settings/settings.html',
                     controller: 'SettingsCtrl as vm'
+                },
+                'sideMenu': {
+                    templateUrl: 'app/manager/menu.html'
+                }
+            }
+
+        })
+        .state('tab.summary', {
+            url: '/summary',
+            views: {
+                'appContent': {
+                    templateUrl: 'app/manager/reports/summary/summary.html',
+                    controller: 'SummaryCtrl as vm'
                 },
                 'sideMenu': {
                     templateUrl: 'app/manager/menu.html'
