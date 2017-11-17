@@ -10,14 +10,18 @@
 			<!-- -->
 			<div style="border:black 1px dashed;padding:4px;">
 			  <button class="button button-balanced icon ion-funnel" ng-click="vm.openFilter()"></button>
+			  <button class="button button-positive icon ion-calendar button-balanced"
+                      ng-click="vm.displayMode = 0;"></button>
+			  <button class="button button-positive icon ion-stats-bars button-balanced"
+                      ng-click="vm.displayMode = 2;"></button>
+			  <button class="button button-positive icon ion-calculator button-balanced"
+                      ng-click="vm.showAverages()"></button>
 			  <button class="button button-positive icon ion-ios-download button-balanced"></button>
-			  <button class="button button-positive icon ion-stats-bars button-balanced"></button>
-			  <button class="button button-positive icon ion-calendar button-balanced"></button>
-			  <button class="button button-positive icon ion-calculator button-balanced"></button>
 			</div>
 			<!-- -->
 			<!-- Report Table: Date, Athletes, Checkouts and Items Tallyed by Day -->
 			<!-- -->
+            <ion-list ng-if="vm.displayMode == 0">
 			<div class="item item-divider table-row positive">
 				<div class="row table-row">
 					<div class="col col-25 col-center">
@@ -47,11 +51,57 @@
 			<ion-item class="item table-row" ng-class="item.status">
 				<div class="row table-row">
 				<div class="col col-25 col-center"><b>Totals</b></div>
-				<div class="col col-25 col-center"><b>714</b></div>
-				<div class="col col-25 col-center"><b>8931</b></div>
-				<div class="col col-25 col-center"><b>17294</b></div>
+				<div class="col col-25 col-center"><b>{{vm.totals.avgStudents | number: 0}}</b> (avg)</div>
+				<div class="col col-25 col-center"><b>{{vm.totals.totalCheckouts}}</b></div>
+				<div class="col col-25 col-center"><b>{{vm.totals.totalItems}}</b></div>
 				</div>
 			</ion-item>
+            </ion-list>
+            
+            <ion-list ng-if="vm.displayMode == 1">
+			<div class="item item-divider table-row positive">
+				<div class="row table-row">
+					<div class="col col-25 col-center">
+						<a ng-click="toggleIndex()">Date&nbsp;
+						<i ng-show="sortIndex=='up'" class="icon ion-arrow-down-b"></i>
+						<i ng-show="sortIndex=='down'" class="icon ion-arrow-up-b"></i>
+						</a></div>
+					<div class="col col-25 col-center">
+						<a ng-click="toggleSort()">CheckoutPerAthlete&nbsp;
+						<i ng-show="sortOrder=='za'" class="icon ion-arrow-down-b"></i>
+						<i ng-show="sortOrder=='az'" class="icon ion-arrow-up-b"></i>
+						</a></div>
+					<div class="col col-25 col-center">ItemsPerAthlete</div>
+					<div class="col col-25 col-center">ItemsPerCheckout</div>
+				</div>
+			</div>
+			<!-- Data Rows: one row for each day within dateRange -->
+			<ion-item class="item table-row" ng-repeat="item in vm.averages" ng-click="showModal(item)" ng-class="item.status">
+				<div class="row table-row">
+				<div class="col col-25 col-center">{{item.ServiceDate.substring(0,10)}}</div>
+				<div class="col col-25 col-center">{{item.CheckoutPerStudent | number: 2}}</div>
+				<div class="col col-25 col-center">{{item.ItemPerStudent | number: 2}}</div>
+				<div class="col col-25 col-center">{{item.ItemPerCheckout | number: 2}}</div>
+				</div>
+			</ion-item>
+			<!-- Totals Row -->
+			<ion-item class="item table-row" ng-class="item.status">
+				<div class="row table-row">
+				<div class="col col-25 col-center"><b>Totals</b></div>
+				<div class="col col-25 col-center"><b>{{vm.totals.avgStudents | number: 0}}</b> (avg)</div>
+				<div class="col col-25 col-center"><b>{{vm.totals.totalCheckouts}}</b></div>
+				<div class="col col-25 col-center"><b>{{vm.totals.totalItems}}</b></div>
+				</div>
+			</ion-item>
+            </ion-list>
+            
+            <div class="item" ng-if="vm.displayMode == 2">
+            <canvas id="line" class="chart chart-line" chart-data="vm.data"
+                chart-labels="vm.labels" chart-series="vm.series" chart-options="vm.options"
+                    chart-colors="vm.colors"
+                chart-dataset-override="vm.datasetOverride">
+                </canvas>
+            </div>
 		</div>
     </ion-content>
 </ion-view>
