@@ -10,9 +10,10 @@ angular.module('app', [
 
     'ion-sticky',
     
-    'googlechart',
     'app.core',
-
+    'ionic-datepicker', 
+    'chart.js',
+    
     'app.archiveListCtrl',
     'app.editOrderCtrl',
     'app.errors',
@@ -49,11 +50,17 @@ angular.module('app', [
             cordova.plugins.Keyboard.disableScroll(true);
 
         }
+        ionic.Platform.fullScreen( true, true );
         if (window.StatusBar) {
             // org.apache.cordova.statusbar required
             StatusBar.styleDefault();
         }
     });
+})
+
+.config(function(ChartJsProvider){
+    console.log('SET CHART COLOR OPTIONS');
+    ChartJsProvider.setOptions({ colors : [ '#803690', '#00ADF9', '#DCDCDC', '#46BFBD', '#FDB45C', '#949FB1', '#4D5360'] });
 })
 
 .config(function ($stateProvider, $urlRouterProvider, $ionicConfigProvider, $httpProvider) {
