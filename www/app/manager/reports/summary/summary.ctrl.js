@@ -5,7 +5,7 @@
 
     angular.module('app.summary')
 
-    .controller(ctrlName, function ($scope, $q, $ionicModal, ionicDatePicker, LoadingSpinner, SummarySvc) {
+    .controller(ctrlName, function ($scope, $q, $ionicModal, ionicDatePicker, LoadingSpinner, SummarySvc, CsvSvc) {
         var vm = this;		
 		vm.items = [];
 		vm.openFilter = _openFilter;
@@ -14,6 +14,7 @@
         vm.hideModalDate = _hideModalDate;
         vm.refreshWithFilter = _refreshWithFilter;
         vm.showAverages = _showAverages;
+		vm.download = _download;
         vm.displayMode = 0;
 		
 		vm.dateRange = {
@@ -70,7 +71,15 @@
                 vm.displayMode = 1;
             });
         }
-        
+
+        function _download() {
+			if (vm.displayMode == 1) {				
+				CsvSvc.download(vm.averages, "summary_report_avg_");
+			} else {
+				CsvSvc.download(vm.items, "summary_report_totals_");
+			}
+        }
+
         function _refreshWithFilter() {
             LoadingSpinner.show();
             var fmt = 'YYYY-MM-DD';
