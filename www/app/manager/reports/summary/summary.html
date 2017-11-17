@@ -8,7 +8,7 @@
 			<!-- -->
 			<!-- Summary Command Center Buttons: filter, download, chart, calendar, calc(avgs) -->
 			<!-- -->
-			<div style="border:black 1px dashed;padding:4px;">
+			<div style="padding:6px;">
 			  <button class="button button-balanced icon ion-funnel" ng-click="vm.openFilter()"></button>
 			  <button class="button button-positive icon ion-calendar button-balanced"
                       ng-click="vm.displayMode = 0;"></button>
@@ -16,7 +16,8 @@
                       ng-click="vm.displayMode = 2;"></button>
 			  <button class="button button-positive icon ion-calculator button-balanced"
                       ng-click="vm.showAverages()"></button>
-			  <button class="button button-positive icon ion-ios-download button-balanced"></button>
+			  <button class="button button-positive icon ion-ios-download button-balanced"
+					  ng-click="vm.download()"></button>
 			</div>
 			<!-- -->
 			<!-- Report Table: Date, Athletes, Checkouts and Items Tallyed by Day -->
