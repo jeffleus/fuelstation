@@ -16,6 +16,7 @@
         vm.clearFilter = _clearFilter;
         vm.deleteCheckout = _deleteCheckout;
         vm.nameFilter = _nameFilter;
+		vm.athleteFilter = _athleteFilter;
         vm.openModal = _openModal;
         vm.newOrder = _newOrder;
 		vm.gotoOrder = _gotoOrder;
@@ -45,7 +46,15 @@
 			
 			AthleteSvc.getAllAthlete().then(function(result) {
 				console.log('OrderListCtrl', 'athletes found: ' + result.length);
-				vm.athletes = result;
+				vm.athletes = _.sortBy(_.sortBy(result, 'firstName'), 'lastName');
+				vm.athletes.forEach(function(ath) {
+					if (ath.lastName.toLowerCase().substring(0, 3) === 'smi') {
+						var fullName = (ath.lastName + ', ' + ath.firstName).toLowerCase();
+						console.log(fullName);
+						console.log(fullName.indexOf('smi'));
+						console.log(fullName.indexOf('smi') > -1);
+					}
+				});
 				vm.sports = _.groupBy(_.sortBy(result, 'sportCode'), 'sportCode');
 			});
 
@@ -97,12 +106,20 @@
                 // Return orders that are not archived and that contain name in filter
                 if (vm.name.value && vm.name.value.length > 0) {
 					var fullName = item.Athlete.lastName + ', ' + item.Athlete.firstName
-                    return !item.isArchived && (fullName.toLowerCase().indexOf(vm.name.value.toLowerCase()) > -1);
+                    return !item.isArchived && (fullName.toLowerCase().indexOf(vm.name.toLowerCase()) > -1);
                 }
                 // Return all orders that have not been archived
                 return !item.isArchived;
             }
         }
+		
+		function _athleteFilter(ath) {
+			if (vm.search && vm.search.length > 0) {
+				var fullName = (ath.lastName + ', ' + ath.firstName).toLowerCase();
+				var search = vm.search.toLowerCase();
+				return ( fullName.indexOf(search) > -1 );
+			} else { return false; }
+		}
 
         function onGetTodaysCheckouts(response) {
             LoadingSpinner.hide();
@@ -145,6 +162,7 @@
 		}
 		
 		function _gotoOrder(athlete) {
+			LoadingSpinner.show();
 			AccountSvc.studentId = athlete.schoolid;
             //
             AthleteSvc.getAthlete(AccountSvc.studentId)
@@ -154,7 +172,8 @@
                 .then(AccountSvc.initializeHiddenCategories)
                 .then(getAllChoices)
                 .then(redirectToCart)
-                .catch(IonicAlertSvc.error);			
+                .catch(IonicAlertSvc.error)
+				.finally(LoadingSpinner.hide);			
 		}
 
         /** 
