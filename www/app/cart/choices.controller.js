@@ -35,7 +35,7 @@
                     var opts = {};
                     opts.title = "You have been logged out due to inactivity.";
                     opts.shouldClearID = true;
-                    opts.redirect = 'tab.studentID';
+                    opts.redirect = 'tab.orderList';
 
                     IonicAlertSvc.alert(opts);
                 }
