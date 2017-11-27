@@ -3,7 +3,9 @@
 
     angular.module('app.studentChoices', [])
 
-    .controller('StudentChoicesCtrl', function (ChoiceSvc, AccountSvc, OrderSvc, $state, CheckoutSvc, $ionicSideMenuDelegate, $ionicPopup, IonicAlertSvc, $interval, $scope) {
+    .controller('StudentChoicesCtrl', function ($scope, $state, $interval, 
+												 $ionicModal, $ionicPopup, $ionicSideMenuDelegate, 
+												 ChoiceSvc, AccountSvc, OrderSvc, CheckoutSvc, IonicAlertSvc) {
         var vm = this;
 
         var timer;
@@ -19,11 +21,14 @@
         vm.orderItem = _orderItem;
         vm.removeItem = _removeItem;
         vm.toggleLeft = _toggleLeft;
+		
+		vm.changeAthlete = _changeAthlete;
 
         init();
 
         function init() {
 			console.log('Categorical Choices', vm.categoricalChoices);
+			loadModal();
             // Start counting down timer, which was initialized to 120 above
             timer = $interval(function () {
                 vm.timeRemaining--;
@@ -154,6 +159,43 @@
 
         function _toggleLeft() {
             $ionicSideMenuDelegate.toggleLeft();
+        }
+		
+		function _changeAthlete() {
+			AccountSvc.clear();
+			OrderSvc.clear();
+			$scope.newModal.show();
+		}
+		
+        function loadModal() {
+            $ionicModal.fromTemplateUrl('app/athlete-selector/newOrder.modal.html', {
+				id: 'new-order', 
+                scope: $scope,
+                animation: 'slide-in-up'
+            }).then(function (modal) {
+                $scope.newModal = modal;
+				$scope.$on('close.newOrder', function() { return closeAndRemove(modal); });
+            });
+
+            $scope.$on('$destroy', function (event, modal) {
+				console.log('OrderListCtrl::$destroy', modal);
+                $scope.newModal.remove();
+            });
+            $scope.$on('modal.hidden', function (event, modal) {
+                //init();
+				console.log('OrderListCtrl::modal.hidden', modal);
+            });
+            $scope.$on('modal.removed', function (event, modal) {
+				console.log('OrderListCtrl::modal.removed', modal);
+            });
+        }
+		
+		function closeAndRemove(modalInstance) {
+            return modalInstance.hide()
+                .then(function () {
+                    //return modalInstance.remove();
+					return;
+                });
         }
     });
 })();
