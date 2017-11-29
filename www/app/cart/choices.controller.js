@@ -14,7 +14,7 @@
         vm.choiceSvc = ChoiceSvc;
         vm.orderItems = OrderSvc.orderItems;
         vm.timeRemaining = 120;
-		vm.categories = vm.choiceSvc.categories();
+		vm.categories = [];
 
         vm.cancel = _cancel;
         vm.onOrderClick = _onOrderClick;
@@ -27,7 +27,11 @@
         init();
 
         function init() {
-			console.log('Categorical Choices', vm.categoricalChoices);
+			vm.choiceSvc.categories().then(function(cats) {
+				vm.categories = _.sortBy(_.filter(cats, function(cat) { return cat.CategoryID > 8; }), 'sortOrder');
+				console.log('Categorical Choices', vm.categories);
+				return;
+			});
 			loadModal();
             // Start counting down timer, which was initialized to 120 above
             timer = $interval(function () {
