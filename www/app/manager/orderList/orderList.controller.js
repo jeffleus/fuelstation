@@ -219,6 +219,7 @@
         function loadModal() {
             $ionicModal.fromTemplateUrl('app/manager/orderList/editOrderModal.html', {
                 scope: $scope,
+				focusFirstInput: true,
                 animation: 'slide-in-up'
             }).then(function (modal) {
                 $scope.modal = modal;
