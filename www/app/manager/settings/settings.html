@@ -1,0 +1,21 @@
+<ion-view view-title="Errors">
+    <ion-nav-buttons side="right">
+        <button class="button button-large ng-click-active ion-refresh" ng-click="vm.saveSettings()"> Save
+        </button>
+    </ion-nav-buttons>
+    <ion-content class="has-header">
+        <ion-list>
+			<ion-item class="item-input">
+				<span class="input-label">TerminalID</span>
+				<input type="text" ng-model="vm.settingSvc.terminalID"></ion-item>
+			<ion-item class="item-input">
+				<span class="input-label">LocationID</span>
+				{{vm.settingSvc.locationID}}</ion-item>
+            <ion-item class="item-input item-select">
+                <div class="input-label">Location</div>
+                <select name="locationID" ng-model="vm.settingSvc.locationID"
+						ng-options="loc.LocationID as loc.title for loc in vm.locations">
+				</select></ion-item>
+        </ion-list>
+    </ion-content>
+</ion-view>

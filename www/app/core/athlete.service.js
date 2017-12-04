@@ -10,6 +10,7 @@
             getAthletesBySport: _getAthletesBySport,
             athleteApi: _athleteApi,
 			saveAthlete: _saveAthlete,
+			updateAthlete: _updateAthlete,
 			deleteAthlete: _deleteAthlete
         };
 
@@ -42,6 +43,14 @@
 			return $http.post(url, athlete)
 				.then(function(result) {
 					console.log('athlete saved');
+					return result;
+				});
+		}
+		
+		function _updateAthlete(athlete) {
+			return $http.put(url, athlete)
+				.then(function(result) {
+					console.log('athlete updated');
 					return result;
 				});
 		}

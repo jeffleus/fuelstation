@@ -89,16 +89,20 @@
             itemClone.orderType = debit;
 
             if (isSnack) {
-                AccountSvc.monthSnacksRemaining--;
-                AccountSvc.daySnacksRemaining--;
-                itemClone.isSnack = true;
-                    AccountSvc.snackCount++;
+				if(!item.isFree) {
+					AccountSvc.monthSnacksRemaining--;
+					AccountSvc.daySnacksRemaining--;
+					itemClone.isSnack = true;
+					AccountSvc.snackCount++;
+				}
             } else {
                 itemClone.isSnack = false;
-                if (debit === 'pre') AccountSvc.preCount++;
-                if (debit === 'post') AccountSvc.postCount++;
-                if (debit === 'snack') AccountSvc.snackCount++;
-				if (debit === 'staff') AccountSvc.staffCount++;
+				if (!item.isFree) {
+					if (debit === 'pre') AccountSvc.preCount++;
+					if (debit === 'post') AccountSvc.postCount++;
+					if (debit === 'snack') AccountSvc.snackCount++;
+					if (debit === 'staff') AccountSvc.staffCount++;
+				}
             }
 
             OrderSvc.addItem(itemClone);
@@ -107,30 +111,33 @@
 
         function _removeItem(index) {
             resetTimer();
+			
+			if (!OrderSvc.orderItems[index].isFree) {
+			
+				if (OrderSvc.orderItems[index].isSnack) {
+					if (AccountSvc.monthSnacksRemaining < AccountSvc.monthSnacksLimit) {
+						AccountSvc.monthSnacksRemaining++;
+					}
+					if (AccountSvc.daySnacksRemaining < AccountSvc.daySnacksLimit) {
+						AccountSvc.daySnacksRemaining++;
+					}
+				}
 
-            if (OrderSvc.orderItems[index].isSnack) {
-                if (AccountSvc.monthSnacksRemaining < AccountSvc.monthSnacksLimit) {
-                    AccountSvc.monthSnacksRemaining++;
-                }
-                if (AccountSvc.daySnacksRemaining < AccountSvc.daySnacksLimit) {
-                    AccountSvc.daySnacksRemaining++;
-                }
-            }
-            
-            switch(OrderSvc.orderItems[index].orderType) {
-                case 'pre':
-                    AccountSvc.preCount--;
-                    break;
-                case 'post':
-                    AccountSvc.postCount--;
-                    break;
-                case 'staff':
-                    AccountSvc.staffCount--;
-                    break;
-                case 'snack':
-                    AccountSvc.snackCount--;
-                    break;
-           }
+				switch(OrderSvc.orderItems[index].orderType) {
+					case 'pre':
+						AccountSvc.preCount--;
+						break;
+					case 'post':
+						AccountSvc.postCount--;
+						break;
+					case 'staff':
+						AccountSvc.staffCount--;
+						break;
+					case 'snack':
+						AccountSvc.snackCount--;
+						break;
+			   }
+			}
 
             OrderSvc.removeItem(index);
             AccountSvc.updateHiddenCategories(OrderSvc.orderItems);

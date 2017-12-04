@@ -39,6 +39,14 @@
 		   });
 	   }
 	   
+	   function _updateSport(s) {
+		   return $http.put(url,s)
+		   .then(function(result) {
+			   console.log(result);
+			   return result;
+		   });
+	   }
+	   
 	   function _deleteSport(id) {
 		   return $http.delete(url + id)
 			   .then(function(result) {

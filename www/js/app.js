@@ -10,13 +10,15 @@ angular.module('app', [
 
     'ion-sticky',
     
-//    'googlechart',
-	'chart.js',
     'app.core',
-
+    'ionic-datepicker', 
+    'chart.js',
+    
     'app.archiveListCtrl',
     'app.editOrderCtrl',
     'app.errors',
+    'app.settings',
+	'app.locations', 
     'app.managerCtrl',
     'app.loginMenuCtrl',
     'app.monthlyCounts',
@@ -29,8 +31,9 @@ angular.module('app', [
     'app.teamManagerCtrl',
     'app.todaysCheckouts',
     'app.unauthenticated',
-	'app.dashboard',
 	
+	'app.summary', 
+
     'blocks.exception',
     'blocks.errorlog',
 
@@ -47,11 +50,17 @@ angular.module('app', [
             cordova.plugins.Keyboard.disableScroll(true);
 
         }
+        ionic.Platform.fullScreen( true, true );
         if (window.StatusBar) {
             // org.apache.cordova.statusbar required
             StatusBar.styleDefault();
         }
     });
+})
+
+.config(function(ChartJsProvider){
+    console.log('SET CHART COLOR OPTIONS');
+    ChartJsProvider.setOptions({ colors : [ '#803690', '#00ADF9', '#DCDCDC', '#46BFBD', '#FDB45C', '#949FB1', '#4D5360'] });
 })
 
 .config(function ($stateProvider, $urlRouterProvider, $ionicConfigProvider, $httpProvider) {
@@ -177,6 +186,45 @@ angular.module('app', [
                 'appContent': {
                     templateUrl: 'app/manager/errorReport/errors.html',
                     controller: 'ErrorsCtrl as vm'
+                },
+                'sideMenu': {
+                    templateUrl: 'app/manager/menu.html'
+                }
+            }
+
+        })
+        .state('tab.settings', {
+            url: '/settings',
+            views: {
+                'appContent': {
+                    templateUrl: 'app/manager/settings/settings.html',
+                    controller: 'SettingsCtrl as vm'
+                },
+                'sideMenu': {
+                    templateUrl: 'app/manager/menu.html'
+                }
+            }
+
+        })
+        .state('tab.summary', {
+            url: '/summary',
+            views: {
+                'appContent': {
+                    templateUrl: 'app/manager/reports/summary/summary.html',
+                    controller: 'SummaryCtrl as vm'
+                },
+                'sideMenu': {
+                    templateUrl: 'app/manager/menu.html'
+                }
+            }
+
+        })
+        .state('tab.locations', {
+            url: '/locations',
+            views: {
+                'appContent': {
+                    templateUrl: 'app/manager/locations/locations.html',
+                    controller: 'LocationsCtrl as vm'
                 },
                 'sideMenu': {
                     templateUrl: 'app/manager/menu.html'

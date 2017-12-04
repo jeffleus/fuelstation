@@ -83,6 +83,8 @@
         */
         function _getMonthCounts(timePeriod){
             //return $resource(ApiEndpoint.url + 'Checkouts/GetMonthCounts/Month/' + timePeriod.month + '/Year/' + timePeriod.year);
+            var reportUrl = 'https://f5ekrwo1b6.execute-api.us-west-2.amazonaws.com/dev/report/checkouts/monthly';
+            reportUrl += '/' + timePeriod.year + '/' + timePeriod.month;
             return {
                 query: function(){
                     return $http.get('https://6tvxksy2ta.execute-api.us-west-2.amazonaws.com/ademo/report/checkouts/monthly')
@@ -96,20 +98,21 @@
         /**
         * Sets required data properties on checkout required for database model
         */
-        function _fillCheckoutObject(order, studentSportID) {
+        function _fillCheckoutObject(order, studentSportID, locationID) {
             var checkout = {};
 
             checkout.CreateDate = moment().format();
             checkout.StudentSportID = studentSportID;
             checkout.CheckoutChoices = order;
+            checkout.LocationID = locationID || -1;
 
             return checkout;
         }
 
-        function _processCheckout(orderItems, studentSportID) {
+        function _processCheckout(orderItems, studentSportID, locationID) {
             LoadingSpinner.show();
             
-            var checkout = service.fillCheckoutObject(orderItems, studentSportID);
+            var checkout = service.fillCheckoutObject(orderItems, studentSportID, locationID);
 
             // var saveCheckout = service.checkout().save(checkout);
             // saveCheckout.$promise.then(onOrderSuccess, IonicAlertSvc.error);

@@ -102,8 +102,13 @@
          //         .then(onSuccess, IonicAlertSvc.error);
          // }
 		  
-//		  SportSvc.saveSport(vm.selectedSport)
-//			  .then(onSuccess, IonicAlertSvc.error);
+		if (vm.selectedSport.createdAt) {
+			SportSvc.updateSport(vm.selectedSport)
+				.then(onSuccess, IonicAlertSvc.error);
+		} else {
+			SportSvc.saveSport(vm.selectedSport)
+				.then(onSuccess, IonicAlertSvc.error);
+		}
 
          function onSuccess() {
             LoadingSpinner.hide();
