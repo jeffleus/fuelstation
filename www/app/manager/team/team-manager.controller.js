@@ -84,7 +84,15 @@
       function onSaveSport(){
          //TODO
          LoadingSpinner.show();
-
+		  
+		if (vm.selectedSport.createdAt) {
+			SportSvc.updateSport(vm.selectedSport)
+				.then(onSuccess, IonicAlertSvc.error);
+		} else {
+			SportSvc.saveSport(vm.selectedSport)
+				.then(onSuccess, IonicAlertSvc.error);
+		}
+		  
          // If there is a choiceID, it is an update. Otherwise, save a new choice.
          // if (vm.isUpdate) {
          //     ChoiceSvc.updateChoice(vm.selectedSnack)
@@ -101,8 +109,6 @@
 			SportSvc.saveSport(vm.selectedSport)
 				.then(onSuccess, IonicAlertSvc.error);
 		}
-//		  SportSvc.saveSport(vm.selectedSport)
-//			  .then(onSuccess, IonicAlertSvc.error);
 
          function onSuccess() {
             LoadingSpinner.hide();

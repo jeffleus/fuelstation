@@ -153,6 +153,20 @@ angular.module('app', [
             }
 
         })
+        .state('tab.dashboard', {
+            cache: false,
+            url: '/dashboard',
+            views: {
+                'appContent': {
+                    templateUrl: 'app/manager/reports/dashboard.html',
+					controller: 'DashboardCtrl'
+                },
+                'sideMenu': {
+                    templateUrl: 'app/manager/menu.html'
+                }
+            }
+
+        })
         .state('tab.monthlyCounts', {
             url: '/monthlyCounts',
             views: {

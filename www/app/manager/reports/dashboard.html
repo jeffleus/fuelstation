@@ -1,0 +1,84 @@
+<ion-view view-title="Hourly Checkout Report">
+    <ion-content class="has-header">
+
+<div class="row">
+  <div class="col">
+	  <div class="card">
+		  <div class="item item-divider item-positive">
+			  <div class="row">
+				  <div class="col col-20"></div>
+				  <div class="col col-60" style="text-align:center;">Checkout Count by Hour</div>
+				  <div class="col col-20" style="text-align:right;"><i class="ion-funnel"></i></div>
+			  </div>
+		  </div>
+		  <div class="item item-text-wrap">
+				<canvas id="line" class="chart chart-line"
+						chart-data="data" chart-labels="labels" chart-series="series" 
+						chart-options="options" chart-dataset-override="datasetOverride" chart-click="onClick">
+				</canvas>
+			  
+		  </div>
+		  <div class="item item-divider" style="text-align:center;">
+			<button class="button button-small button-positive">MFB&nbsp;<i class="ion-close-circled"></i></button>
+			<button class="button button-small button-assertive">Change Day</button>
+			<button class="button button-small button-positive">Set Category</button>
+		  </div>
+	  </div>
+  </div>
+  <div class="col">
+	<div class="card">
+	  <div class="item item-divider item-positive" style="text-align:center;">
+			  <div class="row">
+				  <div class="col col-20"></div>
+				  <div class="col col-60" style="text-align:center;">Checkout Count by Day</div>
+				  <div class="col col-20" style="text-align:right;"><i class="ion-funnel"></i></div>
+			  </div>
+	  </div>
+	  <div class="item item-text-wrap">
+			<canvas id="line" class="chart chart-line"
+					chart-data="data_week" chart-labels="labels_week" chart-series="series_week" 
+					chart-options="options_week" chart-dataset-override="datasetOverride_week" chart-click="onClick_week">
+			</canvas>
+	  </div>
+	  <div class="item item-divider" style="text-align:center;">
+		<button class="button button-small button-assertive">Change Week</button>
+	  </div>
+	</div>	  
+  </div>
+</div>				
+<div class="row">
+  <div class="col">
+	  <div class="card">
+		  <div class="item item-divider">
+			Checkout Count by Hour
+		  </div>
+		  <div class="item item-text-wrap">
+				<canvas id="line" class="chart chart-line"
+						chart-data="data" chart-labels="labels" chart-series="series" 
+						chart-options="options" chart-dataset-override="datasetOverride" chart-click="onClick">
+				</canvas>
+		  </div>
+		  <div class="item item-divider" style="text-align:center;">
+			2016-10-10
+		  </div>
+	  </div>
+  </div>
+  <div class="col">
+	<div class="card">
+	  <div class="item item-divider">
+		Checkout Count by Day
+	  </div>
+	  <div class="item item-text-wrap">
+			<canvas id="line" class="chart chart-line"
+					chart-data="data_week" chart-labels="labels_week" chart-series="series_week" 
+					chart-options="options_week" chart-dataset-override="datasetOverride_week" chart-click="onClick_week">
+			</canvas>
+	  </div>
+	  <div class="item item-divider" style="text-align:center;">
+		2016 Workweek 41
+	  </div>
+	</div>	  
+  </div>
+</div>				
+	</ion-content>
+</ion-view>

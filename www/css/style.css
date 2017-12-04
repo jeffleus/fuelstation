@@ -211,3 +211,9 @@ button.button.round-ios-button.activated h1 {
     -webkit-flex: none;
     flex: none;
 }
+
+.button.button-calm.gluten-free {
+	color: navy;
+	border: 2px dashed navy;
+	background: dodgerblue;
+}

@@ -11,7 +11,7 @@
 		  deleteSport: _deleteSport
       };
 
-      var url = 'https://tsp5us21ie.execute-api.us-west-2.amazonaws.com/dev/sports/';
+      var url = 'https://gdb79sdjz5.execute-api.us-west-2.amazonaws.com/ademo/sports/';
 
       return service;
 
@@ -22,9 +22,17 @@
             return result.data.sports;
          });
       }
-	   
+	   //save function for persisting a new Sport into the database service
 	   function _saveSport(s) {
 		   return $http.post(url,s)
+		   .then(function(result) {
+			   console.log(result);
+			   return result;
+		   });
+	   }
+	   //update function for saving changes to existing SportCode records
+	   function _updateSport(s) {
+		   return $http.put(url,s)
 		   .then(function(result) {
 			   console.log(result);
 			   return result;

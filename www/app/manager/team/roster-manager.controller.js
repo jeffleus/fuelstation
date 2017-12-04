@@ -115,8 +115,7 @@
 		  		.then(onSuccess, IonicAlertSvc.error);
 		}
 
-
-         function onSuccess() {
+         function onSuccess(result) {
             LoadingSpinner.hide();
             getAthletes(vm.selectedSport);
             onCloseModal();

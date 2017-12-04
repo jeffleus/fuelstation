@@ -40,7 +40,8 @@
                     <h4>Snack Options:</h4>
                     <hr />
                     <p>
-                        <button class="button button-calm" ng-repeat="c in vm.choiceSvc.snacks" ng-click="vm.orderItem(c, true,'snack')" ng-show="c.isActive">
+                        <button class="button button-calm" ng-class="{'gluten-free': c.isGlutenFree}"
+								ng-repeat="c in vm.choiceSvc.snacks" ng-click="vm.orderItem(c, true,'snack')" ng-show="c.isActive">
                             {{c.name}}
                         </button>
                         <button class="button button-balanced" ng-repeat="c in vm.choiceSvc.pre | filter: {isSnack:true}" ng-if="vm.accountSvc.shouldHidePre && c.isActive" ng-click="vm.orderItem(c, true,'snack')">
