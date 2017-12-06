@@ -33,6 +33,7 @@ angular.module('app', [
     'app.unauthenticated',
 	
 	'app.summary', 
+	'app.overage', 
 
     'blocks.exception',
     'blocks.errorlog',
@@ -212,6 +213,19 @@ angular.module('app', [
                 'appContent': {
                     templateUrl: 'app/manager/reports/summary/summary.html',
                     controller: 'SummaryCtrl as vm'
+                },
+                'sideMenu': {
+                    templateUrl: 'app/manager/menu.html'
+                }
+            }
+
+        })
+        .state('tab.overage', {
+            url: '/overage',
+            views: {
+                'appContent': {
+                    templateUrl: 'app/manager/reports/overage/overage.html',
+                    controller: 'OverageCtrl as vm'
                 },
                 'sideMenu': {
                     templateUrl: 'app/manager/menu.html'
