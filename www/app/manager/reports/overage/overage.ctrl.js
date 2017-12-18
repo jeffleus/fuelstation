@@ -80,7 +80,7 @@
 				}
 				return;
 			});
-	}
+		}
 
         function _download() {
 			if (vm.displayMode == 1) {

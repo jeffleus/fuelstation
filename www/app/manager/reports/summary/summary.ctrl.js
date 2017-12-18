@@ -13,6 +13,7 @@
         vm.openDatePicker = _openDatePicker;
         vm.hideModalDate = _hideModalDate;
         vm.refreshWithFilter = _refreshWithFilter;
+        vm.applyFilter = _applyFilter;
         vm.showAverages = _showAverages;
 		vm.download = _download;
         vm.displayMode = 0;
@@ -63,6 +64,16 @@
         function _hideModalDate() {
             vm.filterDateModal.hide();
         }
+        
+		function _applyFilter() {
+			return _refreshWithFilter()
+			.then(function() {
+				if (vm.filterModal) {
+					vm.filterModal.hide();
+				}
+				return;
+			});
+		}
         
         function _showAverages() {
             _calculateAverages().then(function(result) {
