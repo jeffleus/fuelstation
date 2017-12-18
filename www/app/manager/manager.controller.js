@@ -8,6 +8,6 @@
 
         window.setInterval(function () {
             ChoiceSvc.choice().get({id:1});
-        }, 30000);
+        }, 60000);
     });
 })();
