@@ -5,7 +5,8 @@
 
     angular.module('app.overage')
 
-    .controller(ctrlName, function ($scope, $q, $ionicModal, ionicDatePicker, LoadingSpinner, SummarySvc, CsvSvc) {
+    .controller(ctrlName, function ($scope, $q, $ionicModal, ionicDatePicker, LoadingSpinner
+									 , OverageSvc, SportSvc, CsvSvc) {
         var vm = this;		
 		vm.items = [];
 		vm.openFilter = _openFilter;
@@ -13,7 +14,7 @@
         vm.openDatePicker = _openDatePicker;
         vm.hideModalDate = _hideModalDate;
         vm.refreshWithFilter = _refreshWithFilter;
-        vm.showAverages = _showAverages;
+        vm.applyFilter = _applyFilter;
 		vm.download = _download;
         vm.displayMode = 0;
 		
@@ -38,13 +39,20 @@
 
 		_init();
         $scope.$on('$ionicView.enter', function() {
+			console.info(ctrlName + '::ionicView.enter');
 			_init();
 		});
 		
         function _init() {
             vm.showChart = false;
-            _refreshWithFilter();
-			loadModals();
+			SportSvc.getSports().then(function(sports) {
+				vm.sports = _.groupBy(sports, 'SportCodeID');
+				console.log(vm.sports);
+			}).then(_refreshWithFilter)
+			.then(loadModals)
+			.catch(function(err) {
+				console.error(err);
+			});
         }
 		
 		function _openFilter() {
@@ -64,50 +72,61 @@
             vm.filterDateModal.hide();
         }
         
-        function _showAverages() {
-            _calculateAverages().then(function(result) {
-                vm.averages = result;
-            }).then(function(result) {
-                vm.displayMode = 1;
-            });
-        }
+		function _applyFilter() {
+			return _refreshWithFilter()
+			.then(function() {
+				if (vm.filterModal) {
+					vm.filterModal.hide();
+				}
+				return;
+			});
+	}
 
         function _download() {
-			if (vm.displayMode == 1) {				
-				CsvSvc.download(vm.averages, "summary_report_avg_");
-			} else {
-				CsvSvc.download(vm.items, "summary_report_totals_");
+			if (vm.displayMode == 1) {
+				var data = vm.athletes;
+				data.unshift({a:'SportCode', b:'StudentID', c:'FirstName', d:'LastName', e:'ServiceDate', f:'OverageCount'});
+				CsvSvc.download(vm.athletes, "overage_rpt_ath_");
+			} else {							 
+				var data = vm.teams;
+				data.unshift({a:'SportCode', b:'AthleteCount', c:'OverageCount'});
+				CsvSvc.download(vm.teams, "overage_rpt_teams_");
 			}
         }
 
         function _refreshWithFilter() {
             LoadingSpinner.show();
             var fmt = 'YYYY-MM-DD';
-			SummarySvc.getSummary(
+			return OverageSvc.getOverage(
                 vm.dateRange.startDate.format(fmt), 
-                vm.dateRange.endDate.format(fmt)).then(function(result) {
-                    console.log(ctrlName, result);
-                    vm.items = result;
-                    _calculateTotals().then(function(result) {
-                        console.log(result);
-                        vm.totals = result;
-                        return;
-                    }).then(_calculateSeries)
-                    .then(function(results) {
-                        console.log(ctrlName, 'set vm data for the chart');
-                        vm.series = ['Students', 'Checkouts', 'Items'];
-                        vm.labels = results.labels;
-                        vm.data = results.data;
-                        return;
-                    }).catch(function(err) {
-                        console.error(err);
-                        return;
-                    }).finally(function() {
-                        LoadingSpinner.hide();
-                        vm.filterModal.hide();
-                    });
-                    //_calculateSeries();
-                });
+                vm.dateRange.endDate.format(fmt))
+			.then(function(result) {
+				console.log(ctrlName, result);
+				//vm.items = result;
+				vm.teams = result.teams;
+				vm.athletes = result.athletes;
+				if (vm.athletes.length > 600) {
+					console.info(ctrlName, 'large dataset returned, performance may be slowed');
+				}
+				return _calculateTotals();
+			}).then(function(result) {
+				console.log(result);
+				vm.totals = result;
+				return;
+			}).then(_calculateSeries)
+			.then(function(results) {
+				console.log(ctrlName, 'set vm data for the chart');
+				vm.series = ['Students', 'Checkouts', 'Items'];
+				vm.labels = results.labels;
+				vm.data = results.data;
+				return;
+			}).catch(function(err) {
+				console.error(err);
+				return;
+			}).finally(function() {
+				LoadingSpinner.hide();
+				return;
+			});
         }
         
 		function loadModals() {
@@ -117,14 +136,18 @@
 				focusFirstInput: true
 			}).then(function (modal) {
 				vm.filterModal = modal;
-			});
-			$ionicModal.fromTemplateUrl('app/manager/reports/summary/filterDateModal.html', {
-				scope: $scope,
-				animation: 'slide-in-up',
-				focusFirstInput: true
+				return $ionicModal.fromTemplateUrl('app/manager/reports/summary/filterDateModal.html', {
+					scope: $scope,
+					animation: 'slide-in-up',
+					focusFirstInput: true
+				});
 			}).then(function (modal) {
                 console.log(ctrlName, vm.dateRange);
 				vm.filterDateModal = modal;
+				return;
+			}).catch(function(err) {
+				console.error(ctrlName, err);
+				return;
 			});
 		}
         
@@ -135,14 +158,11 @@
         
         function _calculateTotals() {
             return $q(function(resolve, reject) {
-                var memo = { totalDays: 0, totalStudents: 0, avgStudents: 0, totalCheckouts: 0, totalItems: 0 };
+                var memo = { totalAthletes: 0, totalOverages: 0 };
                 try {
-                    var totals = _.reduce(vm.items, function(m, item) {
-                        m.totalDays++;
-                        m.totalStudents += item.StudentCount;
-                        m.avgStudents = (m.totalDays == 0) ? 0 : m.totalStudents / m.totalDays;
-                        m.totalCheckouts += item.CheckoutCount;
-                        m.totalItems += item.ItemCount;
+                    var totals = _.reduce(vm.teams, function(m, team) {
+                        m.totalAthletes += team.PlayerCount;
+						m.totalOverages += team.SportOverage;
                         return m;
                     }, memo);
                     resolve(totals);                    
@@ -156,14 +176,30 @@
         function _calculateSeries() {
             return $q(function(resolve, reject) {
                 try {
-                    var labels = _.map(vm.items, function(item) {
-                        return item.ServiceDate.substring(0,10);
-                    });
+					var sum = function(t, n) { return t + n; };
+					var output = _.mapObject(
+					  _.groupBy(vm.athletes, function(ath) { return ath.CheckoutDate.substring(0,10); }),
+					  function(values, checkoutDate) {
+						return {
+						  overage: _.reduce(_.pluck(values, 'OverageCount'), sum, 0),
+						  athletes: _(values).chain().pluck('SchoolSidNumber').unique().value().length
+						};
+					  }
+					);
+					
+					var labels = [];
+					var dataAthletes = [];
+					var dataOverage = [];
+					_.each(output, function(elem, key) {
+					  labels.push(key);
+					  dataAthletes.push(elem.athletes);
+					  dataOverage.push(elem.overage);
+					});
+					labels = labels.sort();
                     console.log(labels);
                     var data = [];
-                    data.push(_.pluck(vm.items, 'StudentCount'));
-                    data.push(_.pluck(vm.items, 'CheckoutCount'));
-                    data.push(_.pluck(vm.items, 'ItemCount'));
+                    data.push(dataAthletes);
+                    data.push(dataOverage);
                     console.log(data);
                     resolve({ labels: labels, data: data });                    
                 }

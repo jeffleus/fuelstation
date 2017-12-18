@@ -1,8 +1,4 @@
 <ion-view view-title="FuelStation Overage Report">
-    <ion-nav-buttons side="right">
-        <button class="button button-large ng-click-active ion-refresh" ng-click="vm.refresh()"> Refresh
-        </button>
-    </ion-nav-buttons>
     <ion-content class="has-header">
         <div class="container">
 			<!-- -->
@@ -10,12 +6,12 @@
 			<!-- -->
 			<div style="padding:6px;">
 			  <button class="button button-balanced icon ion-funnel" ng-click="vm.openFilter()"></button>
-			  <button class="button button-positive icon ion-calendar button-balanced"
+			  <button class="button button-positive icon ion-person-stalker button-balanced"
                       ng-click="vm.displayMode = 0;"></button>
 			  <button class="button button-positive icon ion-stats-bars button-balanced"
                       ng-click="vm.displayMode = 2;"></button>
-			  <button class="button button-positive icon ion-calculator button-balanced"
-                      ng-click="vm.showAverages()"></button>
+			  <button class="button button-positive icon ion-person button-balanced"
+                      ng-click="vm.displayMode = 1;"></button>
 			  <button class="button button-positive icon ion-ios-download button-balanced"
 					  ng-click="vm.download()"></button>
 			</div>
@@ -26,7 +22,7 @@
 			<div class="item item-divider table-row positive">
 				<div class="row table-row">
 					<div class="col col-25 col-center">
-						<a ng-click="toggleIndex()">Date&nbsp;
+						<a ng-click="toggleIndex()">Team&nbsp;
 						<i ng-show="sortIndex=='up'" class="icon ion-arrow-down-b"></i>
 						<i ng-show="sortIndex=='down'" class="icon ion-arrow-up-b"></i>
 						</a></div>
@@ -35,26 +31,26 @@
 						<i ng-show="sortOrder=='za'" class="icon ion-arrow-down-b"></i>
 						<i ng-show="sortOrder=='az'" class="icon ion-arrow-up-b"></i>
 						</a></div>
-					<div class="col col-25 col-center">Checkouts</div>
-					<div class="col col-25 col-center">Items</div>
+					<div class="col col-25 col-center">Overage</div>
+					<div class="col col-25 col-center"></div>
 				</div>
 			</div>
 			<!-- Data Rows: one row for each day within dateRange -->
-			<ion-item class="item table-row" ng-repeat="item in vm.items" ng-click="showModal(item)" ng-class="item.status">
+			<ion-item class="item table-row" ng-repeat="team in vm.teams" ng-click="showModal(item)" ng-class="item.status">
 				<div class="row table-row">
-				<div class="col col-25 col-center">{{item.ServiceDate.substring(0,10)}}</div>
-				<div class="col col-25 col-center">{{item.StudentCount}}</div>
-				<div class="col col-25 col-center">{{item.CheckoutCount}}</div>
-				<div class="col col-25 col-center">{{item.ItemCount}}</div>
+				<div class="col col-25 col-center">{{team.SportCodeID}}</div>
+				<div class="col col-25 col-center">{{team.PlayerCount}}</div>
+				<div class="col col-25 col-center">{{team.SportOverage}}</div>
+				<div class="col col-25 col-center"></div>
 				</div>
 			</ion-item>
 			<!-- Totals Row -->
 			<ion-item class="item table-row" ng-class="item.status">
 				<div class="row table-row">
 				<div class="col col-25 col-center"><b>Totals</b></div>
-				<div class="col col-25 col-center"><b>{{vm.totals.avgStudents | number: 0}}</b> (avg)</div>
-				<div class="col col-25 col-center"><b>{{vm.totals.totalCheckouts}}</b></div>
-				<div class="col col-25 col-center"><b>{{vm.totals.totalItems}}</b></div>
+				<div class="col col-25 col-center"><b>{{vm.totals.totalAthletes | number: 0}}</b></div>
+				<div class="col col-25 col-center"><b>{{vm.totals.totalOverages}}</b></div>
+				<div class="col col-25 col-center"><b></b></div>
 				</div>
 			</ion-item>
             </ion-list>
@@ -63,26 +59,26 @@
 			<div class="item item-divider table-row positive">
 				<div class="row table-row">
 					<div class="col col-25 col-center">
-						<a ng-click="toggleIndex()">Date&nbsp;
+						<a ng-click="toggleIndex()">SportCode&nbsp;
 						<i ng-show="sortIndex=='up'" class="icon ion-arrow-down-b"></i>
 						<i ng-show="sortIndex=='down'" class="icon ion-arrow-up-b"></i>
 						</a></div>
 					<div class="col col-25 col-center">
-						<a ng-click="toggleSort()">CheckoutPerAthlete&nbsp;
+						<a ng-click="toggleSort()">Athlete&nbsp;
 						<i ng-show="sortOrder=='za'" class="icon ion-arrow-down-b"></i>
 						<i ng-show="sortOrder=='az'" class="icon ion-arrow-up-b"></i>
 						</a></div>
-					<div class="col col-25 col-center">ItemsPerAthlete</div>
-					<div class="col col-25 col-center">ItemsPerCheckout</div>
+					<div class="col col-25 col-center">ServiceDate</div>
+					<div class="col col-25 col-center">Overage</div>
 				</div>
 			</div>
 			<!-- Data Rows: one row for each day within dateRange -->
-			<ion-item class="item table-row" ng-repeat="item in vm.averages" ng-click="showModal(item)" ng-class="item.status">
+			<ion-item class="item table-row" ng-repeat="ath in vm.athletes" ng-click="showModal(item)" ng-class="item.status">
 				<div class="row table-row">
-				<div class="col col-25 col-center">{{item.ServiceDate.substring(0,10)}}</div>
-				<div class="col col-25 col-center">{{item.CheckoutPerStudent | number: 2}}</div>
-				<div class="col col-25 col-center">{{item.ItemPerStudent | number: 2}}</div>
-				<div class="col col-25 col-center">{{item.ItemPerCheckout | number: 2}}</div>
+				<div class="col col-25 col-center">{{::ath.SportCodeID}}</div>
+				<div class="col col-25 col-center">{{::(ath.LastName || '')}}, {{::(ath.FirstName || '')}}</div>
+				<div class="col col-25 col-center">{{::ath.CheckoutDate.substring(0,10)}}</div>
+				<div class="col col-25 col-center">{{::ath.OverageCount}}</div>
 				</div>
 			</ion-item>
 			<!-- Totals Row -->

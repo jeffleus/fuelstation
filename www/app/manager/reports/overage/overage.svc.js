@@ -10,11 +10,11 @@
 		  getOverage: _getOverage
 		};
 
-		var url = 'https://6tvxksy2ta.execute-api.us-west-2.amazonaws.com/ademo/report/checkouts/summary/';
+		var url = 'https://6tvxksy2ta.execute-api.us-west-2.amazonaws.com/ademo/report/checkouts/overage/';
 
 		return service;
 
-		function _getSummary(start, end) {
+		function _getOverage(start, end) {
 		console.log(serviceName, url + start + '/' + end);
 		return $http.get(url + start + '/' + end)
 			.then(function(result){
