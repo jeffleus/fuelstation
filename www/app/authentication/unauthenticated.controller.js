@@ -4,7 +4,7 @@
     angular
         .module('app.unauthenticated', [])
 
-        .controller('UnauthenticatedCtrl', function (AuthSvc, $ionicModal, $scope, $state) {
+        .controller('UnauthenticatedCtrl', function (AuthSvc, $ionicModal, $scope, $state, $ionicLoading) {
             var vm = this;
 
             vm.closeFSModal = _closeModal;
@@ -48,13 +48,16 @@
                     stack: (new Error()).stack,
                     cause: "Wrong manager login password"
                 };
+				$ionicLoading.show();
 
                 AuthSvc.login(vm.loginData).then(function (token) {
+					$ionicLoading.hide();
                     console.info("idToken", token);
                     $state.go('tab.studentID', null, {
                         reload: true
                     });
                 }).catch(function (err) {
+					$ionicLoading.hide();
                     IonicAlertSvc.error(err);
                 });
             }
