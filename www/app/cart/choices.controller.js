@@ -136,7 +136,7 @@
 			}
 
 			OrderSvc.addItem(itemClone);
-			AccountSvc.updateHiddenCategories(OrderSvc.orderItems);
+			//AccountSvc.updateHiddenCategories(OrderSvc.orderItems);
 		}
 
         function _removeItem(index) {
@@ -171,7 +171,7 @@
 			}
 
             OrderSvc.removeItem(index);
-            AccountSvc.updateHiddenCategories(OrderSvc.orderItems);
+            //AccountSvc.updateHiddenCategories(OrderSvc.orderItems);
         }
 
         function _toggleLeft() {
