@@ -45,19 +45,11 @@
         function init() {
             LoadingSpinner.show();
 			
-//			AthleteSvc.getAllAthlete().then(function(result) {
-//				console.log('OrderListCtrl', 'athletes found: ' + result.length);
-//				vm.athletes = _.sortBy(_.sortBy(result, 'firstName'), 'lastName');
-//				vm.athletes.forEach(function(ath) {
-//					if (ath.lastName.toLowerCase().substring(0, 3) === 'smi') {
-//						var fullName = (ath.lastName + ', ' + ath.firstName).toLowerCase();
-//						console.log(fullName);
-//						console.log(fullName.indexOf('smi'));
-//						console.log(fullName.indexOf('smi') > -1);
-//					}
-//				});
-//				vm.sports = _.groupBy(_.sortBy(result, 'sportCode'), 'sportCode');
-//			});
+			AthleteSvc.getAllAthlete().then(function(result) {
+				console.log('OrderListCtrl', 'athletes found: ' + result.length);
+				vm.athletes = _.sortBy(_.sortBy(result, 'firstName'), 'lastName');
+				vm.sports = _.groupBy(_.sortBy(result, 'sportCode'), 'sportCode');
+			});
 
             CheckoutSvc.unarchived().query().then(onGetTodaysCheckouts, IonicAlertSvc.error);
 
