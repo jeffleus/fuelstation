@@ -21,7 +21,7 @@
                             </span>
                     <select name="category" required
 							ng-model="vm.selectedSnack.CategoryID" 
-							ng-options="cat.value as cat.label for cat in vm.categories">
+							ng-options="cat.CategoryID as cat.name for cat in vm.categories">
                     </select>
                 </label>
                 <label for="choiceValue" class="item item-input">

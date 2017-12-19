@@ -1,0 +1,53 @@
+<ion-modal-view ng-controller="NewOrderCtrl as vm">
+	<header class="bar bar-header bar-positive">
+		<h1 class="title">Search/Lookup</h1>
+		<button class="button button-clear button-primary" ng-click="vm.cancel()">Cancel</button>
+	</header>
+
+	<div class="bar bar-subheader item-input-inset">
+<!--
+		<label class="item-input-wrapper">
+		<i class="icon ion-ios7-search placeholder-icon"></i>
+		<input type="search" placeholder="Search" ng-model="vm.search" autocorrect="off" focus-on="friendSearch">
+			<a ng-click="vm.clearFilter()"></a>
+		<i class="icon ion-ios-close placeholder-icon"></i>
+		</label>
+-->
+		<label class="item item-input-wrapper">
+		  <input type="text" placeholder="Search by Name" ng-model="vm.search" autofocus>
+		  <a ng-if="vm.search != ''" on-touch="vm.clearFilter()">
+			<i class="icon ion-ios-close placeholder-icon"></i>
+		  </a>
+		</label>
+	</div>
+<!--
+<ion-header-bar class="bar bar-assertive">
+  <h1 class="title">New Order - Select Athlete</h1>
+</ion-header-bar>
+-->
+<ion-content class="has-subheader">
+  <ion-list>
+	  <ion-item class="item"
+				ng-repeat="ath in vm.athletes | filter: vm.athleteFilter"
+				ng-click="vm.startOrder(ath)">
+		{{ath.lastName}}, {{ath.firstName}}
+	  </ion-item>
+<!--
+	<div ng-repeat="sport in vm.sports">
+	  <ion-item class="item-stable"
+				ng-click="toggleSport(sport)"
+				ng-class="{active: isSportShown(sport)}">
+		  <i class="icon" ng-class="isSportShown(sport) ? 'ion-chevron-down' : 'ion-chevron-up'"></i>
+		&nbsp;
+		{{sport[0].sportCode}}
+	  </ion-item>
+	  <ion-item class="item-accordion"
+				ng-repeat="ath in sport | orderBy: 'lastName'"
+				ng-click="vm.gotoOrder(ath)"
+				ng-show="isSportShown(sport)">
+		{{::ath.lastName}}, {{::ath.firstName}}
+	  </ion-item>
+	</div>-->
+  </ion-list>
+</ion-content>
+</ion-modal-view>

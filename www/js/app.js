@@ -33,6 +33,7 @@ angular.module('app', [
     'app.unauthenticated',
 	
 	'app.summary', 
+	'app.new-order',
 
     'blocks.exception',
     'blocks.errorlog',

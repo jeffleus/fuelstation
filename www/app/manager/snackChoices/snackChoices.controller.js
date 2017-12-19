@@ -10,12 +10,13 @@
         vm.predicate = 'name';
         vm.selectedSnack = {};
         vm.typeOptions = ChoiceSvc.typeOptions();
-		vm.categories = ChoiceSvc.categories();
+		vm.categories = [];
         vm.activeOptions = [
             { label: "Yes", value: true },
             { label: "No", value: false }
         ];
 
+		vm.getCategory = _getCategory;
         vm.closeModal = _closeModal;
         vm.deleteChoice = _deleteChoice;
         vm.editChoice = _editChoice;
@@ -25,7 +26,12 @@
         init();
 
         function init() {
-            ChoiceSvc.getAllChoices().then(onGetAllChoicesSuccess, IonicAlertSvc.error);
+			ChoiceSvc.categories().then(function(cats) {
+				vm.categories = _.sortBy(_.filter(cats, function(cat) { return cat.CategoryID > 8; }), 'sortOrder');
+				console.log('Categories', vm.categories);
+				return;
+			}).then(ChoiceSvc.getAllChoices)
+			.then(onGetAllChoicesSuccess, IonicAlertSvc.error);
 
             function onGetAllChoicesSuccess(data) {
                 vm.allChoices = data;
@@ -33,6 +39,11 @@
 
             loadModal();
         }
+		
+		function _getCategory(id) {
+			var cat = _.find(vm.categories, function(c) { return c.CategoryID == id; });
+			return cat ? cat.name : 'not found';
+		}
 
         function _closeModal() {
             vm.modal.hide();

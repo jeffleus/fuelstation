@@ -139,55 +139,59 @@
         }
 		
         function _categories() {
-            var cats = [
-                {
-                    label: "Quick Carb",
-                    value: 9
-            }, {
-                    label: "Bars",
-                    value: 10
-            }, {
-                    label: "Protein",
-                    value: 11
-            }, {
-                    label: "Nuts",
-                    value: 12
-            }, {
-                    label: "Fruit",
-                    value: 13
-            }, {
-                    label: "Breads",
-                    value: 14
-            }, {
-                    label: "Drinks",
-                    value: 15
-            }, {
-                    label: "Salty Snacks",
-                    value: 16
-            }, {
-                    label: "Yogurt",
-                    value: 17
-            }, {
-                    label: "Cereal",
-                    value: 18
-            }, {
-                    label: "TT",
-                    value: 19
-            }, {
-                    label: "Smoothie",
-                    value: 20
-            }, {
-                    label: "Special",
-                    value: 21
-            }, {
-                    label: "Bread",
-                    value: 22
-            }, {
-                    label: "Bar",
-                    value: 23
-            }
-            ];
-            return cats;
+			var catUrl = 'https://bomgmgqdc7.execute-api.us-west-2.amazonaws.com/dev/categories';
+			return $http.get(catUrl).then(function(result) {
+				return result.data.categories;
+			});
+//            var cats = [
+//                {
+//                    label: "Quick Carb",
+//                    value: 9
+//            }, {
+//                    label: "Bars",
+//                    value: 10
+//            }, {
+//                    label: "Protein",
+//                    value: 11
+//            }, {
+//                    label: "Nuts",
+//                    value: 12
+//            }, {
+//                    label: "Fruit",
+//                    value: 13
+//            }, {
+//                    label: "Breads",
+//                    value: 14
+//            }, {
+//                    label: "Drinks",
+//                    value: 15
+//            }, {
+//                    label: "Salty Snacks",
+//                    value: 16
+//            }, {
+//                    label: "Yogurt",
+//                    value: 17
+//            }, {
+//                    label: "Cereal",
+//                    value: 18
+//            }, {
+//                    label: "TT",
+//                    value: 19
+//            }, {
+//                    label: "Smoothie",
+//                    value: 20
+//            }, {
+//                    label: "Special",
+//                    value: 21
+//            }, {
+//                    label: "Bread",
+//                    value: 22
+//            }, {
+//                    label: "Bar",
+//                    value: 23
+//            }
+//            ];
+//            return cats;
         }
     });
 })();

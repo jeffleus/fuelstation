@@ -16,13 +16,14 @@
         vm.clearFilter = _clearFilter;
         vm.deleteCheckout = _deleteCheckout;
         vm.nameFilter = _nameFilter;
-		vm.athleteFilter = _athleteFilter;
+//		vm.athleteFilter = _athleteFilter;
         vm.openModal = _openModal;
         vm.newOrder = _newOrder;
-		vm.gotoOrder = _gotoOrder;
+		vm.cancel = _cancel;
+//		vm.gotoOrder = _gotoOrder;		
         vm.setArchive = _setArchive;
-		vm.athletes = [];
-		vm.sports = {};
+//		vm.athletes = [];
+//		vm.sports = {};
 
         init();
 		$scope.$on('closeOrderModal', function() {
@@ -153,6 +154,10 @@
 			$scope.newModal.show();
 		}
 		
+		function _cancel() {
+			$scope.newModal.hide();
+		}
+		
 		function _gotoOrder(athlete) {
 			LoadingSpinner.show();
 			AccountSvc.studentId = athlete.schoolid;
@@ -206,29 +211,43 @@
         function loadModal() {
             $ionicModal.fromTemplateUrl('app/manager/orderList/editOrderModal.html', {
                 scope: $scope,
+				focusFirstInput: true,
                 animation: 'slide-in-up'
             }).then(function (modal) {
                 $scope.modal = modal;
                 //$scope.modal.show();
             });
-            $ionicModal.fromTemplateUrl('app/manager/orderList/newOrderModal.html', {
+            $ionicModal.fromTemplateUrl('app/athlete-selector/newOrder.modal.html', {
+				id: 'new-order', 
+//            $ionicModal.fromTemplateUrl('app/manager/orderList/newOrderModal.html', {
                 scope: $scope,
                 animation: 'slide-in-up'
             }).then(function (modal) {
                 $scope.newModal = modal;
+				$scope.$on('close.newOrder', function() { return closeAndRemove(modal); });
             });
 
-            $scope.$on('$destroy', function () {
+            $scope.$on('$destroy', function (event, modal) {
+				console.log('OrderListCtrl::$destroy', modal);
                 $scope.modal.remove();
             });
-            $scope.$on('modal.hidden', function () {
+            $scope.$on('modal.hidden', function (event, modal) {
                 //init();
+				console.log('OrderListCtrl::modal.hidden', modal);
                 CheckoutSvc.checkout().query().then(onGetTodaysCheckouts, IonicAlertSvc.error);
 
             });
-            $scope.$on('modal.removed', function () {
-                console.log("modal removed");
+            $scope.$on('modal.removed', function (event, modal) {
+				console.log('OrderListCtrl::modal.removed', modal);
             });
         }
-    });
+		
+		function closeAndRemove(modalInstance) {
+            return modalInstance.hide()
+                .then(function () {
+                    //return modalInstance.remove();
+					return;
+                });
+        }
+	});
 })();

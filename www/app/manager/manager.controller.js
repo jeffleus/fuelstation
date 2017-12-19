@@ -7,7 +7,7 @@
         var vm = this;
 
         window.setInterval(function () {
-            ChoiceSvc.choice().get({id:1});
+            ChoiceSvc.choice().get({id:3320});
         }, 60000);
     });
 })();

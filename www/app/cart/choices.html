@@ -8,11 +8,11 @@
             </ion-header-bar>
             <ion-content class="padding">
                 <div ng-if="!vm.accountSvc.shouldHideItems" ng-repeat="cat in vm.categories" class="category-fade">
-                    <h4>{{cat.label}}:</h4>
+                    <h4>{{cat.name}}:</h4>
                     <hr />
                     <p>
                         <button class="button button-balanced" 
-								ng-repeat="choice in vm.choiceSvc.categoricalChoices[cat.value]" 
+								ng-repeat="choice in vm.choiceSvc.categoricalChoices[cat.CategoryID]" 
 								ng-show="choice.isActive" ng-click="vm.orderItem(choice, false,'pre')">{{choice.name}}</button>
                     </p>
                 </div>
@@ -38,7 +38,18 @@
                 </div>
                 <ion-item class="bar-stable">
                     <p class="text-center">
-                        Welcome, {{vm.accountSvc.athleteData[0].firstName}}
+                        Welcome<br/>
+						<img src="https://image.freepik.com/free-icon/black-male-user-symbol_318-60703.jpg"
+							 style="width:80px;height:80px;border-radius:50%;border:2px solid #e87722;padding:4px;"/>
+						<br/>
+						{{vm.accountSvc.athleteData[0].firstName}}&nbsp;{{vm.accountSvc.athleteData[0].lastName}}
+                        <br />
+                    </p>
+                    <p class="text-center">
+                        <button class="button button-small button-positive"
+								ng-click="vm.changeAthlete()">Change Athlete</button>
+                        <button class="button button-small button-positive"
+								ng-click="vm.changeAthlete()">Add Credits</button>
                         <br /><br />
                     </p>
 <!--
