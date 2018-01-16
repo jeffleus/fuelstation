@@ -15,6 +15,7 @@
       vm.onSelectSport = onSelectSport;
       vm.onUpdateAthlete = onUpdateAthlete;
       vm.sports;
+	  vm.nextAthleteID = "";
 
       init();
 
@@ -57,8 +58,23 @@
 
       function onAddAthlete(){
          vm.isUpdate = false;
-         openModal();
+		  
+		  AthleteSvc.getAllAthlete()
+		  .then(findNextAthleteID)
+		  .then(function(newid) {
+		  	vm.selectedAthlete = {schoolid:newid};
+		  	openModal();
+		  });
       }
+	   
+	   function findNextAthleteID(athletes) {
+		   var lastAthlete = _.chain(athletes)
+				.filter(function(ath) { return ath.schoolid.substring(0,4) == "1718"; })
+		   		.max(function(ath) { return ath.schoolid; })
+		   		.value();
+		   vm.nextAthleteID = (parseInt(lastAthlete.schoolid) + 1).toString();
+		   return vm.nextAthleteID;
+	   }
 
       function onCloseModal(){
          vm.modal.hide();
