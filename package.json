@@ -41,7 +41,8 @@
     "cordova-plugin-whitelist",
     "ionic-plugin-keyboard",
     "cordova-plugin-wkwebview-engine",
-    "cordova-plugin-ionic-webview"
+    "cordova-plugin-ionic-webview",
+    "cordova-plugin-ionic-webview@~1.1.15"
   ],
   "cordovaPlatforms": [
     "ios"
