@@ -3,11 +3,8 @@
 
     angular.module('app.managerCtrl', [])
 
-    .controller('ManagerCtrl', function (ChoiceSvc, IonicAlertSvc) {
+    .controller('ManagerCtrl', function (ChoiceSvc, IonicAlertSvc, $scope, $interval) {
         var vm = this;
 
-        window.setInterval(function () {
-            ChoiceSvc.choice().get({id:1});
-        }, 30000);
     });
 })();

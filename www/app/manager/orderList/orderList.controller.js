@@ -5,7 +5,9 @@
 
     .controller('OrderListCtrl', function (AccountSvc, CheckoutSvc, IonicAlertSvc, OrderSvc, $ionicModal, $scope, LoadingSpinner, $timeout, $interval) {
         var vm = this;
-        var polling;
+		
+        var polling = null;
+		var pollingInterval = 15 * 1000;
 
         vm.name = {};
         vm.todaysCheckouts = [];
@@ -36,7 +38,7 @@
 
             polling = $interval(function () {
                 refresh();
-            }, 20000);
+            }, pollingInterval);
 
             loadModal();
         }
