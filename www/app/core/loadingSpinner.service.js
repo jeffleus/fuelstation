@@ -14,7 +14,7 @@
         
         function _show() {
             $ionicLoading.show({
-                template: '<ion-spinner></ion-spinner>',
+                template: '<ion-spinner icon="bubbles"></ion-spinner>',
                 delay: 400,
                 duration: 20000
             });
