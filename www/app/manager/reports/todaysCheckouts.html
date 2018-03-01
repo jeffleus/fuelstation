@@ -11,18 +11,20 @@
 			<div class="row" style="padding:6px;">
 				<div class="col col-33">
 					<button class="button button-balanced icon ion-funnel" ng-click="vm.openFilter()"></button>
+<!--
 					<button class="button button-positive icon ion-grid button-balanced"
 						  ng-click="vm.displayMode = 0;"></button>
 					<button class="button button-positive icon ion-stats-bars button-balanced"
 						  ng-click="vm.displayMode = 2;"></button>
 					<button class="button button-positive icon ion-calculator button-balanced"
 						  ng-click="vm.showAverages()"></button>
+-->
 					<button class="button button-positive icon ion-ios-download button-balanced"
 						  ng-click="vm.download()"></button>
 					<!--<button type="button" class="button button-balanced" ng-click="vm.download()" style="min-height: 35px; line-height: 20px;">Download CSV</button>-->
 				</div>
 				<div class="col col-67">
-					({{vm.series.length}}) Items Selected.  Table can only display up to (8) items at a time, download <span style="text-decoration:underline;">will include</span> all selected items.
+					({{vm.daysSelected()}}) Days Selected.  Table can only display a few days at a time, download <span style="text-decoration:underline;">will include</span> all selected dates.
 				</div>
 			</div>
             <div class="row stable-bg m-t-10">

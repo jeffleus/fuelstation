@@ -7,15 +7,21 @@
 
     .controller(ctrlName, function ($scope, $ionicModal, ionicDatePicker, CheckoutSvc, IonicAlertSvc, CsvSvc, LoadingSpinner) {
         var vm = this;
-
+		//data array for display in the table
         vm.checkouts = [];
-        
+		//modal filter methods to open and close
 		vm.openFilter = _openFilter;
 		vm.openDateFilter = _openDateFilter;
 		vm.openDatePicker = _openDatePicker;
 		vm.openItemFilter = _openItemFilter;
+        vm.hideModalDate = _hideModalDate;
+        vm.hideModalItem = _hideModalItem;
+		//download currently filtered data as a CSV
         vm.download = _download;
         vm.refresh = init;
+		vm.refreshWithFilter = _refreshWithFilter;
+		//utility method to calculate the selected date range
+		vm.daysSelected = _daysSelected;
 		
 		//private values for working with dates
         var type = '';
@@ -29,24 +35,43 @@
           closeOnSelect: false,             //Optional
           templateType: 'popup'             //Optional
         };
-		//filter data objects
+		//filter data objects - default is yesterday to today
 		vm.dateRange = {
-			startDate: moment().subtract(7, 'days'),
+			startDate: moment().subtract(1, 'days'),
 			endDate: moment()
 		};
 
         init();
-
         function init() {
+//            LoadingSpinner.show();
+//			_loadModals().then(function() {
+//				CheckoutSvc.getDailyCheckouts().query().then(onGetTodaysCheckouts, IonicAlertSvc.error);
+//			});
+			_loadModals()
+				.then(_refreshWithFilter);
+        }
+
+        function _refreshWithFilter() {
+			vm.filterModal.hide();
             LoadingSpinner.show();
-			_loadModals().then(function() {
-				CheckoutSvc.getDailyCheckouts().query().then(onGetTodaysCheckouts, IonicAlertSvc.error);
+            var fmt = 'YYYY-MM-DD';
+			CheckoutSvc.getDailyCheckouts().query(
+				//no args required for now, evenutally needs dateRange
+			).then(
+				//process today's checkouts 
+				onGetTodaysCheckouts
+		  	).catch(function(err) {
+				console.error(err);
+				return;
+			}).finally(function() {
+				LoadingSpinner.hide();
 			});
         }
 
         function onGetTodaysCheckouts(response) {
             vm.checkouts = response.data;
-            LoadingSpinner.hide();
+            //LoadingSpinner.hide();
+			return;
         }
 
         function _download() {
@@ -55,7 +80,7 @@
 		
 		function _loadModals() {
 			// template URL for each of the modals to load
-			var filterModalUrl = 'app/manager/reports/items/filterModal.html';
+			var filterModalUrl = 'app/manager/reports/summary/filterModal.html';
 			var dateModalUrl = 'app/manager/reports/summary/filterDateModal.html';
 			var itemModalUrl = 'app/manager/reports/items/filterItemModal.html';
 			//load each modal using the template and the modal object name on the vm-scope
@@ -96,6 +121,7 @@
         
         function _openDatePicker(dateType){
             type = dateType;
+			ipObj1.inputDate = (type == 'start') ? vm.dateRange.startDate.toDate() : vm.dateRange.endDate.toDate();
             ionicDatePicker.openDatePicker(ipObj1);
         };
         
@@ -103,7 +129,7 @@
             console.log(ctrlName, 'Return value from the datepicker popup is : ' + val, new Date(val));
             (type == 'start') ? vm.dateRange.startDate = moment(val) : vm.dateRange.endDate = moment(val);
         }
-        
+		
         function _hideModalDate() {
             vm.filterDateModal.hide();
         }
@@ -116,6 +142,10 @@
 			console.log(vm.selectedItems.join(","));
             vm.filterItemModal.hide();
         }
+		
+		function _daysSelected() {
+			return vm.dateRange.endDate.diff(vm.dateRange.startDate, 'days') + 1;
+		}
 
     });
 })();
