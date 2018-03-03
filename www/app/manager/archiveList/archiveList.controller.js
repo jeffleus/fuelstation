@@ -17,7 +17,7 @@
         init();
 
         function init() {
-			AuthSvc.refreshTokens();
+			//AuthSvc.refreshTokens();
             CheckoutSvc.archived().query().then(onGetTodaysCheckouts, IonicAlertSvc.error);
 
             function onGetTodaysCheckouts(response) {
