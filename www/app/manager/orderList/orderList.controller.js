@@ -132,7 +132,7 @@
             });
             $scope.$on('modal.hidden', function () {
                 //init();
-                CheckoutSvc.checkout().query().then(onGetTodaysCheckouts, IonicAlertSvc.error);
+                CheckoutSvc.unarchived().query().then(onGetTodaysCheckouts, IonicAlertSvc.error);
 
             });
             $scope.$on('modal.removed', function () {
