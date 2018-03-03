@@ -16,58 +16,51 @@
         self.authNewUser = _authNewUser;
         self.updateUser = _updateUser;
 		self.token = null;
-        
-        self.userTeam = 'NONE';
-        self.userType = 'NONE';
 
-//		self.poolData = { 
-//			UserPoolId : "us-west-2_HqCU8elu4",
-//			ClientId : "bq4vqit9hrh97vrkurd2ns45p"
-//		};
-		//FuelStation User Pool
-		self.poolData = { 
-			UserPoolId : "us-west-2_KMI3gTfQw",
-			ClientId : "49f7iepq786236nea8t33m1kje"
-		};
-		AWSCognito.config.update({region:'us-west-2'});
+		_init();
+		function _init() {
+			//FuelStation User Pool
+			self.poolData = { 
+				UserPoolId : "us-west-2_KMI3gTfQw",
+				ClientId : "49f7iepq786236nea8t33m1kje"
+			};
+			AWSCognito.config.update({region:'us-west-2'});
+			
+			// Use the poolData to construct a UserPool object for use with Cognito
+			self.userPool = new AWSCognito.CognitoIdentityServiceProvider.CognitoUserPool(self.poolData);
+
+			// Init the user profile data - (eventually split this to a separate profile service?)
+			self.userTeam = 'NONE';
+			self.userType = 'NONE';			
+		}
+		
 
 		function _login(loginData) {
+			// Begin w/ a validation of the loginData for existence and user/pwd properties
+			if (!loginData || !loginData.username || !loginData.password) {
+				throw new Error('Invalid login data object passed to _login() of AuthSvc.');
+			}
+			// Format the loginData for required properties - (need to just expect proper data as param and remove)
 			var authenticationData = {
 				Username : loginData.username,
 				Password : loginData.password
 			};
 			var authenticationDetails = new AWSCognito.CognitoIdentityServiceProvider.AuthenticationDetails(authenticationData);
 
-			var userPool = new AWSCognito.CognitoIdentityServiceProvider.CognitoUserPool(self.poolData);
 			var userData = {
 				Username : loginData.username,
-				Pool : userPool
+				Pool : self.userPool
 			};
 			var cognitoUser = new AWSCognito.CognitoIdentityServiceProvider.CognitoUser(userData);
 			return $q(function(resolve, reject){
 				cognitoUser.authenticateUser(authenticationDetails, {                
-					onSuccess: function (result) {
-						//console.log('access token + ' + result.getAccessToken().getJwtToken());
-						/*Use the idToken for Logins Map when Federating User Pools with Cognito Identity or when passing through an Authorization Header to an API Gateway Authorizer*/
-						console.log('refreshToken + ' + result.getRefreshToken().token);
-						console.log('accessToken + ' + new Date(result.getAccessToken().getExpiration() * 1000));
-						console.log('idToken + ' + new Date(result.getIdToken().getExpiration() * 1000));
-						self.token = result.idToken.jwtToken;
-                        
-                        var base64Url = self.token.split('.')[1];
+					onSuccess: function (result) { 
+                        var base64Url = result.idToken.jwtToken.split('.')[1];
                         var base64 = base64Url.replace('-', '+').replace('_', '/');
                         var props = JSON.parse(window.atob(base64));
                         self.userTeam = props['custom:team'];
                         self.userType = props['custom:userType'];
                         console.log(self.userProps);
-                        
-				// Add the User's Id Token to the Cognito credentials login map.
-                AWSCognito.config.credentials = new AWSCognito.CognitoIdentityCredentials({
-                    IdentityPoolId: 'us-west-2:28695927-b308-4073-acd6-fedc4e1cd40b',
-                    Logins: {
-                        'cognito-idp.us-west-2.amazonaws.com/us-west-2_KMI3gTfQw': result.getIdToken().getJwtToken()
-                    }
-                });
                         
 						resolve(result.idToken.jwtToken);
 					},
@@ -81,8 +74,7 @@
 		}
         		
 		function _changePassword(oldPassword, newPassword) {
-			var userPool = new AWSCognito.CognitoIdentityServiceProvider.CognitoUserPool(self.poolData);
-			var cognitoUser = userPool.getCurrentUser();
+			var cognitoUser = self.userPool.getCurrentUser();
 			return $q(function(resolve, reject){
 				cognitoUser.getSession(function(err, session) {
 					if (err) {
@@ -102,40 +94,61 @@
 		}
 
 		function _isAuthenticated() {
-			var userPool = new AWSCognito.CognitoIdentityServiceProvider.CognitoUserPool(self.poolData);
-			var cognitoUser = userPool.getCurrentUser();
+			var cognitoUser = self.userPool.getCurrentUser();
 
 			return (cognitoUser != null);
 		}
 
 		function _logout() {
-			var userPool = new AWSCognito.CognitoIdentityServiceProvider.CognitoUserPool(self.poolData);
-			var cognitoUser = userPool.getCurrentUser();
+			var cognitoUser = self.userPool.getCurrentUser();
 
 			return cognitoUser.signOut();
 		}
 
 		function _getToken() {
+			// Grab the current user to allow getting the current session
+			var cognitoUser = self.userPool.getCurrentUser();
+			// Promise wrap the call 
 			return $q(function(resolve, reject) {
-				if (self.token) {
-                    if (self.tokenExpiration > new Date()) {
-						//console.log(self.token);
-                        resolve(self.token);
-                    } else {
-                        console.info('EXPIRED - refresh tokens w/ AWS and the refreshToken...');
-						_refreshTokens();
-                        resolve(null);
-                    }
-                }
-				else {
-					return _getUser().then(function(token) {
-						self.token = token;
-						resolve(token);
-					}).catch(function(err) {
-						reject(err);
+				//test for user, and throw error if none found
+				if (cognitoUser != null) {
+					// Get the session object that will have the id, access, and refresh tokens
+					cognitoUser.getSession(function(err, session) {
+						if (err) {
+							console.error('Error encountered during getSession.', err);
+							reject(err);
+						}
+						console.info('EXPIRES: ' + new Date(session.getIdToken().getExpiration() * 1000 ))
+						// Resolve the promise with the idToken
+						resolve(session.getIdToken().jwtToken);
 					});
+				} else {
+					console.warn('AuthSvc', 'There is no currentUser on the userPool...');
+					return resolve(null);
+					//return reject(new Error( 'There is not current user to get a session.  Please Authenticate.' )); 
 				}
 			});
+// LEGACY CODE - original setup for getToken replaced after falling back to SDK refresh token features...
+//			return $q(function(resolve, reject) {
+//				if (self.token) {
+//                    if (self.tokenExpiration > new Date()) {
+//						//console.log(self.token);
+//                        resolve(self.token);
+//                    } else {
+//                        console.info('EXPIRED - refresh tokens w/ AWS and the refreshToken...');
+//						_refreshTokens();
+//                        resolve(null);
+//                    }
+//                }
+//				else {
+//					return _getUser().then(function(token) {
+//						self.token = token;
+//						resolve(token);
+//					}).catch(function(err) {
+//						reject(err);
+//					});
+//				}
+//			});
 		}
 		
 		function _refreshTokens() {
@@ -151,8 +164,7 @@
 		}
 
 		function _getUser() {
-			var userPool = new AWSCognito.CognitoIdentityServiceProvider.CognitoUserPool(self.poolData);
-			var cognitoUser = userPool.getCurrentUser();
+			var cognitoUser = self.userPool.getCurrentUser();
 
 			return $q(function(resolve, reject) {
 				if (cognitoUser != null) {
@@ -180,8 +192,8 @@
 		}
         
         function _getUserType() {
-            return _getToken().then(function() {
-                var base64Url = self.token.split('.')[1];
+            return _getToken().then(function(token) {
+                var base64Url = token.split('.')[1];
                 var base64 = base64Url.replace('-', '+').replace('_', '/');
                 var props = JSON.parse(window.atob(base64));
                 self.userTeam = props['custom:team'];
@@ -192,8 +204,7 @@
         }
         
         function _updateUser(newUserType, newUserTeam) {
-			var userPool = new AWSCognito.CognitoIdentityServiceProvider.CognitoUserPool(self.poolData);
-			var cognitoUser = userPool.getCurrentUser();
+			var cognitoUser = self.userPool.getCurrentUser();
             cognitoUser.getSession(function(err, session) {
                 if (err) {
                     console.error('Error encountered during getSession.', err);
@@ -237,10 +248,9 @@
 			};
 			var authenticationDetails = new AWSCognito.CognitoIdentityServiceProvider.AuthenticationDetails(authenticationData);
 
-			var userPool = new AWSCognito.CognitoIdentityServiceProvider.CognitoUserPool(self.poolData);
 			var userData = {
 				Username : loginData.username,
-				Pool : userPool
+				Pool : self.userPool
 			};
 			var cognitoUser = new AWSCognito.CognitoIdentityServiceProvider.CognitoUser(userData);
 
