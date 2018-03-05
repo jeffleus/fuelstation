@@ -5,7 +5,7 @@
 
     angular.module('app.items')
 
-    .controller(ctrlName, function ($scope, $q, $ionicModal, ionicDatePicker, LoadingSpinner
+    .controller(ctrlName, function ($scope, $q, $ionicModal, $ionicPopup, ionicDatePicker, LoadingSpinner
 									 , SummarySvc, ChoiceSvc, ItemsSvc, CsvSvc) {
         var vm = this;		
 		vm.items = [];
@@ -94,9 +94,15 @@
 		
 		function _checkList(choice) {
 			var selected = _.where(vm.choices, { isSelected: true });
-			if (selected.length > 8) {
-				alert('You already selected (3) choices to report.');
-				choice.isSelected = false;
+			if (selected.length > 8 && !self.largeListAckd) {
+				$ionicPopup.alert({
+					title: 'Large Item List', 
+					template: "You have selected more than (8) items to report.  Note a maximum of (8) items can be "
+					+ "shown on screen.  However, all selected item data will be included in the CSV export."
+				}).then(function(res) {
+					self.largeListAckd = true;
+					console.log('More than (8) items selected for report.');
+				});
 			}
 		}
         
@@ -134,6 +140,9 @@
 				vm.data = results.data;
 				
 				vm.items = _pivotData(vm.items);				
+				return _calculateTotals();
+			}).then(function(results) {
+				vm.totals = results;
 				return;
 			}).catch(function(err) {
 				console.error(err);
@@ -177,17 +186,16 @@
         
         function _calculateTotals() {
             return $q(function(resolve, reject) {
-                var memo = { totalDays: 0, totalStudents: 0, avgStudents: 0, totalCheckouts: 0, totalItems: 0 };
+                var memo;
                 try {
-                    var totals = _.reduce(vm.items, function(m, item) {
-                        m.totalDays++;
-                        m.totalStudents += item.StudentCount;
-                        m.avgStudents = (m.totalDays == 0) ? 0 : m.totalStudents / m.totalDays;
-                        m.totalCheckouts += item.CheckoutCount;
-                        m.totalItems += item.ItemCount;
-                        return m;
-                    }, memo);
-                    resolve(totals);                    
+					//calculate totals for each column(item) of data mapping the data array of columns
+					var col_totals = _.map(vm.data, function(col) {
+						//var colmemo;
+						//use reduce to sum up counts of all days in the item column
+						return _.reduce(col, function(memo, num){ return memo + num; }, 0);
+						//return total;
+					});
+                    resolve(col_totals);                    
                 }
                 catch(e) {
                     reject(e);
@@ -218,21 +226,25 @@
         }
 		
 		function _pivotData(data) {
+			//grab a unique(uniq) list of dates(pluck) as a sorted(sort) array(value)
 			var dates = _.chain(data)
 				.pluck("ServiceDate")
 				.uniq()
 				.value()
 				.sort();
-			
+			//group the data by ServiceData creates a row array for each date
 			var rowsObj = _.groupBy(data, "ServiceDate");
+			//map the dates array, where each row is a list of ChoiceCounts sorted by ChoiceName
 			var rows = _.chain(dates).map(function(date) {
 				var row = _.chain(rowsObj[date])
 					.sortBy("ChoiceName")
 					.pluck("ChoiceCount")
 					.value();
+				//make sure to prepend the date to each row, for row headers
 				row.unshift(date);
 				return row;
 			}).value();
+			//return the resulting nested arrays
 			return rows;
 		}
         
