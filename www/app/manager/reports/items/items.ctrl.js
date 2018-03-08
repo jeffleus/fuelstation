@@ -115,11 +115,27 @@
         }
 
         function _download() {
-			if (vm.displayMode == 1) {				
-				CsvSvc.download(vm.averages, "summary_report_avg_");
-			} else {
-				CsvSvc.download(vm.items, "summary_report_totals_");
-			}
+			//clone the data to avoid affecting the on-screen information
+			var output = vm.items.slice(0);
+			var countOfDays = output.length;
+			//clone the series array for a headerRow and add the 'ServiceDate' title to first column
+			var headerRow = vm.series.slice(0)
+			headerRow.unshift('ServiceDate');
+			//clone the totals row and prepend the 'TOTALS' rowHeader to the first column
+			var totalsRow = vm.totals.slice(0)
+			totalsRow.unshift('TOTALS');
+			//clone the totals row and map each numberic col(index>0) to an average by div countOfDays
+			var averagesRow = totalsRow.slice(0);
+			averagesRow = _.map(averagesRow, function(item, index, list) {
+				return (index > 0) ? (item / countOfDays).toFixed(1) : 'AVERAGES';
+			});
+			
+			//prepend the headerRow and append the totals row
+			output.unshift(headerRow);
+			output.push(totalsRow);
+			output.push(averagesRow);
+			
+			CsvSvc.download(output, "item_report_totals_");
         }
 
         function _refreshWithFilter() {
