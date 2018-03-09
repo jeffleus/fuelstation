@@ -33,6 +33,7 @@ angular.module('app', [
     'app.unauthenticated',
 	
 	'app.summary', 
+	'app.items', 
 	'app.new-order',
 
     'blocks.exception',
@@ -199,6 +200,19 @@ angular.module('app', [
                 'appContent': {
                     templateUrl: 'app/manager/reports/summary/summary.html',
                     controller: 'SummaryCtrl as vm'
+                },
+                'sideMenu': {
+                    templateUrl: 'app/manager/menu.html'
+                }
+            }
+
+        })
+        .state('tab.item', {
+            url: '/item',
+            views: {
+                'appContent': {
+                    templateUrl: 'app/manager/reports/items/items.html',
+                    controller: 'ItemsCtrl as vm'
                 },
                 'sideMenu': {
                     templateUrl: 'app/manager/menu.html'
