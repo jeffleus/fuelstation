@@ -6,8 +6,8 @@
     .controller('ManagerCtrl', function (ChoiceSvc, IonicAlertSvc) {
         var vm = this;
 
-        window.setInterval(function () {
-            ChoiceSvc.choice().get({id:3320});
-        }, 60000);
+//        window.setInterval(function () {
+//            ChoiceSvc.choice().get({id:3320});
+//        }, 60000);
     });
 })();
