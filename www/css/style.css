@@ -8,6 +8,11 @@
 .table-row, ion-item.table-row>div.item-content {
     padding: 2px !important;
 }
+
+.rotateText {
+	transform: rotate(-60deg);
+	white-space: normal;
+}
 /***********************/
 
 button {
