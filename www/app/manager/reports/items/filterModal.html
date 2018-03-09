@@ -1,0 +1,34 @@
+<ion-modal-view>
+	<ion-header-bar class="bar-positive">
+		<h1 class="title">Filter</h1>
+	</ion-header-bar>
+	<ion-content class="padding">
+		<ion-list class="manual-list-fullwidth">
+		  <ion-item class="item-icon-left" ng-click="vm.openDateFilter()">
+			<i class="icon ion-calendar assertive"></i>
+			Date Range
+			<span class="item-note">
+				{{vm.dateRange.startDate.format('M/D')}} thru 
+				{{vm.dateRange.endDate.format('M/D')}}</span>
+		  </ion-item>
+		  <ion-item class="item-icon-left" ng-click="vm.openItemFilter()">
+			<i class="icon ion-pricetags assertive"></i>
+			<span>Item Filter</span>
+			<span class="item-note">({{vm.selectedItems.length}}) items</span>
+		  </ion-item>
+<!--
+		  <ion-item class="item-icon-left" ng-click="showModalTeam()">
+			<i class="icon ion-person-stalker" style="color:#aaa;"></i>
+			<span style="color:#aaa;">Team Filter</span>
+			<span class="item-note">8 teams</span>
+		  </ion-item>
+		  <ion-item class="item-icon-left" ng-click="showModalLocation()">
+			<i class="icon ion-map" style="color:#aaa;"></i>
+			<span style="color:#aaa;">Location Filter</span>
+			<span class="item-note">1 location</span>
+		  </ion-item>
+-->
+		</ion-list>
+		<button class="button button-block button-balanced" ng-click="vm.refreshWithFilter()">Apply</button>
+	</ion-content>
+</ion-modal-view>

@@ -1,0 +1,19 @@
+<ion-modal-view>
+	<ion-header-bar class="bar-positive">
+		<button class="button icon ion-close-circled button-assertive"
+			ng-click="vm.hideModalItem()"></button>
+		<h1 class="title">Item Selector</h1>
+		<button class="button icon ion-checkmark-circled button-balanced"
+			ng-click="vm.hideModalItem()"></button>
+	</ion-header-bar>
+	<ion-content class="padding">
+		<ion-list class="manual-list-fullwidth">
+			<ion-item class="item item-divider">Inventory of Choices</ion-item>
+			<ion-checkbox class="item-accordion"
+				ng-repeat="choice in vm.choices | orderBy:'name'" 
+				ng-model="choice.isSelected"
+				ng-click="vm.checkList(choice)">
+				{{choice.name}}</ion-checkbox>
+	</ion-list>
+	</ion-content>
+</ion-modal-view>
