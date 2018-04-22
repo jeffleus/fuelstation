@@ -200,7 +200,7 @@
                 self.shouldHideStaff = (self.staffCount >= self.dayStaffLimit);
 
 
-                if (self.monthSnacksRemaining <= 0 || self.daySnacksRemaining <= 0) {
+                if (self.monthSnacksRemaining <= 0 || self.snackCount >= self.daySnacksLimit) {
                     self.shouldHideSnacks = true;
                 } else {
                     self.shouldHideSnacks = false;
