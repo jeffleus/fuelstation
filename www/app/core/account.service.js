@@ -21,7 +21,8 @@
 
             self.shouldHidePre = false;
             self.shouldHidePost = false;
-            self.shouldHideHydration = false;
+            self.shouldHideFBShakes = true;
+            // Note - added as a default true to hide from all but MFB team
             self.shouldHideSnacks = false;
             // Note: Need both 'gotPreToday' and 'shouldHidePre' variables so that if athlete already checked out a Pre workout item, and they order it again as a snack then remove it from their cart, it won't become available again as a Pre workout item - it should remain a snack-only option
 
@@ -41,7 +42,7 @@
             function _clear() {
                 self.shouldHidePre = false;
                 self.shouldHidePost = false;
-                self.shouldHideHydration = false;
+                self.shouldHideFBShakes = true;
                 self.shouldHideSnacks = false;
                 self.athleteData = null;
                 self.gotPreToday = false;
@@ -66,7 +67,9 @@
                         self.monthSnacksLimit = data.monthSnackLimit;
                         self.dayPreLimit = data.dayPreLimit;
                         self.dayPostLimit = data.dayPostLimit;
-						self.dayStaffLimit = data.dayStaffLimit;
+                        self.dayFBShakeLimit = data.dayFBShakeLimit;
+                        self.dayStaffLimit = data.dayStaffLimit;
+                        self.limitSportCode = data.SportCodeID;
 
                         return $q.when(athlete[0].AthleteID);
                     });
@@ -86,6 +89,7 @@
                 if (history) {
 					self.preCount = history.dayPreCount;
 					self.postCount = history.dayPostCount;
+					self.shakeCount = history.dayFBShakeCount;
 					self.snackCount = history.daySnacksCount;
 					self.staffCount = history.dayStaffCount;
 					
@@ -126,6 +130,7 @@
                     }
                 self.shouldHidePre = (self.preCount >= self.dayPreLimit);
                 self.shouldHidePost = (self.postCount >= self.dayPostLimit);
+                self.shouldHideFBShakes = (self.limitSportCode !== 'MFB') || (self.shakeCount >= self.dayFBShakeLimit);
                 self.shouldHideSnack = (self.snackCount >= self.snackCount);
                 self.shouldHideStaff = (self.staffCount >= self.dayStaffLimit);
 
@@ -197,6 +202,7 @@
 //                }
                 self.shouldHidePre = (self.preCount >= self.dayPreLimit);
                 self.shouldHidePost = (self.postCount >= self.dayPostLimit);
+                self.shouldHideFBShakes = (self.shakeCount >= self.dayFBShakeLimit);
                 self.shouldHideStaff = (self.staffCount >= self.dayStaffLimit);
 
 

@@ -100,6 +100,7 @@
 				if (!item.isFree) {
 					if (debit === 'pre') AccountSvc.preCount++;
 					if (debit === 'post') AccountSvc.postCount++;
+					if (debit === 'fbshake') AccountSvc.shakeCount++;
 					if (debit === 'snack') AccountSvc.snackCount++;
 					if (debit === 'staff') AccountSvc.staffCount++;
 				}
@@ -129,6 +130,9 @@
 						break;
 					case 'post':
 						AccountSvc.postCount--;
+						break;
+                    case 'fbshake':
+						AccountSvc.shakeCount--;
 						break;
 					case 'staff':
 						AccountSvc.staffCount--;
