@@ -11,7 +11,7 @@
         self.choice = _choice;
         self.getAllChoices = _getAllChoices;
         self.getType = _getType;
-        self.hydrationFilter = _hydrationFilter;
+        self.fbShakeFilter = _fbShakeFilter;
         self.staffFilter = _staffFilter;
         self.initializeChoiceCategories = _initializeChoiceCategories;
         self.postWorkout = _postWorkout;
@@ -20,6 +20,15 @@
         self.snackOnly = _snackOnly;
         self.typeOptions = _typeOptions;
         self.updateChoice = _updateChoice;
+
+        function _initializeChoiceCategories(choices) {
+            var allChoices = choices.sort(self.alphabetize);
+            self.snacks = self.snackOnly(allChoices);
+            self.pre = self.preWorkout(allChoices);
+            self.post = self.postWorkout(allChoices);
+            self.fbShakes = self.fbShakeFilter(allChoices);
+			self.staff = self.staffFilter(allChoices);
+        }
 
         function _alphabetize(a, b) {
             if (a.name < b.name)
@@ -30,7 +39,7 @@
                 return 0;
         }
 
-         function _choice() {
+        function _choice() {
             return {
                 get: function(args) {
                     return $http.get(apiUrl + '/' + args.id)
@@ -42,7 +51,7 @@
                     return $http.delete(apiUrl + '/' + args.id);
                 }
             };
-         }
+        }
 
         function _getAllChoices() {
             //return $resource(ApiEndpoint.url + 'Choices', {});
@@ -50,6 +59,14 @@
                 .then(function(result){
                     return result.data.choices;
                 });
+        }
+
+        function _saveChoice(choice){
+            return $http.post(apiUrl, choice);
+        }
+
+        function _updateChoice(choice){
+            return $http.put(apiUrl, choice)
         }
 
         function _getType(type) {
@@ -60,53 +77,8 @@
             } else if (type === 2) {
                 return "Post";
             } else if (type === 3) {
-                return "Hydration";
+                return "FBSnack";
             }
-        }
-
-        function _hydrationFilter(data) {
-            var hydrations = _.where(data, {
-                type: 3
-            });
-            return hydrations;
-        }
-
-        function _staffFilter(data) {
-            var staffItems = _.where(data, {
-                isStaff: true
-            });
-            return staffItems;
-        }
-
-        function _initializeChoiceCategories(choices) {
-            var allChoices = choices.sort(self.alphabetize);
-            self.snacks = self.snackOnly(allChoices);
-            self.pre = self.preWorkout(allChoices);
-            self.post = self.postWorkout(allChoices);
-            self.hydration = self.hydrationFilter(allChoices);
-			self.staff = self.staffFilter(allChoices);
-        }
-
-        function _postWorkout(data) {
-            return _.where(data, {
-                type: 2
-            });
-        }
-
-        function _preWorkout(data) {
-            return _.where(data, {
-                type: 1
-            });
-        }
-
-        function _saveChoice(choice){
-            return $http.post(apiUrl, choice);
-        }
-
-        function _snackOnly(data) {
-            return _.where(data, {
-                type: 0
-            });
         }
 
         function _typeOptions() {
@@ -121,15 +93,43 @@
                     label: "Post",
                     value: 2
             }, {
-                    label: "Hydration",
+                    label: "FB Shake",
                     value: 3
             }
             ];
             return opts;
         }
 
-        function _updateChoice(choice){
-            return $http.put(apiUrl, choice)
+        function _preWorkout(data) {
+            return _.where(data, {
+                type: 1
+            });
+        }
+
+        function _postWorkout(data) {
+            return _.where(data, {
+                type: 2
+            });
+        }
+
+        function _fbShakeFilter(data) {
+            var fbShakes = _.where(data, {
+                type: 3
+            });
+            return fbShakes;
+        }
+
+        function _staffFilter(data) {
+            var staffItems = _.where(data, {
+                isStaff: true
+            });
+            return staffItems;
+        }
+
+        function _snackOnly(data) {
+            return _.where(data, {
+                type: 0
+            });
         }
     });
 })();

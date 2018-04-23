@@ -22,11 +22,11 @@
                         <button class="button button-royal" ng-repeat="c in vm.choiceSvc.post" ng-click="vm.orderItem(c, false,'post')" ng-show="c.isActive">{{c.name}}</button>
                     </p>
                 </div>
-                <div ng-if="!vm.accountSvc.shouldHideHydration" ng-hide="true" class="category-fade">
-                    <h4>Hydration Supplements:</h4>
+                <div ng-if="!vm.accountSvc.shouldHideFBShakes" class="category-fade">
+                    <h4>FB Shakes:</h4>
                     <hr />
                     <p>
-                        <button class="button button-energized" ng-repeat="c in vm.choiceSvc.hydration" ng-click="vm.orderItem(c, false,'hyd')" ng-show="c.isActive">{{c.name}}</button>
+                        <button class="button button-energized" ng-repeat="c in vm.choiceSvc.fbShakes" ng-click="vm.orderItem(c, false,'fbshake')" ng-show="c.isActive">{{c.name}}</button>
                     </p>
                 </div>
                 <div ng-if="!vm.accountSvc.shouldHideStaff" class="category-fade">
@@ -52,13 +52,10 @@
                         <button class="button button-positive" ng-repeat="c in vm.choiceSvc.staff | filter: {isSnack:true}" ng-if="vm.accountSvc.shouldHideStaff && (vm.accountSvc.dayStaffLimit > 0) && c.isActive" ng-click="vm.orderItem(c, true,'snack')">
                             {{c.name}}
                         </button>
-                        <button class="button button-energized" ng-repeat="c in vm.choiceSvc.hydration | filter: {isSnack:true}" ng-if="vm.accountSvc.shouldHideHydration && c.isActive" ng-click="vm.orderItem(c, true,'snack')">
-                            {{c.name}}
-                        </button>
                     </p>
                 </div>
                 <div class="category-fade" ng-if="(vm.accountSvc.shouldHideSnacks &&
-                     vm.accountSvc.shouldHideHydration &&
+                     vm.accountSvc.shouldHideFBShakes &&
                      vm.accountSvc.shouldHidePre &&
                      vm.accountSvc.shouldHidePost)">
 
