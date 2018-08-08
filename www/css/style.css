@@ -46,7 +46,7 @@ button {
 /* Student ID number pad styles */
 
 button.button.round-ios-button {
-    border: 1px solid #457;
+    border: 1px solid #002510;
     background-color: #fff;
     border-radius: 50%;
     width: 100%;
@@ -78,6 +78,8 @@ button.button.round-ios-button.activated h1 {
 }
 .numpad-container {
     padding: 0 26%;
+    /*background-size:cover;*/
+    background-image:url('../img/baylor.png');
 }
 
 /* Order List */
@@ -147,6 +149,7 @@ button.button.round-ios-button.activated h1 {
 
 .light-weight {
     font-weight: 100 !important;
+    color: #002510;
 }
 .text-white {
     color: #fff;
