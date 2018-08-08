@@ -78,8 +78,8 @@ button.button.round-ios-button.activated h1 {
 }
 .numpad-container {
     padding: 0 26%;
-    /*background-size:cover;*/
-    background-image:url('../img/baylor.png');
+    background-size:cover;
+    background-image:url('../img/uva-white.png');
 }
 
 /* Order List */
