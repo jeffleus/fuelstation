@@ -10,7 +10,7 @@
 		  getSummary: _getSummary
       };
 
-      var url = 'https://fk1aftkm06.execute-api.us-west-2.amazonaws.com/demo/report/checkouts/summary/';
+      var url = 'https://9pw80dg8i2.execute-api.us-west-2.amazonaws.com/prod/report/checkouts/summary/';
 
       return service;
 

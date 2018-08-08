@@ -10,7 +10,7 @@
         };
 
         //live service url
-        var url = 'https://e33nles6vd.execute-api.us-west-2.amazonaws.com/demo/snacklimits/';
+        var url = 'https://xttf1er2tc.execute-api.us-west-2.amazonaws.com/prod/snacklimits/';
         
         return service;
         
