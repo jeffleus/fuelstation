@@ -8,6 +8,10 @@
 .table-row, ion-item.table-row>div.item-content {
     padding: 2px !important;
 }
+.rotateText {
+	transform: rotate(-60deg);
+	white-space: normal;
+}
 /***********************/
 
 button {
@@ -42,8 +46,8 @@ button {
 /* Student ID number pad styles */
 
 button.button.round-ios-button {
-    border: 2px solid #13294B;
-    background-color: #f5f8fb;
+    border: 1px solid #457;
+    background-color: #fff;
     border-radius: 50%;
     width: 100%;
     /* height: 120px; */
@@ -210,11 +214,4 @@ button.button.round-ios-button.activated h1 {
 .row.unlimited-items .col {
     -webkit-flex: none;
     flex: none;
-}
-.numpad-container {
-  background-size: auto 100%;
-    background-repeat: no-repeat;
-    background-position: center;
-  background-image:url('https://s3-us-west-2.amazonaws.com/lmu.fuelstationapp.com/img/lmu-lions.png');
-/*    background-image: url('http://www.fbschedules.com/images/logos/fbs/lsu-tigers.png');*/
 }
