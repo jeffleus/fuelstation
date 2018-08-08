@@ -7,8 +7,6 @@
 // 'starter.controllers' is found in controllers.js
 angular.module('app', [
     'ionic',
-
-    'ion-sticky',
     
     'app.core',
     'ionic-datepicker', 
