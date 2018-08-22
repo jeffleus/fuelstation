@@ -5,12 +5,13 @@
 
     .service('ChoiceSvc', function ($http, $resource, ApiEndpoint) {
         var self = this;
-        var apiUrl = 'https://mna6x5va5e.execute-api.us-west-2.amazonaws.com/dev/choices';
+        var apiUrl = 'https://rv3fgtr60d.execute-api.us-west-2.amazonaws.com/prod/choices';
 
         self.alphabetize = _alphabetize;
         self.choice = _choice;
         self.getAllChoices = _getAllChoices;
         self.getType = _getType;
+		self.choiceTypes = _choiceTypes;
         self.fbShakeFilter = _fbShakeFilter;
         self.staffFilter = _staffFilter;
         self.initializeChoiceCategories = _initializeChoiceCategories;
@@ -28,6 +29,8 @@
             self.post = self.postWorkout(allChoices);
             self.fbShakes = self.fbShakeFilter(allChoices);
 			self.staff = self.staffFilter(allChoices);
+			
+			self.types = self.choiceTypes(allChoices);
         }
 
         function _alphabetize(a, b) {
@@ -73,13 +76,26 @@
             if (type === 0) {
                 return "Snack only";
             } else if (type === 1) {
-                return "Pre";
+                return "Bars";
             } else if (type === 2) {
-                return "Post";
+                return "Chips & Crackers";
             } else if (type === 3) {
-                return "FBSnack";
-            }
+                return "Dairy";
+            } else if (type === 4) {
+                return "Breakfast";
+            } else if (type === 5) {
+                return "Fruit";
+            } else if (type === 6) {
+                return "Specialty";
+            } else {
+				return "Type Not Listed";
+			}
         }
+		
+		function _choiceTypes(data) {
+			//group the choices by type and return as a dictionary
+			return _.groupBy(data, 'type');
+		}
 
         function _typeOptions() {
             var opts = [
