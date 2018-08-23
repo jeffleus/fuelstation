@@ -18,6 +18,7 @@
         vm.orderItem = _orderItem;
         vm.removeItem = _removeItem;
         vm.toggleLeft = _toggleLeft;
+		vm.typeButton = _typeButton;
 
         init();
 
@@ -38,6 +39,7 @@
                     IonicAlertSvc.alert(opts);
                 }
             }, 1000);
+			console.log(vm.choiceSvc.types);
         }
 
         // Cancel timer when controller is destroyed (i.e. when route changes), otherwise timer continues even if user has already been logged out
@@ -154,5 +156,23 @@
         function _toggleLeft() {
             $ionicSideMenuDelegate.toggleLeft();
         }
+		
+		function _typeButton(type) {
+            if (type === 0) {
+                return "";
+            } else if (type === 1) {
+                return "button-calm";
+            } else if (type === 2) {
+                return "button-positive";
+            } else if (type === 3) {
+                return "button-balanced";
+            } else if (type === 4) {
+                return "button-energized";
+            } else if (type === 5) {
+                return "button-royal";
+            } else if (type === 6) {
+                return "button-positive";
+            }
+		}
     });
 })();
