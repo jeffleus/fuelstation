@@ -6,6 +6,8 @@
 
     .controller('StudentLoginCtrl', function (AccountSvc, OrderSvc, AthleteSvc, IonicAlertSvc, CheckoutSvc, ChoiceSvc, $state, LoadingSpinner, $ionicModal, $scope, $timeout, $localstorage) {
         var vm = this;
+		
+		vm.ID_LENGTH = 7;
 
         vm.accountSvc = AccountSvc;
         vm.password = {};
@@ -33,14 +35,14 @@
         function _numButton(num) {
             console.log('yo! a number was pressed...');
             // Student ID must be 8 characters long. 
-            if (AccountSvc.studentId.length < 8) {
+            if (AccountSvc.studentId.length < vm.ID_LENGTH) {
                 AccountSvc.studentId = AccountSvc.studentId + num;
                 checkStudentId();
             }
         }
 
         function checkStudentId() {
-            if (AccountSvc.studentId.length === 8) {
+            if (AccountSvc.studentId.length === vm.ID_LENGTH) {
                 LoadingSpinner.show();
                 getAthleteData();
             }
