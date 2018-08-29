@@ -25,7 +25,7 @@
 //            return $resource(ApiEndpoint.url + 'Checkouts/Archived');
             return {
                 query: function() {
-                    return $http.get('https://612lvtc6vf.execute-api.us-west-2.amazonaws.com/prod/checkouts/Archived'); 
+                    return $http.get('https://igdgy6rea9.execute-api.us-west-2.amazonaws.com/prod/checkouts/Archived'); 
                 }
             };            
         }
@@ -40,22 +40,22 @@
             // });
             return {
                 save: function(checkout) {
-                    return $http.post('https://612lvtc6vf.execute-api.us-west-2.amazonaws.com/prod/checkouts',checkout);
+                    return $http.post('https://igdgy6rea9.execute-api.us-west-2.amazonaws.com/prod/checkouts',checkout);
                 },
                 update: function(checkout) {
-                    return $http.put('https://612lvtc6vf.execute-api.us-west-2.amazonaws.com/prod/checkouts',checkout);
+                    return $http.put('https://igdgy6rea9.execute-api.us-west-2.amazonaws.com/prod/checkouts',checkout);
                 },
                 delete: function(id) {
-                    return $http.delete('https://612lvtc6vf.execute-api.us-west-2.amazonaws.com/prod/checkouts/' + id);
+                    return $http.delete('https://igdgy6rea9.execute-api.us-west-2.amazonaws.com/prod/checkouts/' + id);
                 },
                 get: function(id) {
-                    return $http.get('https://612lvtc6vf.execute-api.us-west-2.amazonaws.com/prod/checkouts/' + id);
+                    return $http.get('https://igdgy6rea9.execute-api.us-west-2.amazonaws.com/prod/checkouts/' + id);
                 },
                 query: function() {
-                    return $http.get('https://612lvtc6vf.execute-api.us-west-2.amazonaws.com/prod/checkouts?filter=93262,93263,93265,93266');
+                    return $http.get('https://igdgy6rea9.execute-api.us-west-2.amazonaws.com/prod/checkouts?filter=93262,93263,93265,93266');
                 }
             };
-            return $http.post('https://612lvtc6vf.execute-api.us-west-2.amazonaws.com/prod/checkouts',checkout)
+            return $http.post('https://igdgy6rea9.execute-api.us-west-2.amazonaws.com/prod/checkouts',checkout)
         }
 
         // This currently returns a specific checkout by checkout ID, not the checkout history of athlete
@@ -63,7 +63,7 @@
             // return $resource(ApiEndpoint.url + 'Checkouts/History/:studentSportID', {
             //     studentSportID: '@studentSportID'
             // });
-            return $http.get('https://612lvtc6vf.execute-api.us-west-2.amazonaws.com/prod/report/checkouts/history/' + id)
+            return $http.get('https://igdgy6rea9.execute-api.us-west-2.amazonaws.com/prod/report/checkouts/history/' + id)
                 .then(function(result){
                     return result.data;
                 });
@@ -73,7 +73,7 @@
             //return $resource(ApiEndpoint.url + 'Checkouts/GetDailyCheckouts');
 			return {
 				query: function() {
-					return $http.get('https://612lvtc6vf.execute-api.us-west-2.amazonaws.com/prod/report/checkouts/daily');
+					return $http.get('https://igdgy6rea9.execute-api.us-west-2.amazonaws.com/prod/report/checkouts/daily');
 				}
 			}
         }
@@ -83,7 +83,7 @@
         */
         function _getMonthCounts(timePeriod){
             //return $resource(ApiEndpoint.url + 'Checkouts/GetMonthCounts/Month/' + timePeriod.month + '/Year/' + timePeriod.year);
-            var reportUrl = 'https://612lvtc6vf.execute-api.us-west-2.amazonaws.com/prod/report/checkouts/monthly';
+            var reportUrl = 'https://igdgy6rea9.execute-api.us-west-2.amazonaws.com/prod/report/checkouts/monthly';
             reportUrl += '/' + timePeriod.year + '/' + timePeriod.month;
             return {
                 query: function(){
@@ -157,7 +157,7 @@
             //return $resource(ApiEndpoint.url + 'Checkouts/Unarchived');
             return {
                 query: function() {
-                    return $http.get('https://612lvtc6vf.execute-api.us-west-2.amazonaws.com/prod/checkouts/Unarchived'); 
+                    return $http.get('https://igdgy6rea9.execute-api.us-west-2.amazonaws.com/prod/checkouts/Unarchived'); 
                 }
             };            
         }
