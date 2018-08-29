@@ -25,12 +25,12 @@
             LoadingSpinner.show();
 
             sport = sportLimit.Sport.description;
-            
-            var updateJson = {
-                  "SnackLimitID": sportLimit.SnackLimitID,
-                  "daySnackLimit": sportLimit.daySnackLimit,
-                  "monthSnackLimit": sportLimit.monthSnackLimit
-            };
+//            
+//            var updateJson = {
+//                  "SnackLimitID": sportLimit.SnackLimitID,
+//                  "daySnackLimit": sportLimit.daySnackLimit,
+//                  "monthSnackLimit": sportLimit.monthSnackLimit
+//            };
 
             SnackLimits.snackLimits().update(sportLimit)
                         .then(onUpdateSnackLimitSuccess, IonicAlertSvc.error);
