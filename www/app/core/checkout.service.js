@@ -83,11 +83,11 @@
         */
         function _getMonthCounts(timePeriod){
             //return $resource(ApiEndpoint.url + 'Checkouts/GetMonthCounts/Month/' + timePeriod.month + '/Year/' + timePeriod.year);
-            var reportUrl = 'https://f5ekrwo1b6.execute-api.us-west-2.amazonaws.com/dev/report/checkouts/monthly';
+            var reportUrl = 'https://6tvxksy2ta.execute-api.us-west-2.amazonaws.com/ademo/report/checkouts/monthly';
             reportUrl += '/' + timePeriod.year + '/' + timePeriod.month;
             return {
                 query: function(){
-                    return $http.get('https://6tvxksy2ta.execute-api.us-west-2.amazonaws.com/ademo/report/checkouts/monthly')
+                    return $http.get(reportUrl)
                         .then(function(result){
                             return result.data;
                         });
