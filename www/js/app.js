@@ -8,8 +8,6 @@
 angular.module('app', [
     'ionic',
 
-    'ion-sticky',
-    
     'app.core',
     'ionic-datepicker', 
     'chart.js',
