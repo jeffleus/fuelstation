@@ -19,16 +19,16 @@
                             <button class="button button-clear first-left-btn" ng-click="vm.setArchive(checkout, $index)"><i class="icon ion-checkmark-circled light"></i></button>
                             <button class="button button-clear second-right-btn" ng-click="vm.openModal(checkout)"><i class="icon ion-edit light"></i></button>
                             <button class="button button-clear first-right-btn" ng-click="vm.deleteCheckout(checkout)"><i class="icon ion-close-circled light"></i></button>
-                            <strong>{{checkout.Athlete.lastName + ', ' + checkout.Athlete.firstName}}</strong>
+                            <strong>{{::(checkout.Athlete.lastName + ', ' + checkout.Athlete.firstName)}}</strong>
                             <br>
-                            <small>{{checkout.CreateDate | date: 'shortTime'}}</small>
+                            <small>{{::checkout.CreateDate | date: 'shortTime'}}</small>
                             <!-- <small>{{vm.parseRelativeTime(checkout.createDate)}}</small>-->
                         </div>
                         <div class="card-order-body">
                             <ion-scroll>
                                 <ion-list>
                                     <ion-item class="padding" ng-repeat="choice in checkout.CheckoutChoices">
-                                        {{choice.Choice.name}}
+                                        {{::choice.Choice.name}}
                                     </ion-item>
                                     <ion-item></ion-item>
                                 </ion-list>
