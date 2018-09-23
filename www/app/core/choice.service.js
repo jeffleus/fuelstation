@@ -98,22 +98,56 @@
 		}
 
         function _typeOptions() {
-            var opts = [
-                {
+			
+			var typeDict = {
+				0: {
                     label: "Snack only",
                     value: 0
-            }, {
-                    label: "Pre",
+				}, 
+				1: {
+                    label: "Bars",
                     value: 1
-            }, {
-                    label: "Post",
+            	}, 
+				2: {
+                    label: "Chips & Crackers",
                     value: 2
-            }, {
-                    label: "FB Shake",
+            	}, 
+				3: {
+                    label: "Dairy",
                     value: 3
-            }
-            ];
-            return opts;
+            	}, 
+				4: {
+                    label: "Breakfast",
+                    value: 4
+            	}, 
+				5: {
+                    label: "Fruit",
+                    value: 5
+            	}, 
+				6: {
+                    label: "Specialty",
+                    value: 6
+            	}
+			};
+			
+			return _.values(typeDict);
+			
+//            var opts = [
+//                {
+//                    label: "Snack only",
+//                    value: 0
+//            }, {
+//                    label: "Pre",
+//                    value: 1
+//            }, {
+//                    label: "Post",
+//                    value: 2
+//            }, {
+//                    label: "FB Shake",
+//                    value: 3
+//            }
+//            ];
+//            return opts;
         }
 
         function _preWorkout(data) {
