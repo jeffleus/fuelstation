@@ -29,6 +29,7 @@
 			UserPoolId : "us-west-2_KMI3gTfQw",
 			ClientId : "49f7iepq786236nea8t33m1kje"
 		};
+		self.identityPoolId = "us-west-2:28695927-b308-4073-acd6-fedc4e1cd40b";
 		AWSCognito.config.update({region:'us-west-2'});
 
 		function _login(loginData) {
@@ -47,27 +48,14 @@
 			return $q(function(resolve, reject){
 				cognitoUser.authenticateUser(authenticationDetails, {                
 					onSuccess: function (result) {
-						//console.log('access token + ' + result.getAccessToken().getJwtToken());
-						/*Use the idToken for Logins Map when Federating User Pools with Cognito Identity or when passing through an Authorization Header to an API Gateway Authorizer*/
-						console.log('refreshToken + ' + result.getRefreshToken().token);
-						console.log('accessToken + ' + new Date(result.getAccessToken().getExpiration() * 1000));
-						console.log('idToken + ' + new Date(result.getIdToken().getExpiration() * 1000));
-						self.token = result.idToken.jwtToken;
-                        
-                        var base64Url = self.token.split('.')[1];
-                        var base64 = base64Url.replace('-', '+').replace('_', '/');
-                        var props = JSON.parse(window.atob(base64));
-                        self.userTeam = props['custom:team'];
-                        self.userType = props['custom:userType'];
-                        console.log(self.userProps);
-                        
-				// Add the User's Id Token to the Cognito credentials login map.
-                AWSCognito.config.credentials = new AWSCognito.CognitoIdentityCredentials({
-                    IdentityPoolId: 'us-west-2:28695927-b308-4073-acd6-fedc4e1cd40b',
-                    Logins: {
-                        'cognito-idp.us-west-2.amazonaws.com/us-west-2_KMI3gTfQw': result.getIdToken().getJwtToken()
-                    }
-                });
+						try {
+							self.cognitoTokens = _processTokens(result);
+							self.token = self.cognitoTokens.idToken;
+							_cacheToken(self.token);
+						}
+						catch(err) {
+							reject(err);
+						}
                         
 						resolve(result.idToken.jwtToken);
 					},
@@ -77,6 +65,41 @@
 						reject(err);
 					}
 				});            
+			});
+		}
+		
+		function _processTokens(result) {
+			/*Use the idToken for Logins Map when Federating User Pools with Cognito Identity or when passing through an Authorization Header to an API Gateway Authorizer*/
+//			console.log('refreshToken + ' + result.getRefreshToken().token);
+//			console.log('accessToken + ' + new Date(result.getAccessToken().getExpiration() * 1000));
+//			console.log('idToken + ' + new Date(result.getIdToken().getExpiration() * 1000));
+			var token = result.idToken.jwtToken;
+			self.tokenExpiration = new Date(result.getIdToken().getExpiration() * 1000);
+			console.info("Token Remain (min): ", (self.tokenExpiration - _Now())/60000);
+			var tokenDictionary = {
+				idToken: result.idToken.jwtToken,
+				accessToken: result.accessToken.jwtToken,
+				refreshToken: result.refreshToken.token
+			};
+			
+			//process the idToken for the user claims to TEAM and USERTYPE
+			var base64Url = token.split('.')[1];
+			var base64 = base64Url.replace('-', '+').replace('_', '/');
+			var props = JSON.parse(window.atob(base64));
+			self.userTeam = props['custom:team'];
+			self.userType = props['custom:userType'];
+			console.log(`Logged in User: team-${self.userTeam}, type-${self.userType}`);
+			
+			return tokenDictionary;
+		}
+		
+		function _cacheToken(token) {
+			// Add the User's Id Token to the Cognito credentials login map.
+			AWSCognito.config.credentials = new AWSCognito.CognitoIdentityCredentials({
+				IdentityPoolId: self.identityPoolId,
+				Logins: {
+					'cognito-idp.us-west-2.amazonaws.com/us-west-2_KMI3gTfQw': token
+				}
 			});
 		}
         		
@@ -118,7 +141,7 @@
 		function _getToken() {
 			return $q(function(resolve, reject) {
 				if (self.token) {
-                    if (self.tokenExpiration > new Date()) {
+                    if (self.tokenExpiration > _Now()) {
 						//console.log(self.token);
                         resolve(self.token);
                     } else {
@@ -161,22 +184,29 @@
 							console.error('Error encountered during getSession.', err);
 							reject(err);
 						}
-						self.token = session.getIdToken().jwtToken;
-                        self.tokenExpiration = new Date(session.getIdToken().getExpiration() * 1000);
-						console.info("Token Remain (min): ", (self.tokenExpiration - new Date())/60000);
-
-				// Add the User's Id Token to the Cognito credentials login map.
-                AWSCognito.config.credentials = new AWSCognito.CognitoIdentityCredentials({
-                    IdentityPoolId: 'us-west-2:28695927-b308-4073-acd6-fedc4e1cd40b',
-                    Logins: {
-                        'cognito-idp.us-west-2.amazonaws.com/us-west-2_KMI3gTfQw': session.getIdToken().getJwtToken()
-                    }
-                });
 						
-						resolve(session.getIdToken().jwtToken);
+						try {
+							//process the token and report time remaining before token expiration
+							self.token = session.getIdToken().jwtToken;
+							self.tokenExpiration = new Date(session.getIdToken().getExpiration() * 1000);
+							console.info("Token Remain (min): ", (self.tokenExpiration - _Now())/60000);
+							//cache the token in the AWS service for later use
+							_cacheToken(self.token);
+							resolve(self.token);
+							
+						} catch(tokenErr) {
+							reject(tokenErr);
+						}
 					});
 				} else { return resolve(null); }
 			});
+		}
+		
+		function _Now() {
+			var offsetInMinutes = 0;
+			var now = new Date();
+			now.setMinutes(now.getMinutes() + offsetInMinutes);
+			return now;
 		}
         
         function _getUserType() {

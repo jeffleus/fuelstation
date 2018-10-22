@@ -36,7 +36,7 @@ angular.module('app', [
     'blocks.exception',
     'blocks.errorlog',
 
-    'templates', 
+//    'templates', 
     'ionic.utils'
     ])
 
@@ -77,7 +77,7 @@ angular.module('app', [
             url: '/studentID',
             views: {
                 'appContent': {
-                    templateUrl: 'athleteLogin/login.html',
+                    templateUrl: 'app/athleteLogin/login.html',
                     controller: 'StudentLoginCtrl as vm'
                 },
                 'sideMenu': {
