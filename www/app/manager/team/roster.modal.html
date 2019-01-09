@@ -12,6 +12,13 @@
 
                 <label for="name" class="item item-input">
                     <span class="input-label">
+                                ID
+                            </span>
+                    <input type="text" name="name" ng-model="vm.selectedAthlete.schoolid" required/>
+                </label>
+
+                <label for="name" class="item item-input">
+                    <span class="input-label">
                                 First Name
                             </span>
                     <input type="text" name="name" ng-model="vm.selectedAthlete.firstName" required/>
@@ -23,20 +30,21 @@
                             </span>
                     <input type="text" name="name" ng-model="vm.selectedAthlete.lastName" required/>
                 </label>
-
-                <label for="name" class="item item-input">
-                    <span class="input-label">
-                                ID
-                            </span>
-                    <input type="text" name="name" ng-model="vm.selectedAthlete.schoolid" required/>
+				
+                <label for="isCoach" class="item item-input item-toggle">
+                    <span class="input-label"> isCoach? </span>
+					<label class="toggle">
+					   <input type="checkbox" name="isCoach" ng-model="vm.selectedAthlete.isCoach">
+					   <div class="track">
+						 <div class="handle"></div>
+					   </div>
+					</label>
                 </label>
-
 
                 <div class="padding">
                     <button type="button" ng-click="vm.onCloseModal()" class="button button-stable">Cancel</button>
                     <button ng-click="vm.onSaveAthlete()" class="button button-balanced">Save</button>
                 </div>
-
 
             </div>
         </form>
