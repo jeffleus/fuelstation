@@ -4,7 +4,7 @@
     angular
         .module('app.unauthenticated', [])
 
-        .controller('UnauthenticatedCtrl', function (AuthSvc, $ionicModal, $scope, $state) {
+        .controller('UnauthenticatedCtrl', function (AuthSvc, $ionicModal, $scope, $state, IonicAlertSvc) {
             var vm = this;
 
             vm.closeFSModal = _closeModal;
