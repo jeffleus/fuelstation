@@ -11,7 +11,7 @@
 		  deleteSport: _deleteSport
       };
 
-      var url = 'https://tsp5us21ie.execute-api.us-west-2.amazonaws.com/dev/sports/';
+      var url = 'https://kpudsmolzl.execute-api.us-west-2.amazonaws.com/demo/sports/';
 
       return service;
 
