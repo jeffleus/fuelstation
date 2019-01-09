@@ -11,7 +11,7 @@
 		  getItems: _getItems
       };
 
-      var url = 'https://f5ekrwo1b6.execute-api.us-west-2.amazonaws.com/dev/report/checkouts/items/';
+      var url = 'https://e1k9j1875e.execute-api.us-west-2.amazonaws.com/demo/report/checkouts/items/';
 
       return service;
 

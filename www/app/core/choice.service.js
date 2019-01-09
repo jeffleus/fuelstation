@@ -5,7 +5,7 @@
 
     .service('ChoiceSvc', function ($http, $resource, ApiEndpoint) {
         var self = this;
-        var apiUrl = 'https://mna6x5va5e.execute-api.us-west-2.amazonaws.com/dev/choices';
+        var apiUrl = 'https://crvx4plki4.execute-api.us-west-2.amazonaws.com/demo/choices';
 
         self.alphabetize = _alphabetize;
         self.choice = _choice;
