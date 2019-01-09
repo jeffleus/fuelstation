@@ -78,6 +78,9 @@ button.button.round-ios-button.activated h1 {
 }
 .numpad-container {
     padding: 0 26%;
+	width: 100%;
+/*    background-size:cover;*/
+    background-image:url('../img/vcu.png');
 }
 
 /* Order List */
