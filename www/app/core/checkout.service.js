@@ -11,6 +11,7 @@
             getCheckoutHistory: _getCheckoutHistory,
             getDailyCheckouts: _getDailyCheckouts,
             getMonthCounts: _getMonthCounts,
+			getRechargeCounts: _getRechargeCounts,
             fillCheckoutObject: _fillCheckoutObject,
             processCheckout: _processCheckout,
             setArchiveProperties: _setArchiveProperties,
@@ -84,6 +85,22 @@
         function _getMonthCounts(timePeriod){
             //return $resource(ApiEndpoint.url + 'Checkouts/GetMonthCounts/Month/' + timePeriod.month + '/Year/' + timePeriod.year);
             var reportUrl = 'https://igdgy6rea9.execute-api.us-west-2.amazonaws.com/prod/report/checkouts/monthly';
+            reportUrl += '/' + timePeriod.year + '/' + timePeriod.month;
+            return {
+                query: function(){
+                    return $http.get(reportUrl)
+                        .then(function(result){
+                            return result.data;
+                        });
+                }
+            }
+        }
+        
+        /**
+        * Gets total orders for each snack by month
+        */
+        function _getRechargeCounts(timePeriod){
+            var reportUrl = 'https://igdgy6rea9.execute-api.us-west-2.amazonaws.com/prod/report/checkouts/recharge';
             reportUrl += '/' + timePeriod.year + '/' + timePeriod.month;
             return {
                 query: function(){
