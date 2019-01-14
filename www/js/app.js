@@ -32,6 +32,7 @@ angular.module('app', [
 	
 	'app.summary', 
 	'app.items', 
+	'app.recharge',
 
     'blocks.exception',
     'blocks.errorlog',
@@ -158,6 +159,19 @@ angular.module('app', [
                 'appContent': {
                     templateUrl: 'app/manager/reports/monthlyCounts.html',
                     controller: 'MonthlyCountsCtrl as vm'
+                },
+                'sideMenu': {
+                    templateUrl: 'app/manager/menu.html'
+                }
+            }
+
+        })
+        .state('tab.rechargeReport', {
+            url: '/rechargeReport',
+            views: {
+                'appContent': {
+                    templateUrl: 'app/manager/reports/recharge/rechargeReport.html',
+                    controller: 'RechargeReportCtrl as vm'
                 },
                 'sideMenu': {
                     templateUrl: 'app/manager/menu.html'
