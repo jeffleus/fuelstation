@@ -25,8 +25,8 @@
         var type = '';
         var ipObj1 = {
           callback: _datePickerCallback,    //Mandatory
-          from: new Date(2017, 7, 1),       //Optional
-          to: new Date(2018, 6, 30),        //Optional
+          from: new Date(2018, 7, 1),       //Optional
+          to: new Date(2019, 6, 30),        //Optional
           inputDate: new Date(),            //Optional
           mondayFirst: true,                //Optional
           disableWeekdays: [0],             //Optional
