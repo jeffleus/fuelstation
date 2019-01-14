@@ -91,7 +91,7 @@
             itemClone.orderType = debit;
 
             if (isSnack) {
-				if(!item.isFree) {
+				if(!_doNotCount(item)) {
 					AccountSvc.monthSnacksRemaining--;
 					AccountSvc.daySnacksRemaining--;
 					itemClone.isSnack = true;
@@ -99,7 +99,7 @@
 				}
             } else {
                 itemClone.isSnack = false;
-				if (!item.isFree) {
+				if (!_doNotCount(item)) {
 					if (debit === 'pre') AccountSvc.preCount++;
 					if (debit === 'post') AccountSvc.postCount++;
 					if (debit === 'fbshake') AccountSvc.shakeCount++;
@@ -111,11 +111,18 @@
             OrderSvc.addItem(itemClone);
             AccountSvc.updateHiddenCategories(OrderSvc.orderItems);
         }
+		
+		//inserted as a utility to abstract the logic of NOT counting items
+		// 20190113 - added the coach accountType to allow unlimited
+		function _doNotCount(item) {
+			return item.isFree || AccountSvc.athleteData[0].isCoach;
+		}		
 
         function _removeItem(index) {
             resetTimer();
 			
-			if (!OrderSvc.orderItems[index].isFree) {
+			//update cart counts if the item is not one that is counted
+			if (!_doNotCount(OrderSvc.orderItems[index])) {
 			
 				if (OrderSvc.orderItems[index].isSnack) {
 					if (AccountSvc.monthSnacksRemaining < AccountSvc.monthSnacksLimit) {
