@@ -31,6 +31,19 @@
                     <input type="text" name="name" ng-model="vm.selectedAthlete.schoolid" required/>
                 </label>
 
+                <label for="isCoach" class="item item-toggle">
+					Is Coach?
+					<label class="toggle toggle-assertive">
+						<input type="checkbox" name="isCoach" ng-model="vm.selectedAthlete.isCoach"/>
+						<div class="track">
+							<div class="handle"></div>
+						</div>
+					</label>
+					
+                    <div class="track">
+						<div class="label"></div>
+					</div>
+                </label>
 
                 <div class="padding">
                     <button type="button" ng-click="vm.onCloseModal()" class="button button-stable">Cancel</button>
