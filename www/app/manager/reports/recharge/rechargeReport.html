@@ -4,7 +4,7 @@
         <div class="container padding">
             <div class="list">
                 <div class="row">
-                    <div class="col-25">
+                    <div class="col-20">
                         <label class="item item-input item-select">
                             <div class="input-label">
                                 Month
@@ -14,7 +14,8 @@
                         </label>
 
                     </div>
-                    <div class="col-25">
+
+                    <div class="col-20">
                         <label class="item item-input item-select">
                             <div class="input-label">
                                 Year
@@ -27,6 +28,16 @@
                     <div class="col-10 text-center">
                         <button type="button" class="button button-positive" ng-click="vm.getMonthCounts()" style="min-height: 35px; line-height: 20px;">Go</button>
 
+                    </div>
+
+					<div class="col-20">
+                        <label class="item item-input item-select">
+                            <div class="input-label">
+                                Team
+                            </div>
+						   <select name="type" ng-model="vm.selectedSport" ng-change="vm.onSelectSport()" 
+								   ng-options="type.SportCodeID as type.description for type in vm.sports" required></select>
+                        </label>
                     </div>
 
                     <div class="col-20">
@@ -44,7 +55,7 @@
                     <div class="col-20"><strong>Counts</strong></div>
                 </div>
 
-                <div class="row m-b-10" ng-repeat="item in vm.counts">
+                <div class="row m-b-10" ng-repeat="item in vm.counts | filter: vm.selectedTeamID">
                     <div class="col-25">{{item.SportCodeID}}</div>
                     <div class="col-50">{{item.LastName}}, {{item.FirstName}}</div>
                     <div class="col-20">{{item.OverageTotal}}</div>
