@@ -79,7 +79,7 @@
          * @returns {object} Counts of: Today's snack checkouts, current month snack checkouts, and whether athlete has checked out pre, post, or hydration today
          */
         function getCheckoutHistory(id) {
-            AccountSvc.preCount = 0;AccountSvc.postCount = 0;AccountSvc.snackCount = 0;
+            AccountSvc.preCount = 0;AccountSvc.postCount = 0;AccountSvc.snackCount = 0;AccountSvc.monthlyCount = 0;
             return CheckoutSvc.getCheckoutHistory(id)
                 .then(function (response) {
                     return response;

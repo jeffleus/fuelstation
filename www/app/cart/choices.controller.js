@@ -40,6 +40,7 @@
                 }
             }, 1000);
 			console.log(vm.choiceSvc.types);
+			console.log("MONTHLY HIST: ", AccountSvc.monthSnacksLimit);
         }
 
         // Cancel timer when controller is destroyed (i.e. when route changes), otherwise timer continues even if user has already been logged out

@@ -135,7 +135,7 @@
                 self.shouldHideStaff = (self.staffCount >= self.dayStaffLimit);
 
                     // Manually setting defaults (|| self...) because history currently not implemented
-                    self.monthSnacksRemaining = Math.max(self.monthSnacksLimit - history.monthSnacksCount, 0) || self.monthSnacksLimit;
+                    self.monthSnacksRemaining = Math.max(self.monthSnacksLimit - history.monthSnacksCount, 0);// || self.monthSnacksLimit;
                     self.daySnacksRemaining = Math.max(self.daySnacksLimit - history.daySnacksCount, 0) || self.daySnacksLimit;
 
                     if (self.monthSnacksRemaining < self.daySnacksLimit) {
