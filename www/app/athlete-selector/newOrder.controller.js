@@ -3,7 +3,7 @@
 
     angular.module('app.new-order')
 
-    .controller('NewOrderCtrl', function ($scope, $rootScope, $state, $timeout, $interval, $ionicModal, 
+    .controller('NewOrderCtrl', function ($scope, $rootScope, $state, $timeout, $q, $interval, $ionicPopup, 
 											LoadingSpinner, IonicAlertSvc, 
 											AccountSvc, AthleteSvc, ChoiceSvc, CheckoutSvc, OrderSvc) {
         var vm = this;
@@ -67,37 +67,64 @@
 //            OrderSvc.clear();
 //			$scope.newModal.show();
 //		}
-		
-		function _startOrder(athlete) {
-			LoadingSpinner.show();
-			AccountSvc.studentId = athlete.schoolid;
 
+		function _isAthleteEnabled(athlete) {
+			//check the athlete isEnabled property to see if toggled off
 			if (!athlete.isEnabled) {
-				var msg = {
-					title: 'The athlete selected has been disabled by the Nurtition staff.  They are not currently eligible for service.  Please contact Alexandra Bechard for more details.'
+				var opts = {
+					title: 'Account Disabled',
+					template: 'The athlete selected has been disabled by the Nurtition Staff.  They are not currently eligible for service.  Please contact Alexandra Bechard for more details.'
 				};
-				IonicAlertSvc.alert(msg).then( _cancel );
-			}
+				var athleteDisabledAlert = $ionicPopup.alert(opts)
+				athleteDisabledAlert.then( function() {
+					_cancel();
+				});
+				$timeout(function() {
+					athleteDisabledAlert.close();
+				}, 3000);
+				return false;
+			} else { return true; }
+		}
 
+		function _reviewAllergies(athlete) {
 			if (athlete.hasAllergy) {
 				var msg = {
-					title: 'The athlete is marked as having allergies, but no notes recorded.'
+					title: 'Athlete Allergies',
+					template: 'The athlete is marked as having allergies, but no notes recorded.'
 				};
 				if (athlete.allergyNotes) {
-					msg.title = athlete.allergyNotes;
+					msg.template = athlete.allergyNotes;
 				}
-				IonicAlertSvc.alert(msg);
-			}
-			//
-			AthleteSvc.getAthlete(AccountSvc.studentId)
-				.then(AccountSvc.saveAthleteData)
-				.then(AccountSvc.getSnackLimits)
-				.then(getCheckoutHistory)
-				.then(AccountSvc.initializeHiddenCategories)
-				.then(getAllChoices)
-				.then(redirectToCart)
-				.catch(IonicAlertSvc.error)
-				.finally(LoadingSpinner.hide);
+				var allergyAlert = $ionicPopup.alert(msg)
+				$timeout(function() {
+					allergyAlert.close();
+				}, 4000);
+				return allergyAlert;
+			} else return $q.when( true );
+		}
+		
+		function _startOrder(athlete) {
+			//check the athlete to see if account is enabled
+			if ( _isAthleteEnabled(athlete) ) {
+				
+				//check to see if the athlete has allergies
+				_reviewAllergies(athlete).then( function() {
+					//begin the order process
+					LoadingSpinner.show();
+					AccountSvc.studentId = athlete.schoolid;	
+
+					//run through the series of steps to process the cart
+					AthleteSvc.getAthlete(AccountSvc.studentId)
+						.then(AccountSvc.saveAthleteData)
+						.then(AccountSvc.getSnackLimits)
+						.then(getCheckoutHistory)
+						.then(AccountSvc.initializeHiddenCategories)
+						.then(getAllChoices)
+						.then(redirectToCart)
+						.catch(IonicAlertSvc.error)
+						.finally(LoadingSpinner.hide);
+				});
+			} 
 		}
 		
 		function _cancel() {
