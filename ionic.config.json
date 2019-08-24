@@ -1,6 +1,9 @@
 {
   "name": "FuelStationAWS",
-  "app_id": "61455737",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "ionic1",
   "gulpStartupTasks": [
     "sass",
     "templatecache",
@@ -8,14 +11,11 @@
     "useref",
     "watch"
   ],
-  "type": "ionic1",
-  "integrations": {
-    "cordova": {}
-  },
   "watchPatterns": [
     "scss/**/*",
     "www/**/*",
     "!www/lib/**/*",
     "!www/**/*.map"
-  ]
+  ],
+  "id": "61455737"
 }

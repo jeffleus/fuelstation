@@ -71,16 +71,33 @@
 		function _startOrder(athlete) {
 			LoadingSpinner.show();
 			AccountSvc.studentId = athlete.schoolid;
-            //
-            AthleteSvc.getAthlete(AccountSvc.studentId)
-                .then(AccountSvc.saveAthleteData)
-                .then(AccountSvc.getSnackLimits)
-                .then(getCheckoutHistory)
-                .then(AccountSvc.initializeHiddenCategories)
-                .then(getAllChoices)
-                .then(redirectToCart)
-                .catch(IonicAlertSvc.error)
-				.finally(LoadingSpinner.hide);			
+
+			if (!athlete.isEnabled) {
+				var msg = {
+					title: 'The athlete selected has been disabled by the Nurtition staff.  They are not currently eligible for service.  Please contact Alexandra Bechard for more details.'
+				};
+				IonicAlertSvc.alert(msg).then( _cancel );
+			}
+
+			if (athlete.hasAllergy) {
+				var msg = {
+					title: 'The athlete is marked as having allergies, but no notes recorded.'
+				};
+				if (athlete.allergyNotes) {
+					msg.title = athlete.allergyNotes;
+				}
+				IonicAlertSvc.alert(msg);
+			}
+			//
+			AthleteSvc.getAthlete(AccountSvc.studentId)
+				.then(AccountSvc.saveAthleteData)
+				.then(AccountSvc.getSnackLimits)
+				.then(getCheckoutHistory)
+				.then(AccountSvc.initializeHiddenCategories)
+				.then(getAllChoices)
+				.then(redirectToCart)
+				.catch(IonicAlertSvc.error)
+				.finally(LoadingSpinner.hide);
 		}
 		
 		function _cancel() {
