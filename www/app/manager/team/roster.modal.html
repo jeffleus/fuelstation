@@ -10,6 +10,12 @@
         <form name="vm.athleteForm" novalidate>
             <div class="list">
 
+                <ion-toggle style="padding: 8px 16px" ng-model="vm.selectedAthlete.isEnabled" ng-checked="vm.selectedAthlete.isEnabled">
+                  <span class="input-label">
+                    Account Enabled
+                  </span>
+                </ion-toggle>
+
                 <label for="name" class="item item-input">
                     <span class="input-label">
                                 First Name
@@ -31,11 +37,22 @@
                     <input type="text" name="name" ng-model="vm.selectedAthlete.schoolid" required/>
                 </label>
 
+                <ion-toggle style="padding: 8px 16px" ng-model="vm.selectedAthlete.hasAllergy" ng-checked="vm.selectedAthlete.hasAllergy">
+                  <span class="input-label">
+                    Has Allergy
+                  </span>
+                </ion-toggle>
+
+                <ion-item class="item-input">
+                  <span class="input-label">Allergy Notes</span>
+                  <textarea ng-model="vm.selectedAthlete.allergyNotes"></textarea>
+                </ion-item>
 
                 <div class="padding">
                     <button type="button" ng-click="vm.onCloseModal()" class="button button-stable">Cancel</button>
                     <button ng-click="vm.onSaveAthlete()" class="button button-balanced">Save</button>
                 </div>
+
 
 
             </div>
