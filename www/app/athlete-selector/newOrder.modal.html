@@ -31,6 +31,7 @@
 				ng-repeat="ath in vm.athletes | filter: vm.athleteFilter"
 				ng-click="vm.startOrder(ath)">
 		{{ath.lastName}}, {{ath.firstName}}
+		<span ng-show="!ath.isEnabled" style="color:firebrick;">&nbsp;(acct disabled)</span>
 	  </ion-item>
 <!--
 	<div ng-repeat="sport in vm.sports">
