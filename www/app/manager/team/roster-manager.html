@@ -19,6 +19,7 @@
 
          <ion-item ng-show="vm.selectedSport && vm.athletes" ng-repeat="athlete in vm.athletes | orderBy: 'lastName' ">
             {{athlete.lastName}}, {{athlete.firstName}}  - {{athlete.schoolid}}
+            <span ng-show="!athlete.isEnabled" style="color:firebrick;">&nbsp;(acct disabled)</span>
             <ion-option-button class="button-energized"
             ng-click="vm.onUpdateAthlete(athlete)">
             Edit
