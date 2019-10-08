@@ -9,7 +9,7 @@
             snackLimits: _snackLimits
         };
 
-        var url = 'https://n6jjrfl2j7.execute-api.us-west-2.amazonaws.com/dev/snacklimits/';
+        var url = 'https://bwtchslm53.execute-api.us-west-2.amazonaws.com/dev/snacklimits/';
 
         return service;
         

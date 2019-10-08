@@ -10,9 +10,9 @@
         };
 
         //mocked service url
-        //var url = 'https://n6jjrfl2j7.execute-api.us-west-2.amazonaws.com/dev/snacklimits/';
+        //var url = 'https://bwtchslm53.execute-api.us-west-2.amazonaws.com/dev/snacklimits/';
         //live service url
-        var url = 'https://sdnue615uh.execute-api.us-west-2.amazonaws.com/demo/snacklimits/';
+        var url = 'https://bwtchslm53.execute-api.us-west-2.amazonaws.com/demo/snacklimits/';
         
         return service;
         
